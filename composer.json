@@ -1,0 +1,32 @@
+{
+    "name": "sistem-atc/marketplaces",
+    "description": "Pacote unificado de integração com marketplaces (ML, Shopee, Magalu, TikTok, etc)",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SistemAtc\\Marketplaces\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sistem ATC",
+            "email": "sistem.atc@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/http": "^10.0|^11.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

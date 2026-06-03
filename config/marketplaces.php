@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'mercadolivre' => [
+        'api_base' => env('MARKETPLACES_ML_BASE_URL', 'https://api.mercadolivre.com'),
+        'webhook_secret' => env('MARKETPLACES_ML_WEBHOOK_SECRET'),
+    ],
+    'shopee' => [
+        'base_url' => env('MARKETPLACES_SHOPEE_BASE_URL', 'https://partner.shopeemobile.com'),
+        'webhook_secret' => env('MARKETPLACES_SHOPEE_WEBHOOK_SECRET'),
+    ],
+    'magalu' => [
+        'api_base' => env('MARKETPLACES_MAGALU_BASE_URL', 'https://api.magalu.com'),
+        'token_url' => env('MARKETPLACES_MAGALU_TOKEN_URL', 'https://autoseg-idp.luizalabs.com/oauth/token'),
+    ],
+    'tiktok' => [
+        'base_url' => env('MARKETPLACES_TIKTOK_BASE_URL', 'https://open-api.tiktokglobalshop.com'),
+    ],
+    'amazon' => [
+        'spapi_base_url' => env('MARKETPLACES_AMAZON_BASE_URL', 'https://sellingpartnerapi-na.amazon.com'),
+        'lwa_token_url' => env('MARKETPLACES_AMAZON_LWA_TOKEN_URL', 'https://api.amazon.com/auth/o2/token'),
+    ],
+    'shopify' => [
+        'api_version' => env('MARKETPLACES_SHOPIFY_API_VERSION', '2024-04'),
+    ],
+    'mercadopago' => [
+        'api_base' => env('MARKETPLACES_MERCADOPAGO_BASE_URL', 'https://api.mercadopago.com'),
+    ],
+    'lojaintegrada' => [
+        'api_base' => env('MARKETPLACES_LOJAINTEGRADA_BASE_URL', 'https://api.awsli.com.br/v1'),
+    ],
+    'webhooks' => [
+        'enabled' => true,
+        'prefix' => env('MARKETPLACES_WEBHOOK_PREFIX', 'api/webhooks'),
+        'middleware' => ['api'],
+    ],
+];
