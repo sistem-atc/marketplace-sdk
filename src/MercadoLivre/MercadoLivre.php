@@ -15,6 +15,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Question\QuestionMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Message\MessageMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Claim\ClaimMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Category\CategoryMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Promotion\PromotionMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Support\HttpClientFactory;
 
 class MercadoLivre
@@ -67,5 +68,14 @@ class MercadoLivre
     public function categories(MarketplaceIntegration $integration): CategoryMethods
     {
         return new CategoryMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Seller Promotions — campanhas e promoções (DEAL, LIGHTNING, PRE_NEGOTIATED, etc).
+     * Usa app_version=v2 (obrigatório).
+     */
+    public function promotions(MarketplaceIntegration $integration): PromotionMethods
+    {
+        return new PromotionMethods(HttpClientFactory::make($integration), $integration);
     }
 }
