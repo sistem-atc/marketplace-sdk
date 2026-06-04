@@ -13,6 +13,14 @@ use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
  * Endpoint base: GET /seller-promotions/users/{sellerId}
  * Versão obrigatória: app_version=v2 (v1 e v3 retornam 400 Bad Request).
  *
+ * Status dos endpoints (2026-06-04):
+ *   list()    → 200 ✅ funcional
+ *   listAll() → 200 ✅ funcional
+ *   get()     → 404 🔒 aguardando liberação ML
+ *   listItems() → 404 🔒 aguardando liberação ML
+ *   getSubscription() → 404 🔒 aguardando liberação ML
+ *   subscribe() → 404 🔒 aguardando liberação ML
+ *
  * Tipos de promoção retornados:
  *   - DEAL               → Campanhas de desconto com data fixa (ex: 06.06)
  *   - LIGHTNING          → Oferta relâmpago
@@ -85,13 +93,99 @@ class PromotionMethods extends BaseMethods
         $limit  = 50;
 
         do {
-            $page   = $this->list($sellerId, $status, $type, $limit, $offset);
+            $page    = $this->list($sellerId, $status, $type, $limit, $offset);
             $results = $page['results'];
-            $all    = array_merge($all, $results);
-            $total  = $page['paging']['total'] ?? 0;
+            $all     = array_merge($all, $results);
+            $total   = $page['paging']['total'] ?? 0;
             $offset += $limit;
         } while (count($results) === $limit && $offset < $total);
 
         return $all;
+    }
+
+    // ── Endpoints aguardando liberação pelo ML (retornam 404 em 2026-06-04) ──
+    // Implementados e prontos — quando o ML liberar basta usar normalmente.
+
+    /**
+     * Detalhe de uma campanha específica.
+     * Aguardando: GET /seller-promotions/{promotionId}?app_version=v2
+     *
+     * @return array<string, mixed>
+     */
+    public function get(string $promotionId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            "/seller-promotions/{$promotionId}",
+            ['app_version' => self::APP_VERSION],
+        );
+    }
+
+    /**
+     * Items participantes de uma campanha.
+     * Aguardando: GET /seller-promotions/{promotionId}/items?app_version=v2
+     *
+     * @return array{results: array<int, array<string, mixed>>, paging: array<string, int>}
+     */
+    public function listItems(
+        string $promotionId,
+        int $limit = 50,
+        int $offset = 0,
+    ): array {
+        $response = $this->makeRequest(
+            HttpMethod::GET,
+            "/seller-promotions/{$promotionId}/items",
+            ['app_version' => self::APP_VERSION, 'limit' => min($limit, 50), 'offset' => $offset],
+        );
+
+        return [
+            'results' => $response['results'] ?? [],
+            'paging'  => $response['paging'] ?? [],
+        ];
+    }
+
+    /**
+     * Subscription/opt-in status de uma campanha.
+     * Aguardando: GET /seller-promotions/{promotionId}/subscription?app_version=v2
+     *
+     * @return array<string, mixed>
+     */
+    public function getSubscription(string $promotionId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            "/seller-promotions/{$promotionId}/subscription",
+            ['app_version' => self::APP_VERSION],
+        );
+    }
+
+    /**
+     * Opt-in em uma campanha (aceitar convite/participar).
+     * Aguardando: POST /seller-promotions/{promotionId}/subscription?app_version=v2
+     *
+     * @return array<string, mixed>
+     */
+    public function subscribe(string $promotionId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            "/seller-promotions/{$promotionId}/subscription",
+            ['app_version' => self::APP_VERSION],
+        );
+    }
+
+    /**
+     * Opt-out de uma campanha.
+     * Aguardando: DELETE /seller-promotions/{promotionId}/subscription?app_version=v2
+     *
+     * @return array<string, mixed>
+     */
+    public function unsubscribe(string $promotionId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::DELETE,
+            "/seller-promotions/{$promotionId}/subscription",
+            ['app_version' => self::APP_VERSION],
+        );
     }
 }
