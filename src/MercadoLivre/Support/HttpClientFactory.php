@@ -20,7 +20,7 @@ class HttpClientFactory
         // A logica de refresh sera movida para um TokenRefresher que usa o Contract
         TokenRefresher::refresh($integration);
 
-        return Http::baseUrl(config('marketplaces.mercadolivre.api_base', 'https://api.mercadolivre.com'))
+        return Http::baseUrl(config('marketplaces.mercadolivre.api_base', 'https://api.mercadolibre.com'))
             ->withToken($integration->getAccessToken())
             ->timeout(60)
             ->connectTimeout(10)
