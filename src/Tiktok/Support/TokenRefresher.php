@@ -14,14 +14,41 @@ class TokenRefresher
     private const AUTH_HOST = 'https://auth.tiktok-shops.com';
     private const REFRESH_PATH = '/api/v2/token/refresh';
 
+    /**
+     * Idempotente: skip se o token ainda e' valido (guard). O
+     * HttpClientFactory chama isto antes de TODA request — sem o guard
+     * faria um POST e rotacionaria os tokens TikTok a cada chamada.
+     */
     public static function refresh(MarketplaceIntegration $integration): string
+    {
+        $token = $integration->getAccessToken();
+
+        if ($token && ! self::isExpired($integration)) {
+            return $token;
+        }
+
+        return self::doRefresh($integration);
+    }
+
+    /** Forca refresh ignorando o guard (sweep proativo / 105002 na borda). */
+    public static function forceRefresh(MarketplaceIntegration $integration): string
     {
         return self::doRefresh($integration);
     }
 
-    public static function forceRefresh(MarketplaceIntegration $integration): string
+    private static function isExpired(MarketplaceIntegration $integration): bool
     {
-        return self::doRefresh($integration);
+        if (method_exists($integration, 'isExpired')) {
+            return $integration->isExpired();
+        }
+
+        $settings = $integration->getMarketplaceSettings();
+        $expiresAt = $settings['expires_at'] ?? null;
+        if (! $expiresAt) {
+            return false;
+        }
+
+        return (new \DateTime($expiresAt))->getTimestamp() < (time() + 300);
     }
 
     private static function doRefresh(MarketplaceIntegration $integration): string

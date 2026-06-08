@@ -49,6 +49,17 @@ class OrderMethods extends BaseMethods
         return $response['response']['order_list'] ?? [];
     }
 
+    /**
+     * Atalho: dados de NFe (invoice_data) de UM pedido. Usado pelo pipeline
+     * de resolucao de NFe — retorna null quando o pedido nao tem invoice_data.
+     */
+    public function getInvoiceInfo(string $orderSn): ?array
+    {
+        $details = $this->getOrderDetail([$orderSn], ['invoice_data']);
+
+        return $details[0]['invoice_data'] ?? null;
+    }
+
     public function getBookingDetail(array $bookingSnList, ?array $optionalFields = null): array
     {
         if (empty($bookingSnList)) return [];
