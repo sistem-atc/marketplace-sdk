@@ -33,6 +33,19 @@ class WebhookMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, '/v1/onboarding/signup');
     }
 
+    /**
+     * Inscreve no historico (catchup de eventos antigos).
+     * PUT /v1/onboarding/signup/history
+     */
+    public function signupHistory(string $webhookUrl, ?string $topicId = null, array $filterBy = []): array
+    {
+        $body = ['webhook' => $webhookUrl];
+        if ($topicId !== null && $topicId !== '') $body['topic_id'] = $topicId;
+        if (!empty($filterBy)) $body['filter_by'] = $filterBy;
+
+        return $this->makeRequest(HttpMethod::PUT, '/v1/onboarding/signup/history', [], $body);
+    }
+
     public function signoff(string $signupId): array
     {
         return $this->makeRequest(HttpMethod::DELETE, "/v1/onboarding/signup/{$signupId}");

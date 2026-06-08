@@ -79,6 +79,9 @@ abstract class BaseMethods
         $e = new MagaluRequestException($response);
         Log::warning('Magalu HTTP Request Error', [
             'status' => $e->status(),
+            'magalu_error' => $e->magaluError(),
+            'magalu_message' => $e->magaluMessage(),
+            'url' => $e->url(),
             'integration_id' => $this->integration->getIntegrationIdentifier(),
         ]);
         throw $e;
