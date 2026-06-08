@@ -4,41 +4,45 @@ declare(strict_types=1);
 
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
-use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Facades\Log;
+use SistemAtc\Marketplaces\Amazon\Client;
 
+/**
+ * Endpoint Orders v0 da SP-API (busca por AmazonOrderId individual).
+ *
+ * Rate limits Amazon:
+ *   - GET /orders/{id}            : 2 req/s + burst 30
+ *   - GET /orders/{id}/orderItems : 0.5 req/s + burst 30 (o gargalo)
+ */
 class Orders
 {
     public function __construct(
-        protected PendingRequest $httpClient,
-        protected MarketplaceIntegration $integration
+        private readonly Client $client,
     ) {}
 
-    public function getOrder(string $amazonOrderId, int $retryAttempt = 0): array
+    /**
+     * Header do pedido (GET /orders/v0/orders/{orderId}). Retorna `payload`
+     * ou [] em 404.
+     *
+     * @return array<string, mixed>
+     */
+    public function getOrder(string $amazonOrderId): array
     {
-        $response = $this->httpClient->get("/orders/v0/orders/{$amazonOrderId}");
+        $resp = $this->client->get('/orders/v0/orders/'.rawurlencode($amazonOrderId));
 
-        if (($response->status() === 429 || $response->status() >= 500) && $retryAttempt < 3) {
-            $sleep = (int) ($response->header('Retry-After') ?: pow(2, $retryAttempt + 1));
-            Log::warning("Amazon SP-API 429/5xx, retrying in {$sleep}s", ['order' => $amazonOrderId]);
-            sleep($sleep);
-            return $this->getOrder($amazonOrderId, $retryAttempt + 1);
-        }
-
-        return $response->json() ?? [];
+        return data_get($resp, 'payload', []);
     }
-    
-    public function getOrderItems(string $amazonOrderId, int $retryAttempt = 0): array
-    {
-        $response = $this->httpClient->get("/orders/v0/orders/{$amazonOrderId}/orderItems");
-        
-        if (($response->status() === 429 || $response->status() >= 500) && $retryAttempt < 3) {
-            $sleep = (int) ($response->header('Retry-After') ?: pow(2, $retryAttempt + 1));
-            sleep($sleep);
-            return $this->getOrderItems($amazonOrderId, $retryAttempt + 1);
-        }
 
-        return $response->json() ?? [];
+    /**
+     * Itens do pedido (GET /orders/v0/orders/{orderId}/orderItems). Retorna
+     * `payload.OrderItems` ou [] em 404 / sem itens. NAO pagina NextToken
+     * (pedidos BR raramente passam de 1 pagina).
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getOrderItems(string $amazonOrderId): array
+    {
+        $resp = $this->client->get('/orders/v0/orders/'.rawurlencode($amazonOrderId).'/orderItems');
+
+        return data_get($resp, 'payload.OrderItems', []);
     }
 }
