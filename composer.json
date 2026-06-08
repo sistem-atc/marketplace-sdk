@@ -8,6 +8,13 @@
             "SistemAtc\\Marketplaces\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SistemAtc\\Marketplaces\\MarketplacesServiceProvider"
+            ]
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "SistemAtc\\Marketplaces\\Tests\\": "tests/"
