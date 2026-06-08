@@ -64,10 +64,10 @@ class TokenRefresher
         // Tenta pegar expires_at via método do contrato ou propriedade.
         // O contrato não expõe expires_at diretamente — verificamos via
         // getMarketplaceSettings ou cast de datetime se disponível.
-        // Como o Bunker implementa updateTokens com expires_at, o model
+        // Como o host implementa updateTokens com expires_at, o model
         // expõe a data via Eloquent. Usamos reflection defensiva.
         if (method_exists($integration, 'isExpired')) {
-            return $integration->isExpired(); // Bunker Integration::isExpired()
+            return $integration->isExpired(); // host Integration::isExpired()
         }
 
         $settings  = $integration->getMarketplaceSettings();

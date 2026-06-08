@@ -12,7 +12,7 @@ class HttpClientFactory
 {
     public static function make(MarketplaceIntegration $integration): PendingRequest
     {
-        // Aqui o host (Bunker) deve garantir que o token esta fresco antes de chamar.
+        // Aqui o host (host) deve garantir que o token esta fresco antes de chamar.
         // Mas se precisar de refresh auto:
         // TokenRefresher::refresh($integration);
 

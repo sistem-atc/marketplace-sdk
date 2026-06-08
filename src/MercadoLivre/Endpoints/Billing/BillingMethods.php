@@ -279,7 +279,7 @@ class BillingMethods extends BaseMethods
      *
      * ⚠️ ALTA INCIDENCIA DE 429 (doc oficial). Recomendado:
      *   - SOMENTE pra orders ainda nao processados (consulte primeiro
-     *     marketplace_billing_charges.order_id no Bunker).
+     *     marketplace_billing_charges.order_id no host).
      *   - Sem polling repetido — uma chamada e cacheia o resultado.
      *
      * @param  list<string>  $orderIds  Lista de orders pra filtrar (max ~50)

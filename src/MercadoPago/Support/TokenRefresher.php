@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Log;
  *      correriam pra rotacionar, invalidando o refresh_token uma da outra.
  *      O lock serializa o refresh por integration.
  *
- * NOTA: ao contrario do conector interno do Bunker, a lib NAO desativa a
+ * NOTA: ao contrario do conector interno do host, a lib NAO desativa a
  * integration em caso de falha — isso fica como responsabilidade do host
  * (consistente com os demais TokenRefreshers da lib).
  *
@@ -140,7 +140,7 @@ class TokenRefresher
 
     private static function isExpired(MarketplaceIntegration $integration): bool
     {
-        // O Bunker implementa Integration::isExpired() (com margem propria).
+        // O host implementa Integration::isExpired() (com margem propria).
         if (method_exists($integration, 'isExpired')) {
             return $integration->isExpired();
         }

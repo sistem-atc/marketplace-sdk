@@ -99,7 +99,7 @@ class TokenRefresher
 
     private static function isExpired(MarketplaceIntegration $integration): bool
     {
-        // O Bunker implementa Integration::isExpired() (com margem propria).
+        // O host implementa Integration::isExpired() (com margem propria).
         if (method_exists($integration, 'isExpired')) {
             return $integration->isExpired();
         }

@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Webhooks\Handlers;
 
 use Illuminate\Http\Request;
-use SistemAtc\Marketplaces\Webhooks\Events\MarketplaceWebhookEvent;
+use SistemAtc\Marketplaces\Webhooks\Events\MagaluWebhookEvent;
 
 class MagaluWebhookHandler implements WebhookHandlerInterface
 {
     public function validate(Request $request): bool
     {
-        // Assinatura (X-Signature-256 HMAC) e' validada no host antes de delegar.
         return true;
     }
 
@@ -19,13 +18,9 @@ class MagaluWebhookHandler implements WebhookHandlerInterface
     {
         $payload = $request->all();
 
-        event(new MarketplaceWebhookEvent('magalu', $payload, $this->extractTopic($request, $payload)));
+        event(new MagaluWebhookEvent($payload, $this->extractTopic($request, $payload)));
     }
 
-    /**
-     * Topics Magalu: 'orders_order', 'orders_delivery'. Podem vir em
-     * type/topic/event_name/event/action (body) ou em headers.
-     */
     private function extractTopic(Request $request, array $body): ?string
     {
         $candidates = [
