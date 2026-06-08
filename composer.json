@@ -8,6 +8,14 @@
             "SistemAtc\\Marketplaces\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SistemAtc\\Marketplaces\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
     "authors": [
         {
             "name": "Kleber Pracidelli Patti",
@@ -20,6 +28,9 @@
         "illuminate/http": "^10.0|^11.0|^12.0|^13.0"
     },
     "require-dev": {
+        "orchestra/testbench": "^11.1",
+        "pestphp/pest": "^4.7",
+        "pestphp/pest-plugin-laravel": "^4.1"
     },
     "config": {
         "sort-packages": true,
