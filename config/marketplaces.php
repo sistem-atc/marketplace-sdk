@@ -30,8 +30,14 @@ return [
         'api_base' => env('MARKETPLACES_LOJAINTEGRADA_BASE_URL', 'https://api.awsli.com.br/v1'),
     ],
     'webhooks' => [
-        'enabled' => true,
+        // Catch-all legado (api/webhooks/{marketplace}). So' usar quando NAO
+        // houver lista per-MP em `routes`. Default false — preferir `routes`.
+        'enabled' => false,
         'prefix' => env('MARKETPLACES_WEBHOOK_PREFIX', 'api/webhooks'),
         'middleware' => ['api'],
+        // Modo per-MP: lista de marketplaces cujas rotas o pacote registra
+        // (api/webhooks/{mp}). Migracao um-a-um — o host so' adiciona o MP aqui
+        // quando o listener/validacao dele ja' estao prontos.
+        'routes' => [],
     ],
 ];
