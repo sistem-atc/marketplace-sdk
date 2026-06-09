@@ -10,6 +10,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Orders;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 use SistemAtc\Marketplaces\Amazon\Support\TokenRefresher;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -51,6 +52,11 @@ class Client
     public function messaging(): Messaging
     {
         return new Messaging($this);
+    }
+
+    public function reports(): Reports
+    {
+        return new Reports($this);
     }
 
     public function get(string $path, array $query = []): array

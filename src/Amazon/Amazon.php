@@ -10,6 +10,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Finances;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 
 class Amazon
 {
@@ -41,5 +42,10 @@ class Amazon
     public function messaging(MarketplaceIntegration $integration): Messaging
     {
         return $this->client($integration)->messaging();
+    }
+
+    public function reports(MarketplaceIntegration $integration): Reports
+    {
+        return $this->client($integration)->reports();
     }
 }

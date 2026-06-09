@@ -13,6 +13,7 @@ use SistemAtc\Marketplaces\Shopee\Endpoints\Webhook\WebhookMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Return\ReturnMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Chat\ChatMethods;
+use SistemAtc\Marketplaces\Shopee\Endpoints\Marketing\MarketingMethods;
 use SistemAtc\Marketplaces\Shopee\Support\HttpClientFactory;
 
 class Shopee
@@ -55,5 +56,10 @@ class Shopee
     public function chat(MarketplaceIntegration $integration): ChatMethods
     {
         return new ChatMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function marketing(MarketplaceIntegration $integration): MarketingMethods
+    {
+        return new MarketingMethods(HttpClientFactory::make($integration), $integration);
     }
 }

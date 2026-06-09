@@ -16,6 +16,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Message\MessageMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Claim\ClaimMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Category\CategoryMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Promotion\PromotionMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Advertising\AdvertisingMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Support\HttpClientFactory;
 
 class MercadoLivre
@@ -77,5 +78,10 @@ class MercadoLivre
     public function promotions(MarketplaceIntegration $integration): PromotionMethods
     {
         return new PromotionMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function advertising(MarketplaceIntegration $integration): AdvertisingMethods
+    {
+        return new AdvertisingMethods(HttpClientFactory::make($integration), $integration);
     }
 }

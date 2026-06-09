@@ -12,6 +12,7 @@ use SistemAtc\Marketplaces\Shopify\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\Shopify\Endpoints\Product\ProductMethods;
 use SistemAtc\Marketplaces\Shopify\Endpoints\Transaction\TransactionMethods;
 use SistemAtc\Marketplaces\Shopify\Endpoints\Webhooks;
+use SistemAtc\Marketplaces\Shopify\Endpoints\Analytics\AnalyticsMethods;
 use SistemAtc\Marketplaces\Shopify\Support\HttpClientFactory;
 
 class Shopify
@@ -49,5 +50,10 @@ class Shopify
     public function metafields(MarketplaceIntegration $integration): MetafieldMethods
     {
         return new MetafieldMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function analytics(MarketplaceIntegration $integration): AnalyticsMethods
+    {
+        return new AnalyticsMethods(HttpClientFactory::make($integration), $integration);
     }
 }
