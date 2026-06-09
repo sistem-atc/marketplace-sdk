@@ -17,8 +17,10 @@ use SistemAtc\Marketplaces\Webhooks\Handlers\TiktokWebhookHandler;
 
 class WebhookController extends Controller
 {
-    public function handle(Request $request, string $marketplace)
+    public function handle(Request $request)
     {
+        $marketplace = (string) $request->route('marketplace');
+
         $handler = match ($marketplace) {
             'mercadolivre', 'mercado-livre' => new MercadoLivreWebhookHandler(),
             'shopee' => new ShopeeWebhookHandler(),
