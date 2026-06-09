@@ -39,5 +39,6 @@ return [
         // (api/webhooks/{mp}). Migracao um-a-um — o host so' adiciona o MP aqui
         // quando o listener/validacao dele ja' estao prontos.
         'routes' => [],
+        'tenant_routes' => [],
     ],
 ];

@@ -7,10 +7,12 @@ namespace SistemAtc\Marketplaces\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use SistemAtc\Marketplaces\Webhooks\Handlers\AmazonWebhookHandler;
+use SistemAtc\Marketplaces\Webhooks\Handlers\LojaIntegradaWebhookHandler;
 use SistemAtc\Marketplaces\Webhooks\Handlers\MagaluWebhookHandler;
 use SistemAtc\Marketplaces\Webhooks\Handlers\MercadoLivreWebhookHandler;
 use SistemAtc\Marketplaces\Webhooks\Handlers\NetshoesWebhookHandler;
 use SistemAtc\Marketplaces\Webhooks\Handlers\ShopeeWebhookHandler;
+use SistemAtc\Marketplaces\Webhooks\Handlers\ShopifyWebhookHandler;
 use SistemAtc\Marketplaces\Webhooks\Handlers\TiktokWebhookHandler;
 
 class WebhookController extends Controller
@@ -24,6 +26,8 @@ class WebhookController extends Controller
             'tiktok' => new TiktokWebhookHandler(),
             'amazon' => new AmazonWebhookHandler(),
             'netshoes' => new NetshoesWebhookHandler(),
+            'shopify' => new ShopifyWebhookHandler(),
+            'loja-integrada' => new LojaIntegradaWebhookHandler(),
             default => null,
         };
 

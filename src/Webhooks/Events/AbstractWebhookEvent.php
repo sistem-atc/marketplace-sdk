@@ -14,5 +14,7 @@ abstract class AbstractWebhookEvent
     public function __construct(
         public array $payload,
         public ?string $topic = null,
+        public array $headers = [],
+        public array $params = [],
     ) {}
 }

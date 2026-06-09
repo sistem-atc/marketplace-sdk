@@ -38,13 +38,21 @@ class MarketplacesServiceProvider extends ServiceProvider
         // pro pacote UM A UM — o host mantem no proprio routes/ os que ainda nao
         // migraram, sem colisao com um catch-all.
         $routes = (array) config('marketplaces.webhooks.routes', []);
+        $tenantRoutes = (array) config('marketplaces.webhooks.tenant_routes', []);
 
-        if (! empty($routes)) {
-            Route::prefix($prefix)->middleware($middleware)->group(function () use ($routes, $controller) {
+        if (! empty($routes) || ! empty($tenantRoutes)) {
+            Route::prefix($prefix)->middleware($middleware)->group(function () use ($routes, $tenantRoutes, $controller) {
                 foreach ($routes as $marketplace) {
                     Route::match(['GET', 'POST'], "/{$marketplace}", [$controller, 'handle'])
                         ->defaults('marketplace', $marketplace)
                         ->name("marketplaces.webhooks.{$marketplace}");
+                }
+
+                foreach ($tenantRoutes as $marketplace) {
+                    Route::match(['GET', 'POST'], "/{tenant}/{$marketplace}", [$controller, 'handle'])
+                        ->defaults('marketplace', $marketplace)
+                        ->where('tenant', '[a-z0-9-]+')
+                        ->name("marketplaces.webhooks.{$marketplace}.tenant");
                 }
             });
         }
