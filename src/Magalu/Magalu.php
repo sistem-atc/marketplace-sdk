@@ -10,6 +10,8 @@ use SistemAtc\Marketplaces\Magalu\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Delivery\DeliveryMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Logistics\LogisticsMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Webhooks\WebhookMethods;
+use SistemAtc\Marketplaces\Magalu\Endpoints\Product\ProductMethods;
+use SistemAtc\Marketplaces\Magalu\Endpoints\Claim\ClaimMethods;
 use SistemAtc\Marketplaces\Magalu\Support\HttpClientFactory;
 
 class Magalu
@@ -37,5 +39,15 @@ class Magalu
     public function webhooks(MarketplaceIntegration $integration): WebhookMethods
     {
         return new WebhookMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function products(MarketplaceIntegration $integration): ProductMethods
+    {
+        return new ProductMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function claims(MarketplaceIntegration $integration): ClaimMethods
+    {
+        return new ClaimMethods(HttpClientFactory::make($integration), $integration);
     }
 }

@@ -4,37 +4,30 @@ declare(strict_types=1);
 
 namespace SistemAtc\Marketplaces\Shopify\Endpoints;
 
-use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
-use Illuminate\Http\Client\PendingRequest;
+use SistemAtc\Marketplaces\Shopify\Bases\BaseMethods;
+use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 
-class Webhooks
+class Webhooks extends BaseMethods
 {
-    public function __construct(
-        protected PendingRequest $httpClient,
-        protected MarketplaceIntegration $integration
-    ) {}
-
     public function list(): array
     {
-        $response = $this->httpClient->get('webhooks.json');
-        return $response->json()['webhooks'] ?? [];
+        $response = $this->makeRequest(HttpMethod::GET, 'webhooks');
+        return $response['webhooks'] ?? [];
     }
 
     public function create(string $topic, string $address, string $format = 'json'): array
     {
-        $response = $this->httpClient->post('webhooks.json', [
+        return $this->makeRequest(HttpMethod::POST, 'webhooks', [], [
             'webhook' => [
                 'topic' => $topic,
                 'address' => $address,
                 'format' => $format,
             ],
         ]);
-        return $response->json()['webhook'] ?? [];
     }
 
     public function delete(int|string $webhookId): array
     {
-        $response = $this->httpClient->delete("webhooks/{$webhookId}.json");
-        return $response->json() ?? [];
+        return $this->makeRequest(HttpMethod::DELETE, "webhooks/{$webhookId}");
     }
 }

@@ -19,4 +19,19 @@ class OrderMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, "pedido/{$numero}/");
     }
+
+    public function updateStatus(int|string $numero, string $status): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "pedido/{$numero}/", [], [
+            'situacao' => $status,
+        ]);
+    }
+
+    public function updateTracking(int|string $numero, string $trackingCode, string $url = ''): array
+    {
+        return $this->makeRequest(HttpMethod::POST, "pedido/{$numero}/envio/", [], [
+            'objeto' => $trackingCode,
+            'url' => $url,
+        ]);
+    }
 }

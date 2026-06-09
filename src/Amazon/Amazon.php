@@ -8,14 +8,11 @@ use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Orders;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Finances;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 
 class Amazon
 {
-    /**
-     * Cliente SP-API com token LWA auto-refresh + retry 429/401/404 +
-     * endpoint regional. Use ->get()/->post() pra paths crus ou
-     * ->orders()/->finances()/->notifications() pros endpoints tipados.
-     */
     public function client(MarketplaceIntegration $integration): Client
     {
         return new Client($integration);
@@ -34,5 +31,15 @@ class Amazon
     public function notifications(MarketplaceIntegration $integration): Notifications
     {
         return $this->client($integration)->notifications();
+    }
+
+    public function listings(MarketplaceIntegration $integration): Listings
+    {
+        return $this->client($integration)->listings();
+    }
+
+    public function messaging(MarketplaceIntegration $integration): Messaging
+    {
+        return $this->client($integration)->messaging();
     }
 }

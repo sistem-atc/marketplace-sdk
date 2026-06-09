@@ -15,6 +15,11 @@ class InvoiceMethods extends BaseMethods
     /** Range max documentado pela Magalu por chamada. */
     private const MAX_RANGE_DAYS = 30;
 
+    public function create(string $orderId, array $data): array
+    {
+        return $this->makeRequest(HttpMethod::POST, "/seller/v1/orders/{$orderId}/invoices", [], $data);
+    }
+
     public function getFulfillmentSignedUrl(string $startDate, string $endDate): array
     {
         $this->assertValidDate($startDate, 'startDate');
