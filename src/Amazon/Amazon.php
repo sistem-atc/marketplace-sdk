@@ -11,6 +11,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Invoices;
 
 class Amazon
 {
@@ -47,5 +48,10 @@ class Amazon
     public function reports(MarketplaceIntegration $integration): Reports
     {
         return $this->client($integration)->reports();
+    }
+
+    public function invoices(MarketplaceIntegration $integration): Invoices
+    {
+        return $this->client($integration)->invoices();
     }
 }
