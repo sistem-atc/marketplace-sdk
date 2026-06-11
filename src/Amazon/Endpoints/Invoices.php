@@ -36,7 +36,7 @@ class Invoices
      */
     public function createExport(string $marketplaceId, string $dateStart, string $dateEnd, array $options = []): array
     {
-        return $this->client->post(self::BASE.'/invoices/exports', array_merge([
+        return $this->client->postRestricted(self::BASE.'/invoices/exports', array_merge([
             'marketplaceId' => $marketplaceId,
             'dateStart' => $dateStart,
             'dateEnd' => $dateEnd,
@@ -50,7 +50,7 @@ class Invoices
      */
     public function getExport(string $exportId): array
     {
-        return $this->client->get(self::BASE.'/invoices/exports/'.rawurlencode($exportId));
+        return $this->client->getRestricted(self::BASE.'/invoices/exports/'.rawurlencode($exportId));
     }
 
     /**
@@ -71,7 +71,7 @@ class Invoices
      */
     public function getDocument(string $documentId): array
     {
-        return $this->client->get(self::BASE.'/invoices/documents/'.rawurlencode($documentId));
+        return $this->client->getRestricted(self::BASE.'/invoices/documents/'.rawurlencode($documentId));
     }
 
     /**

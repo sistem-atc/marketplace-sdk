@@ -12,6 +12,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Invoices;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Tokens;
 use SistemAtc\Marketplaces\Amazon\Support\TokenRefresher;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -65,6 +66,11 @@ class Client
         return new Invoices($this);
     }
 
+    public function tokens(): Tokens
+    {
+        return new Tokens($this);
+    }
+
     public function get(string $path, array $query = []): array
     {
         return $this->request('GET', $path, $query);
@@ -73,6 +79,31 @@ class Client
     public function post(string $path, array $body = []): array
     {
         return $this->request('POST', $path, body: $body);
+    }
+
+    /**
+     * GET restrito: obtém um RDT pra (GET, $path) e usa no lugar do token LWA.
+     */
+    public function getRestricted(string $path, array $query = []): array
+    {
+        return $this->request('GET', $path, query: $query, tokenOverride: $this->rdtFor('GET', $path));
+    }
+
+    /**
+     * POST restrito: obtém um RDT pra (POST, $path) e usa no lugar do token LWA.
+     */
+    public function postRestricted(string $path, array $body = []): array
+    {
+        return $this->request('POST', $path, body: $body, tokenOverride: $this->rdtFor('POST', $path));
+    }
+
+    private function rdtFor(string $method, string $path): ?string
+    {
+        $rdt = $this->tokens()->createRestrictedDataToken([
+            ['method' => $method, 'path' => $path],
+        ]);
+
+        return $rdt !== '' ? $rdt : null;
     }
 
     public function put(string $path, array $body = []): array
@@ -90,9 +121,11 @@ class Client
         return $this->request('DELETE', $path);
     }
 
-    private function request(string $method, string $path, array $query = [], array $body = []): array
+    private function request(string $method, string $path, array $query = [], array $body = [], ?string $tokenOverride = null): array
     {
-        $token = TokenRefresher::refresh($this->integration);
+        // tokenOverride = RDT (Restricted Data Token) pra operações restritas;
+        // senão usa o access token LWA normal.
+        $token = $tokenOverride ?? TokenRefresher::refresh($this->integration);
 
         $settings = $this->integration->getMarketplaceSettings();
         $base = ! empty($settings['endpoint'])
@@ -128,7 +161,7 @@ class Client
                 continue;
             }
 
-            if ($resp->status() === 401 && $attempt === 1) {
+            if ($resp->status() === 401 && $attempt === 1 && $tokenOverride === null) {
                 $token = TokenRefresher::refresh($this->integration, force: true);
                 continue;
             }
