@@ -50,7 +50,7 @@ describe('MarketPlaces::Tiktok()->promotion()', function () {
 
         Http::assertSent(function ($req) {
             return str_contains($req->url(), '/promotion/202309/activities/search')
-                && str_contains($req->url(), 'page_size=100')
+                && str_contains($req->body(), '"page_size":100')
                 && $req->method() === 'POST';
         });
     });

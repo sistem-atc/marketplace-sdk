@@ -31,23 +31,21 @@ class PromotionMethods extends BaseMethods
         ?string $status = null,
         string $version = self::DEFAULT_VERSION,
     ): array {
-        // TikTok lista via POST (page_size/page_token na query, filtros no body),
-        // igual /order/.../orders/search. GET retorna 36009010 "Invalid method".
-        $query = [
+        // Listagem é o sub-recurso /search (POST) — o POST em /activities (sem
+        // /search) é o CREATE (exige title). page_size/page_token vão no BODY
+        // como tipos nativos (na query virariam string e o TikTok rejeita
+        // "page_size type invalid, expected int32").
+        $body = [
             'page_size' => min($pageSize, self::MAX_PAGE_SIZE),
         ];
         if ($pageToken !== '') {
-            $query['page_token'] = $pageToken;
+            $body['page_token'] = $pageToken;
         }
-
-        $body = [];
         if ($status !== null) {
             $body['status'] = $status;
         }
 
-        // Listagem é o sub-recurso /search (POST), igual /order/.../orders/search.
-        // O POST em /activities (sem /search) é o CREATE (exige title).
-        $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities/search", $query, $body);
+        $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities/search", [], $body);
         $data = $response['data'] ?? [];
 
         return [
