@@ -43,6 +43,29 @@ class ItemMethods extends BaseMethods
     }
 
     /**
+     * Multiget de anuncios: GET /items?ids=MLB1,MLB2&attributes=...
+     * Max 20 ids por chamada (limite do ML). Retorna lista de
+     * {code, body} — body com os atributos pedidos (ex.: seller_custom_field).
+     *
+     * @param  array<int, string>  $itemIds
+     * @param  array<int, string>  $attributes  ex.: ['id','seller_custom_field','status']
+     * @return array<int, array<string, mixed>>
+     */
+    public function multiGet(array $itemIds, array $attributes = []): array
+    {
+        if ($itemIds === []) {
+            return [];
+        }
+
+        $query = ['ids' => implode(',', array_slice($itemIds, 0, 20))];
+        if ($attributes !== []) {
+            $query['attributes'] = implode(',', $attributes);
+        }
+
+        return $this->makeRequest(HttpMethod::GET, '/items', $query);
+    }
+
+    /**
      * Altera o status de um anuncio (active, paused, closed).
      */
     public function updateStatus(string $itemId, string $status): array
