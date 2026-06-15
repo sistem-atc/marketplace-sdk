@@ -71,4 +71,24 @@ describe('MarketPlaces::Shopee()->marketing()', function () {
                 && ! str_contains($req->url(), '/api/v2/marketing/');
         });
     });
+
+    it('getDiscount usa /api/v2/discount/get_discount com discount_id + page_no', function () {
+        Http::fake([
+            'partner.shopeemobile.com/api/v2/discount/get_discount*' => Http::response([
+                'response' => ['discount_id' => 123, 'item_list' => [['item_id' => 1]], 'more' => true],
+            ]),
+        ]);
+
+        $resp = MarketPlaces::Shopee()->marketing(makeShopeeMarketingIntegration())
+            ->getDiscount(123, pageNo: 2, pageSize: 50);
+
+        expect($resp['response']['item_list'])->toHaveCount(1);
+
+        Http::assertSent(function ($req) {
+            return str_contains($req->url(), '/api/v2/discount/get_discount')
+                && str_contains($req->url(), 'discount_id=123')
+                && str_contains($req->url(), 'page_no=2')
+                && ! str_contains($req->url(), '/api/v2/marketing/');
+        });
+    });
 });
