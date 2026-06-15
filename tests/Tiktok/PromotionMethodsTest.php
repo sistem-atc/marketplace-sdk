@@ -27,9 +27,9 @@ function ttPromotionIntegration(): FakeIntegration
 }
 
 describe('MarketPlaces::Tiktok()->promotion()', function () {
-    it('getActivities usa GET /promotion/202309/activities e normaliza data', function () {
+    it('getActivities usa POST /promotion/202309/activities/search e normaliza data', function () {
         Http::fake([
-            'open-api.tiktokglobalshop.com/promotion/202309/activities*' => Http::response([
+            'open-api.tiktokglobalshop.com/promotion/202309/activities/search*' => Http::response([
                 'code' => 0,
                 'message' => 'success',
                 'data' => [
@@ -49,7 +49,7 @@ describe('MarketPlaces::Tiktok()->promotion()', function () {
             ->and($resp['total_count'])->toBe(1);
 
         Http::assertSent(function ($req) {
-            return str_contains($req->url(), '/promotion/202309/activities')
+            return str_contains($req->url(), '/promotion/202309/activities/search')
                 && str_contains($req->url(), 'page_size=100')
                 && $req->method() === 'POST';
         });

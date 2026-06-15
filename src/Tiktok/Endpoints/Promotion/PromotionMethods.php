@@ -45,7 +45,9 @@ class PromotionMethods extends BaseMethods
             $body['status'] = $status;
         }
 
-        $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities", $query, $body);
+        // Listagem é o sub-recurso /search (POST), igual /order/.../orders/search.
+        // O POST em /activities (sem /search) é o CREATE (exige title).
+        $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities/search", $query, $body);
         $data = $response['data'] ?? [];
 
         return [
