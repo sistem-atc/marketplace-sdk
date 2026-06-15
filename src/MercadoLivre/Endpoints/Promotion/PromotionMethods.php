@@ -208,4 +208,52 @@ class PromotionMethods extends BaseMethods
             ['app_version' => self::APP_VERSION],
         );
     }
+
+    /**
+     * Inclui um ITEM (anúncio) numa promoção — participar com preço.
+     * POST /seller-promotions/items/{itemId}?app_version=v2
+     * Body: { promotion_id, promotion_type, deal_price? }
+     *
+     * deal_price é obrigatório pros tipos com faixa (DEAL/LIGHTNING); pros
+     * pré-negociados (SMART/PRE_NEGOTIATED) o preço já é definido pelo ML e
+     * pode ser omitido (passe null).
+     *
+     * @return array<string, mixed>
+     */
+    public function enrollItem(string $itemId, string $promotionId, string $promotionType, ?float $dealPrice = null): array
+    {
+        $body = [
+            'promotion_id' => $promotionId,
+            'promotion_type' => $promotionType,
+        ];
+        if ($dealPrice !== null) {
+            $body['deal_price'] = $dealPrice;
+        }
+
+        return $this->makeRequest(
+            HttpMethod::POST,
+            "/seller-promotions/items/{$itemId}",
+            ['app_version' => self::APP_VERSION],
+            $body,
+        );
+    }
+
+    /**
+     * Remove um ITEM de uma promoção (deixar de participar).
+     * DELETE /seller-promotions/items/{itemId}?app_version=v2&promotion_id=&promotion_type=
+     *
+     * @return array<string, mixed>
+     */
+    public function withdrawItem(string $itemId, string $promotionId, string $promotionType): array
+    {
+        return $this->makeRequest(
+            HttpMethod::DELETE,
+            "/seller-promotions/items/{$itemId}",
+            [
+                'app_version' => self::APP_VERSION,
+                'promotion_id' => $promotionId,
+                'promotion_type' => $promotionType,
+            ],
+        );
+    }
 }

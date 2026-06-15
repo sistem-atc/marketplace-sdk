@@ -65,3 +65,29 @@ describe('MarketPlaces::MercadoLivre()->promotions()->listItems', function () {
         Http::assertSent(fn ($req) => str_contains($req->url(), 'search_after=CURSOR1'));
     });
 });
+
+describe('MarketPlaces::MercadoLivre()->promotions() enroll/withdraw item', function () {
+    it('enrollItem faz POST /seller-promotions/items/{id} com body', function () {
+        Http::fake(['api.mercadolibre.com/seller-promotions/items/MLB1*' => Http::response(['status' => 'started'], 200)]);
+
+        MarketPlaces::MercadoLivre()->promotions(mlPromotionIntegration())
+            ->enrollItem('MLB1', 'P-MLB1', 'DEAL', 40.90);
+
+        Http::assertSent(fn ($req) => str_contains($req->url(), '/seller-promotions/items/MLB1')
+            && $req->method() === 'POST'
+            && str_contains($req->body(), '"promotion_id":"P-MLB1"')
+            && str_contains($req->body(), '"deal_price":40.9'));
+    });
+
+    it('withdrawItem faz DELETE com promotion_id/type na query', function () {
+        Http::fake(['api.mercadolibre.com/seller-promotions/items/MLB1*' => Http::response([], 200)]);
+
+        MarketPlaces::MercadoLivre()->promotions(mlPromotionIntegration())
+            ->withdrawItem('MLB1', 'P-MLB1', 'DEAL');
+
+        Http::assertSent(fn ($req) => str_contains($req->url(), '/seller-promotions/items/MLB1')
+            && $req->method() === 'DELETE'
+            && str_contains($req->url(), 'promotion_id=P-MLB1')
+            && str_contains($req->url(), 'promotion_type=DEAL'));
+    });
+});
