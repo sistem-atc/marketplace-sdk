@@ -31,17 +31,21 @@ class PromotionMethods extends BaseMethods
         ?string $status = null,
         string $version = self::DEFAULT_VERSION,
     ): array {
+        // TikTok lista via POST (page_size/page_token na query, filtros no body),
+        // igual /order/.../orders/search. GET retorna 36009010 "Invalid method".
         $query = [
             'page_size' => min($pageSize, self::MAX_PAGE_SIZE),
         ];
         if ($pageToken !== '') {
             $query['page_token'] = $pageToken;
         }
+
+        $body = [];
         if ($status !== null) {
-            $query['status'] = $status;
+            $body['status'] = $status;
         }
 
-        $response = $this->makeRequest(HttpMethod::GET, "/promotion/{$version}/activities", $query);
+        $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities", $query, $body);
         $data = $response['data'] ?? [];
 
         return [
