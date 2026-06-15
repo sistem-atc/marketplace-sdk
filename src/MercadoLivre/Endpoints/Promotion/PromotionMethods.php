@@ -123,19 +123,39 @@ class PromotionMethods extends BaseMethods
 
     /**
      * Items participantes de uma campanha.
-     * Aguardando: GET /seller-promotions/{promotionId}/items?app_version=v2
      *
-     * @return array{results: array<int, array<string, mixed>>, paging: array<string, int>}
+     * GET /seller-promotions/promotions/{promotionId}/items?promotion_type={TYPE}&app_version=v2
+     *
+     * IMPORTANTE: o path tem o segmento `/promotions/` e o `promotion_type` é
+     * OBRIGATÓRIO — sem eles o ML responde 404 resource_not_found. Paginação é
+     * por cursor `search_after` (o `paging.searchAfter` da resposta vira o
+     * `search_after` da próxima página), não por offset.
+     *
+     * Cada item traz: id (MLB), status (candidate|started), price, original_price,
+     * meli_percentage (subsídio ML), seller_percentage, offer_id, start/end_date.
+     *
+     * @param  string  $promotionType  SMART|DEAL|LIGHTNING|PRE_NEGOTIATED|...
+     * @return array{results: array<int, array<string, mixed>>, paging: array<string, mixed>}
      */
     public function listItems(
         string $promotionId,
+        string $promotionType,
         int $limit = 50,
-        int $offset = 0,
+        ?string $searchAfter = null,
     ): array {
+        $query = [
+            'app_version' => self::APP_VERSION,
+            'promotion_type' => $promotionType,
+            'limit' => min($limit, 50),
+        ];
+        if ($searchAfter !== null && $searchAfter !== '') {
+            $query['search_after'] = $searchAfter;
+        }
+
         $response = $this->makeRequest(
             HttpMethod::GET,
-            "/seller-promotions/{$promotionId}/items",
-            ['app_version' => self::APP_VERSION, 'limit' => min($limit, 50), 'offset' => $offset],
+            "/seller-promotions/promotions/{$promotionId}/items",
+            $query,
         );
 
         return [
