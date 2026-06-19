@@ -10,6 +10,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Endpoints\User\UserMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Shipment\ShipmentMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Billing\BillingMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Inventory\InventoryMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Item\ItemMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Question\QuestionMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Message\MessageMethods;
@@ -49,6 +50,14 @@ class MercadoLivre
     public function items(MarketplaceIntegration $integration): ItemMethods
     {
         return new ItemMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Inventory / Fulfillment — estoque dos itens no Full.
+     */
+    public function inventory(MarketplaceIntegration $integration): InventoryMethods
+    {
+        return new InventoryMethods(HttpClientFactory::make($integration), $integration);
     }
 
     public function questions(MarketplaceIntegration $integration): QuestionMethods
