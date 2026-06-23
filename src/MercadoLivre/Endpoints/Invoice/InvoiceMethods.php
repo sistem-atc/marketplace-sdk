@@ -23,6 +23,19 @@ class InvoiceMethods extends BaseMethods
         return $response->json();
     }
 
+    /**
+     * Nota fiscal individual por ID (resource do webhook `invoices`):
+     * GET /users/{userId}/invoices/{invoiceId}.
+     * Retorna null em 404 (NFe inexistente).
+     */
+    public function getById(int|string $userId, int|string $invoiceId): ?array
+    {
+        $response = $this->httpClient->get("/users/{$userId}/invoices/{$invoiceId}");
+        if ($response->status() === 404) return null;
+        if ($response->failed()) throw new MercadoLivreRequestException($response);
+        return $response->json();
+    }
+
     public function getByShipment(int|string $sellerId, int|string $shipmentId): ?array
     {
         $response = $this->httpClient->get("/users/{$sellerId}/invoices/shipments/{$shipmentId}");
