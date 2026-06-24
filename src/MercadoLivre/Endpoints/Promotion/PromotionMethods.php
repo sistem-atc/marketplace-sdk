@@ -122,6 +122,29 @@ class PromotionMethods extends BaseMethods
     }
 
     /**
+     * Promoções/campanhas em que um ITEM (anúncio) participa ou é candidato.
+     * Usado pra sync CIRÚRGICO a partir do webhook public_candidates/public_offers
+     * (cujo resource traz o MLB) — busca só o item afetado em vez de listAll.
+     *
+     * GET /seller-promotions/items/{itemId}?app_version=v2
+     *
+     * Retorna LISTA (1 entry por campanha do item): cada uma traz id (= promotion_id),
+     * type (SMART|DEAL|SELLER_COUPON_CAMPAIGN|...), ref_id (= resource do webhook),
+     * status (candidate|started), price, original_price, meli_percentage,
+     * seller_percentage, name, start_date/finish_date.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getItemPromotions(string $itemId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            "/seller-promotions/items/{$itemId}",
+            ['app_version' => self::APP_VERSION],
+        );
+    }
+
+    /**
      * Items participantes de uma campanha.
      *
      * GET /seller-promotions/promotions/{promotionId}/items?promotion_type={TYPE}&app_version=v2
