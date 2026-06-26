@@ -13,6 +13,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Invoices;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Tokens;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Pricing;
 use SistemAtc\Marketplaces\Amazon\Support\TokenRefresher;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
@@ -69,6 +70,11 @@ class Client
     public function tokens(): Tokens
     {
         return new Tokens($this);
+    }
+
+    public function pricing(): Pricing
+    {
+        return new Pricing($this);
     }
 
     public function get(string $path, array $query = []): array

@@ -12,6 +12,7 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Invoices;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Pricing;
 
 class Amazon
 {
@@ -53,5 +54,10 @@ class Amazon
     public function invoices(MarketplaceIntegration $integration): Invoices
     {
         return $this->client($integration)->invoices();
+    }
+
+    public function pricing(MarketplaceIntegration $integration): Pricing
+    {
+        return $this->client($integration)->pricing();
     }
 }
