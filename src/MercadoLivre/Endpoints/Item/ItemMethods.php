@@ -66,6 +66,26 @@ class ItemMethods extends BaseMethods
     }
 
     /**
+     * Preco de venda EFETIVO do anuncio — inclui campanhas/ofertas do ML
+     * ("Oferta imperdivel" etc.), que o campo `price` do item NAO reflete.
+     *
+     * GET /items/{id}/sale_price?context=channel_marketplace
+     *
+     * Retorna {amount (PARA, o que o cliente paga), regular_amount (DE, riscado),
+     * currency_id, metadata{campaign_id, promotion_type,...}}. Pode dar 404
+     * quando nao ha price rule ativa — o chamador deve tratar (fallback no
+     * `price` do item).
+     *
+     * @return array<string, mixed>
+     */
+    public function salePrice(string $itemId, string $context = 'channel_marketplace'): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/items/{$itemId}/sale_price", [
+            'context' => $context,
+        ]);
+    }
+
+    /**
      * Altera o status de um anuncio (active, paused, closed).
      */
     public function updateStatus(string $itemId, string $status): array
