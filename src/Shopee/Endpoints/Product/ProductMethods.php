@@ -27,6 +27,23 @@ class ProductMethods extends BaseMethods
         ]);
     }
 
+    /**
+     * Variacoes (models) de um anuncio com `has_model: true`. O preco de itens com
+     * variacao NAO vem no item (price_info null) — vem por model aqui.
+     *
+     * GET /api/v2/product/get_model_list?item_id={id}
+     *
+     * Retorna response.model[] cada um com model_id, model_sku, tier_index[] e
+     * price_info[{current_price, original_price}]; + response.tier_variation[] (os
+     * nomes/opcoes das variacoes, ex.: "Peso" => 250g/500g/1Kg).
+     */
+    public function getModelList(int $itemId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_model_list', [
+            'item_id' => $itemId,
+        ]);
+    }
+
     public function updateStock(int $itemId, int $stock, ?int $variationId = null): array
     {
         $body = [
