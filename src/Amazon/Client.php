@@ -112,6 +112,28 @@ class Client
         return $rdt !== '' ? $rdt : null;
     }
 
+    /**
+     * GET grantless: usa um token client_credentials (scope) no lugar do token
+     * de seller. Pra operacoes SP-API que nao exigem consent de um seller
+     * (ex.: Notifications getDestinations).
+     */
+    public function getGrantless(string $path, string $scope, array $query = []): array
+    {
+        return $this->request('GET', $path, query: $query, tokenOverride: TokenRefresher::grantless($this->integration, $scope));
+    }
+
+    /** POST grantless (ex.: Notifications createDestination). */
+    public function postGrantless(string $path, string $scope, array $body = []): array
+    {
+        return $this->request('POST', $path, body: $body, tokenOverride: TokenRefresher::grantless($this->integration, $scope));
+    }
+
+    /** DELETE grantless (ex.: Notifications deleteDestination / deleteSubscriptionById). */
+    public function deleteGrantless(string $path, string $scope): array
+    {
+        return $this->request('DELETE', $path, tokenOverride: TokenRefresher::grantless($this->integration, $scope));
+    }
+
     public function put(string $path, array $body = []): array
     {
         return $this->request('PUT', $path, body: $body);

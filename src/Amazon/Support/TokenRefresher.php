@@ -27,6 +27,71 @@ class TokenRefresher
     private const EXPIRY_MARGIN_SECONDS = 300;
 
     /**
+     * Cache em memoria dos tokens grantless por (integration, scope), com
+     * validade. Grantless NAO usa refresh_token — e' um token de aplicacao.
+     *
+     * @var array<string, array{token: string, expires_at: int}>
+     */
+    private static array $grantlessCache = [];
+
+    /**
+     * Token GRANTLESS (grant_type=client_credentials + scope). Usado pelas
+     * operacoes SP-API que NAO exigem autorizacao de um seller especifico —
+     * ex.: Notifications createDestination/getDestinations/deleteDestination e
+     * getSubscriptionById/deleteSubscriptionById.
+     *
+     * NAO depende de refresh_token; so' de client_id/client_secret da app.
+     * Cacheado em memoria por (integration, scope) ate' ~5min antes de expirar.
+     *
+     * @param  string  $scope  ex.: 'sellingpartnerapi::notifications'
+     */
+    public static function grantless(MarketplaceIntegration $integration, string $scope, bool $force = false): string
+    {
+        $cacheKey = $integration->getIntegrationIdentifier().'|'.$scope;
+        $cached = self::$grantlessCache[$cacheKey] ?? null;
+        if (! $force && $cached && $cached['expires_at'] > (time() + self::EXPIRY_MARGIN_SECONDS)) {
+            return $cached['token'];
+        }
+
+        [$clientId, $clientSecret, $tokenUrl] = self::resolveLwaCredentials($integration);
+
+        if (! $clientId || ! $clientSecret) {
+            throw new RuntimeException('Integration Amazon sem credenciais LWA (client_id/client_secret) pro token grantless.');
+        }
+
+        $response = Http::asForm()->timeout(15)->post($tokenUrl, [
+            'grant_type'    => 'client_credentials',
+            'scope'         => $scope,
+            'client_id'     => $clientId,
+            'client_secret' => $clientSecret,
+        ]);
+
+        if ($response->failed()) {
+            Log::error('Amazon LWA grantless failed', [
+                'status'         => $response->status(),
+                'scope'          => $scope,
+                'integration_id' => $integration->getIntegrationIdentifier(),
+            ]);
+            throw new RuntimeException(
+                'LWA grantless failed (scope='.$scope.'): HTTP '.$response->status().' — '.($response->json('error_description') ?? 'unknown')
+            );
+        }
+
+        $data  = $response->json();
+        $token = (string) ($data['access_token'] ?? '');
+        if ($token === '') {
+            throw new RuntimeException('LWA grantless sem access_token (scope='.$scope.').');
+        }
+
+        self::$grantlessCache[$cacheKey] = [
+            'token'      => $token,
+            'expires_at' => time() + (int) ($data['expires_in'] ?? 3600),
+        ];
+
+        return $token;
+    }
+
+    /**
      * Garante access_token valido. Idempotente: skip se ainda fresco
      * (a menos que $force). Retorna o token utilizavel.
      */
