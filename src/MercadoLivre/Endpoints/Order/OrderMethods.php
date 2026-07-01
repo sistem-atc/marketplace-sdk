@@ -34,4 +34,23 @@ class OrderMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}");
     }
+
+    /**
+     * Detalhe de um feedback de venda por id (GET /feedback/{id}) — rating,
+     * message, from/to, role (seller|buyer), item, order_id.
+     *
+     * GOTCHA: o sub-endpoint /orders/{id}/feedback da 403 `invalid_seller_buyer_id`;
+     * pegue os ids em order.feedback.seller.id / .buyer.id (via get()) e chame
+     * este metodo. Alem disso, este endpoint antigo exige o access_token na
+     * QUERY (Bearer sozinho da 403 "access_token_error"; Bearer + query = 200) —
+     * por isso o token vai tambem em $query.
+     */
+    public function feedbackById(int|string $feedbackId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            "/feedback/{$feedbackId}",
+            ['access_token' => (string) $this->integration->getAccessToken()],
+        );
+    }
 }

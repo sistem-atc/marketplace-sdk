@@ -18,19 +18,42 @@ class NetshoesWebhookHandler implements WebhookHandlerInterface
     {
         $payload = $request->all();
 
-        event(new NetshoesWebhookEvent($payload, $this->extractTopic($request)));
+        // Payload confirmado da notificacao Netshoes PEDIDO_ALTERADO:
+        //   { sellerId, name, eventCode:"PEDIDO_ALTERADO", eventAction:"PEDIDO",
+        //     eventMessage, eventDate, urlNotifyService,
+        //     parameters:{ orderNumber }, expands:[], links:[] }
+        // Topic = eventCode; params expostos pro listener do host.
+        event(new NetshoesWebhookEvent(
+            payload: $payload,
+            topic: $this->extractTopic($request, $payload),
+            headers: [],
+            params: is_array($payload['parameters'] ?? null) ? $payload['parameters'] : [],
+        ));
     }
 
-    private function extractTopic(Request $request): ?string
+    /**
+     * @param  array<string, mixed>  $body
+     */
+    private function extractTopic(Request $request, array $body): ?string
     {
-        $topic = $request->input('topic')
-            ?? $request->input('event_type')
-            ?? $request->input('type')
-            ?? $request->input('action')
-            ?? $request->query('topic')
-            ?? $request->header('X-Webhook-Topic')
-            ?? $request->header('X-Event-Type');
+        $candidates = [
+            $body['eventCode'] ?? null,   // PEDIDO_ALTERADO (confirmado)
+            $body['eventAction'] ?? null, // PEDIDO
+            $body['topic'] ?? null,
+            $body['event_type'] ?? null,
+            $body['type'] ?? null,
+            $body['action'] ?? null,
+            $request->query('topic'),
+            $request->header('X-Webhook-Topic'),
+            $request->header('X-Event-Type'),
+        ];
 
-        return is_string($topic) && $topic !== '' ? substr($topic, 0, 100) : null;
+        foreach ($candidates as $c) {
+            if (is_string($c) && $c !== '') {
+                return substr($c, 0, 100);
+            }
+        }
+
+        return null;
     }
 }

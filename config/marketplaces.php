@@ -29,6 +29,11 @@ return [
     'lojaintegrada' => [
         'api_base' => env('MARKETPLACES_LOJAINTEGRADA_BASE_URL', 'https://api.awsli.com.br/v1'),
     ],
+    'netshoes' => [
+        // PROD usa HTTPS; HOMOLOG (sandbox) e' HTTP (https reseta a conexao).
+        'api_base' => env('MARKETPLACES_NETSHOES_BASE_URL', 'https://api-marketplace.netshoes.com.br'),
+        'sandbox_base' => env('MARKETPLACES_NETSHOES_SANDBOX_URL', 'http://api-sandbox.netshoes.com.br'),
+    ],
     'webhooks' => [
         // Catch-all legado (api/webhooks/{marketplace}). So' usar quando NAO
         // houver lista per-MP em `routes`. Default false — preferir `routes`.

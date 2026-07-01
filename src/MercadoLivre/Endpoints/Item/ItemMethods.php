@@ -86,6 +86,22 @@ class ItemMethods extends BaseMethods
     }
 
     /**
+     * Sugestao de preco (Price Suggestion API) de um anuncio:
+     * GET /suggestions/items/{itemId}/details — retorna status, ratio,
+     * current_price / suggested_price / lowest_price (cada um {amount, ...}).
+     *
+     * GOTCHA: o path do webhook price_suggestion (/marketplace/benchmarks/items/
+     * {id}/details) da 403 "Invalid caller.id"; o endpoint que responde 200 e'
+     * este (/suggestions/...).
+     *
+     * @return array<string, mixed>
+     */
+    public function priceSuggestion(string $itemId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/suggestions/items/{$itemId}/details");
+    }
+
+    /**
      * Altera o status de um anuncio (active, paused, closed).
      */
     public function updateStatus(string $itemId, string $status): array
