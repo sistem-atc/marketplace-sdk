@@ -10,11 +10,28 @@ use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 class MessageMethods extends BaseMethods
 {
     /**
-     * Busca o histórico de mensagens de um pedido (ou pack).
+     * Busca o histórico de mensagens de um pack (pós-venda).
+     *
+     * Path correto = /messages/packs/{pack}/sellers/{seller}?tag=post_sale.
+     * (O antigo /all retorna 404 "resource not found".)
      */
-    public function getPackMessages(string $packId, array $params = []): array
+    public function getPackMessages(string $packId, int|string $sellerId, array $params = []): array
     {
-        return $this->makeRequest(HttpMethod::GET, "/messages/packs/{$packId}/all", $params);
+        $params = array_merge(['tag' => 'post_sale'], $params);
+
+        return $this->makeRequest(HttpMethod::GET, "/messages/packs/{$packId}/sellers/{$sellerId}", $params);
+    }
+
+    /**
+     * Busca UMA mensagem pelo seu id (o `resource` do webhook topic=messages).
+     * Retorna `{messages: [ { id, from, to, text, message_date,
+     * message_resources: [{id,name:packs},{id,name:sellers}], ... } ]}`.
+     */
+    public function getMessage(string $messageId, array $params = []): array
+    {
+        $params = array_merge(['tag' => 'post_sale'], $params);
+
+        return $this->makeRequest(HttpMethod::GET, "/messages/{$messageId}", $params);
     }
 
     /**
@@ -34,9 +51,9 @@ class MessageMethods extends BaseMethods
         }
 
         return $this->makeRequest(
-            HttpMethod::POST, 
-            "/messages/packs/{$packId}/sellers/{$sellerId}", 
-            [], 
+            HttpMethod::POST,
+            "/messages/packs/{$packId}/sellers/{$sellerId}",
+            ['tag' => 'post_sale'],
             $body
         );
     }
