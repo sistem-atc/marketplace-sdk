@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Tiktok;
 
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
+use SistemAtc\Marketplaces\Tiktok\Endpoints\CustomerService\CustomerServiceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Finance\FinanceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Order\OrderMethods;
@@ -49,5 +50,10 @@ class Tiktok
     public function reverse(MarketplaceIntegration $integration): ReverseMethods
     {
         return new ReverseMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function customerService(MarketplaceIntegration $integration): CustomerServiceMethods
+    {
+        return new CustomerServiceMethods(HttpClientFactory::make($integration), $integration);
     }
 }
