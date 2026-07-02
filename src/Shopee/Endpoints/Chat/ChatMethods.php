@@ -64,13 +64,21 @@ class ChatMethods extends BaseMethods
      *
      * @return array<string, mixed>
      */
-    public function getMessageList(int|string $conversationId, int $pageSize = 60, int $offset = 0): array
+    public function getMessageList(int|string $conversationId, int $pageSize = 60, int|string $offset = ''): array
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message_list', [
+        // `offset` na sellerchat e' um CURSOR (message_id_str da pagina anterior),
+        // NAO um indice numerico. Vazio = pagina mais recente. Mandar offset=0
+        // (int) dispara `error_not_found` — so' incluimos quando ha' cursor real.
+        $params = [
             'conversation_id' => $conversationId,
             'page_size' => min($pageSize, 60),
-            'offset' => $offset,
-        ]);
+        ];
+
+        if ($offset !== '' && $offset !== 0 && $offset !== '0') {
+            $params['offset'] = (string) $offset;
+        }
+
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message_list', $params);
     }
 
     /**
