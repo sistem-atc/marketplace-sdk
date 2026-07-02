@@ -78,7 +78,7 @@ class ChatMethods extends BaseMethods
             $params['offset'] = (string) $offset;
         }
 
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message_list', $params);
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message', $params);
     }
 
     /**
