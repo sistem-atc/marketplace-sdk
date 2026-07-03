@@ -13,13 +13,17 @@ class HttpClientFactory
     public static function make(MarketplaceIntegration $integration): PendingRequest
     {
         $settings = $integration->getMarketplaceSettings();
-        $apiKey = $settings['api_key'] ?? '';
-        $chaveApi = $settings['chave_api'] ?? '';
+
+        // Auth da API v1 da Loja Integrada:
+        //   Authorization: chave_api {chave da API da loja} aplicacao {chave de aplicacao do integrador}
+        // settings esperados: api_key (chave da loja) + application_key (integrador).
+        // chave_api aceito como alias legado de api_key.
+        $apiKey = $settings['api_key'] ?? ($settings['chave_api'] ?? '');
+        $applicationKey = $settings['application_key'] ?? '';
 
         return Http::withHeaders([
-            'X-API-Key' => $apiKey,
-            'Authorization' => "Chave {$chaveApi}",
-        ])->baseUrl(config('marketplaces.lojaintegrada.api_base', 'https://api.awsli.com.br/v1'))
+            'Authorization' => "chave_api {$apiKey} aplicacao {$applicationKey}",
+        ])->baseUrl($settings['api_base'] ?? config('marketplaces.lojaintegrada.api_base', 'https://api.awsli.com.br/v1'))
           ->timeout(30);
     }
 }
