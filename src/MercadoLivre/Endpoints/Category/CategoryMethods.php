@@ -26,12 +26,15 @@ class CategoryMethods extends BaseMethods
     }
 
     /**
-     * Busca atributos obrigatorios de uma categoria.
+     * Busca os atributos de uma categoria (com tags required/allowed values).
+     *
+     * Endpoint dedicado /categories/{id}/attributes — o GET /categories/{id}
+     * (metodo get()) NAO traz os atributos (so' settings/children), por isso
+     * antes retornava vazio. Retorna a lista de atributos direto (array top-level).
      */
     public function attributes(string $categoryId): array
     {
-        $category = $this->get($categoryId);
-        return $category['attributes'] ?? [];
+        return $this->makeRequest(HttpMethod::GET, "/categories/{$categoryId}/attributes");
     }
 
     /**
