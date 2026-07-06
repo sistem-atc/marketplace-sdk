@@ -26,6 +26,11 @@ class Amazon
         return $this->client($integration)->orders();
     }
 
+    public function sellers(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\Sellers
+    {
+        return $this->client($integration)->sellers();
+    }
+
     public function finances(MarketplaceIntegration $integration): Finances
     {
         return $this->client($integration)->finances();

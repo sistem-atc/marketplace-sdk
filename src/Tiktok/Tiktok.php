@@ -10,6 +10,7 @@ use SistemAtc\Marketplaces\Tiktok\Endpoints\Finance\FinanceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Product\ProductMethods;
+use SistemAtc\Marketplaces\Tiktok\Endpoints\Product\CategoryMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Promotion\PromotionMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Logistics\LogisticsMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Reverse\ReverseMethods;
@@ -35,6 +36,11 @@ class Tiktok
     public function products(MarketplaceIntegration $integration): ProductMethods
     {
         return new ProductMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function category(MarketplaceIntegration $integration): CategoryMethods
+    {
+        return new CategoryMethods(HttpClientFactory::make($integration), $integration);
     }
 
     public function promotion(MarketplaceIntegration $integration): PromotionMethods

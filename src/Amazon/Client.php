@@ -37,6 +37,11 @@ class Client
         return new Orders($this);
     }
 
+    public function sellers(): \SistemAtc\Marketplaces\Amazon\Endpoints\Sellers
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\Sellers($this);
+    }
+
     public function finances(): Finances
     {
         return new Finances($this);
