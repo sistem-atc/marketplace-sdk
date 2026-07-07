@@ -41,7 +41,7 @@ class OrderMethods extends BaseMethods
         $query = [
             'order_sn_list' => implode(',', $orderSnList),
             'response_optional_fields' => implode(',', $optionalFields ?? [
-                'buyer_user_id', 'buyer_username', 'recipient_address', 'item_list', 
+                'buyer_user_id', 'buyer_username', 'buyer_cpf_id', 'recipient_address', 'item_list',
                 'pay_time', 'actual_shipping_fee', 'invoice_data', 'order_status'
             ]),
         ];
