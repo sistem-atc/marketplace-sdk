@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Tiktok;
 
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
+use SistemAtc\Marketplaces\Tiktok\Endpoints\Authorization\AuthorizationMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\CustomerService\CustomerServiceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Finance\FinanceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Invoice\InvoiceMethods;
@@ -21,6 +22,12 @@ class Tiktok
     public function orders(MarketplaceIntegration $integration): OrderMethods
     {
         return new OrderMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /** Authorization API — lojas autorizadas + shop_cipher (pos-OAuth). */
+    public function authorization(MarketplaceIntegration $integration): AuthorizationMethods
+    {
+        return new AuthorizationMethods(HttpClientFactory::make($integration), $integration);
     }
 
     public function finance(MarketplaceIntegration $integration): FinanceMethods
