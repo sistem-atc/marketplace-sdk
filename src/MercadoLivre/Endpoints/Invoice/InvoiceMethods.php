@@ -7,14 +7,25 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Invoice;
 use Illuminate\Http\Client\Response;
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Invoice\BillingInfoResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Invoice\InvoiceResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 
 class InvoiceMethods extends BaseMethods
 {
-    public function getBillingInfo(int|string $orderId): array
+    /**
+     * Dados fiscais do comprador (GET /orders/{id}/billing_info) como DTO tipado.
+     * Leia campos com `->billingInfo?->additional('FIRST_NAME')` — o ML manda tudo
+     * como lista chave-valor. `toArray()` e' LOSSLESS (validado vs 544 reais).
+     *
+     * Erros (404 sem billing / 403 sem escopo) seguem estourando — o caller
+     * decide o que fazer (ver PullMlBillingInfoJob).
+     */
+    public function getBillingInfo(int|string $orderId): BillingInfoResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}/billing_info");
+        return BillingInfoResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}/billing_info")
+        );
     }
 
     public function getByOrderId(int|string $sellerId, int|string $orderId): ?InvoiceResponseDTO
