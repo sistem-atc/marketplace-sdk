@@ -7,9 +7,15 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Order;
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderSearchResponseDTO;
 
 class OrderMethods extends BaseMethods
 {
+    /**
+     * Busca paginada de pedidos (GET /orders/search) como DTO tipado.
+     * `->results` traz OrderResponseDTO (mesma arvore do get()); `->paging?->total`
+     * pro controle de paginacao.
+     */
     public function search(
         int|string $sellerId,
         ?string $dateFrom = null,
@@ -17,7 +23,7 @@ class OrderMethods extends BaseMethods
         string $sort = 'date_desc',
         int $limit = 50,
         int $offset = 0,
-    ): array {
+    ): OrderSearchResponseDTO {
         $query = [
             'seller' => $sellerId,
             'sort' => $sort,
@@ -28,7 +34,9 @@ class OrderMethods extends BaseMethods
         if ($dateFrom !== null) $query['order.date_created.from'] = $dateFrom;
         if ($dateTo !== null) $query['order.date_created.to'] = $dateTo;
 
-        return $this->makeRequest(HttpMethod::GET, '/orders/search', $query);
+        return OrderSearchResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, '/orders/search', $query)
+        );
     }
 
     /**

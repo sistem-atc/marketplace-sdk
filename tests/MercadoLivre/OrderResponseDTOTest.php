@@ -5,6 +5,7 @@ declare(strict_types=1);
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderItem;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderPayment;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderSearchResponseDTO;
 
 /**
  * Payload SINTETICO (mesma shape da API ML /orders/{id}, dados fake) — cobre os
@@ -116,6 +117,26 @@ it('tipa payments e trata `[]` de data como null (marcador vazio do ML)', functi
         ->and($p->collector)->toBe(['id' => 64196652]) // objeto preservado (mixed)
         ->and($p->dateApproved)->toBeNull()            // [] → null (não estoura)
         ->and($p->dateCreated)->toBe('2026-07-16T10:00:00.000-03:00');
+});
+
+it('OrderSearchResponseDTO tipa results[] como OrderResponseDTO + paging', function () {
+    $resp = OrderSearchResponseDTO::fromArray([
+        'paging' => ['total' => 137, 'offset' => 50, 'limit' => 50],
+        'results' => [fakeMlOrderPayload(), fakeMlOrderPayload()],
+    ]);
+
+    expect($resp->paging->total)->toBe(137)
+        ->and($resp->paging->offset)->toBe(50)
+        ->and($resp->results)->toHaveCount(2)
+        ->and($resp->results[0])->toBeInstanceOf(OrderResponseDTO::class)
+        ->and($resp->results[0]->id)->toBe(2000000000001)
+        ->and($resp->results[0]->orderItems[0]->item->sellerSku)->toBe('SKU-1');
+});
+
+it('OrderSearchResponseDTO aguenta busca vazia', function () {
+    $resp = OrderSearchResponseDTO::fromArray(['paging' => ['total' => 0], 'results' => []]);
+
+    expect($resp->results)->toBe([])->and($resp->paging->total)->toBe(0);
 });
 
 it('roundtrip fromArray→toArray preserva os campos escalares principais', function () {
