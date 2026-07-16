@@ -58,6 +58,15 @@ trait AutoHydrate
                 $typeName = $type->getName();
 
                 if ($type->isBuiltin()) {
+                    // APIs de MP (ML em especial) devolvem `[]` (array vazio) como
+                    // marcador de "vazio" em campos ESCALARES (ex: date_approved: []).
+                    // Trata como null (usa o default) em vez de estourar no cast.
+                    if (is_array($value) && in_array($typeName, ['int', 'float', 'bool', 'string'], true)) {
+                        $params[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
+
+                        continue;
+                    }
+
                     $value = match ($typeName) {
                         'float' => is_float($value) ? $value : (float) $value,
                         'int' => is_int($value) ? $value : (int) $value,
