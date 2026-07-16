@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Invoice;
 
+use Illuminate\Http\Client\Response;
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Invoice\InvoiceResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 
 class InvoiceMethods extends BaseMethods
@@ -15,12 +17,11 @@ class InvoiceMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}/billing_info");
     }
 
-    public function getByOrderId(int|string $sellerId, int|string $orderId): ?array
+    public function getByOrderId(int|string $sellerId, int|string $orderId): ?InvoiceResponseDTO
     {
-        $response = $this->httpClient->get("/users/{$sellerId}/invoices/orders/{$orderId}");
-        if ($response->status() === 404) return null;
-        if ($response->failed()) throw new MercadoLivreRequestException($response);
-        return $response->json();
+        return $this->toInvoiceDto(
+            $this->httpClient->get("/users/{$sellerId}/invoices/orders/{$orderId}")
+        );
     }
 
     /**
@@ -28,20 +29,36 @@ class InvoiceMethods extends BaseMethods
      * GET /users/{userId}/invoices/{invoiceId}.
      * Retorna null em 404 (NFe inexistente).
      */
-    public function getById(int|string $userId, int|string $invoiceId): ?array
+    public function getById(int|string $userId, int|string $invoiceId): ?InvoiceResponseDTO
     {
-        $response = $this->httpClient->get("/users/{$userId}/invoices/{$invoiceId}");
-        if ($response->status() === 404) return null;
-        if ($response->failed()) throw new MercadoLivreRequestException($response);
-        return $response->json();
+        return $this->toInvoiceDto(
+            $this->httpClient->get("/users/{$userId}/invoices/{$invoiceId}")
+        );
     }
 
-    public function getByShipment(int|string $sellerId, int|string $shipmentId): ?array
+    public function getByShipment(int|string $sellerId, int|string $shipmentId): ?InvoiceResponseDTO
     {
-        $response = $this->httpClient->get("/users/{$sellerId}/invoices/shipments/{$shipmentId}");
-        if ($response->status() === 404) return null;
-        if ($response->failed()) throw new MercadoLivreRequestException($response);
-        return $response->json();
+        return $this->toInvoiceDto(
+            $this->httpClient->get("/users/{$sellerId}/invoices/shipments/{$shipmentId}")
+        );
+    }
+
+    /**
+     * Parse UNICO das 3 chamadas de invoice-metadata: 404 -> null; erro ->
+     * exception; senao desembrulha `attributes` e hidrata o DTO.
+     */
+    private function toInvoiceDto(Response $response): ?InvoiceResponseDTO
+    {
+        if ($response->status() === 404) {
+            return null;
+        }
+        if ($response->failed()) {
+            throw new MercadoLivreRequestException($response);
+        }
+
+        $json = (array) $response->json();
+
+        return InvoiceResponseDTO::fromArray($json['attributes'] ?? $json);
     }
 
     public function downloadXmlByLocation(string $xmlLocation): string
