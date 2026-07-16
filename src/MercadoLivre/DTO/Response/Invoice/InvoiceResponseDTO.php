@@ -8,17 +8,22 @@ use SistemAtc\Marketplaces\Common\Attributes\ArrayOf;
 use SistemAtc\Marketplaces\Common\Traits\AutoHydrate;
 use SistemAtc\Marketplaces\Common\Traits\CastToArray;
 use SistemAtc\Marketplaces\Contracts\DTOInterface;
-use SistemAtc\Marketplaces\MercadoLivre\DTO\Shared\Common\ReferenceInvoice;
 
 /**
- * Metadados fiscais de UMA nota do ML — resposta de:
- *   - GET /users/{seller}/invoices/orders/{orderId}     (getByOrderId)
- *   - GET /users/{userId}/invoices/{invoiceId}          (getById)
- *   - GET /users/{seller}/invoices/shipments/{shipment} (getByShipment)
+ * RAIZ da resposta de invoice-metadata do ML — GET de:
+ *   - /users/{seller}/invoices/orders/{orderId}     (getByOrderId)
+ *   - /users/{userId}/invoices/{invoiceId}          (getById)
+ *   - /users/{seller}/invoices/shipments/{shipment} (getByShipment)
  *
- * Todas as 3 chamadas devolvem esta mesma shape (dentro de `attributes`). Este
- * DTO e' o UNICO ponto de parse — os consumidores usam `->invoiceKey`,
- * `->xmlLocation`, `->referenceInvoices[0]->id` etc. em vez de array cru.
+ * As 3 chamadas devolvem esta mesma shape. Este DTO e' o UNICO ponto de parse —
+ * a arvore inteira e' tipada (issuer/recipient/shipment/items/fiscal_data), com
+ * o bloco de emissao/SEFAZ em `->attributes` (InvoiceAttributes). Consumidores
+ * usam `->attributes->invoiceKey`, `->items[0]->fiscalData->attributes->cfop`,
+ * `->issuer->identifications->cnpj` etc. em vez de array cru.
+ *
+ * @property list<InvoiceItem> $items
+ * @property array<int|string, mixed> $errors
+ * @property array<int|string, mixed> $payments
  */
 final class InvoiceResponseDTO implements DTOInterface
 {
@@ -26,50 +31,39 @@ final class InvoiceResponseDTO implements DTOInterface
     use CastToArray;
 
     /**
-     * @param  list<ReferenceInvoice>  $referenceInvoices
-     * @param  array<int|string, mixed>  $tags
-     * @param  array<int|string, mixed>  $thirdPartyAuthorizations
+     * @param  list<InvoiceItem>  $items
+     * @param  array<int|string, mixed>  $errors
+     * @param  array<int|string, mixed>  $payments
      */
     public function __construct(
-        public readonly ?string $invoiceKey = null,
-        public readonly ?string $xmlLocation = null,
-        public readonly ?string $danfeLocation = null,
-        public readonly ?string $statusCode = null,
-        public readonly ?string $statusDescription = null,
-        public readonly ?string $invoiceType = null,
-        public readonly ?string $emissionType = null,
-        public readonly ?string $environmentType = null,
-        public readonly ?string $documentType = null,
-        public readonly ?string $orderSource = null,
-        public readonly ?string $invoiceSource = null,
-        public readonly ?string $xmlVersion = null,
-        public readonly ?string $protocol = null,
-        public readonly ?string $protocolDueDate = null,
-        public readonly ?string $receipt = null,
-        public readonly ?string $receiptDate = null,
-        public readonly ?string $invoiceCreationDate = null,
-        public readonly ?string $authorizationDate = null,
-        public readonly ?string $cancellationDate = null,
-        public readonly ?string $cancellationProtocol = null,
-        public readonly ?string $cancellationReason = null,
-        public readonly ?string $cancellationErrorCode = null,
-        public readonly ?string $cancellationErrorDescription = null,
-        public readonly ?string $document = null,
-        public readonly ?string $danfe = null,
-        public readonly ?string $cnf = null,
-        public readonly ?string $correctionLetter = null,
-        public readonly ?string $paymentMethod = null,
-        public readonly ?bool $includeFreight = null,
-        public readonly ?ReferenceInvoice $referenceInvoice = null,
-        #[ArrayOf(ReferenceInvoice::class)]
-        public readonly array $referenceInvoices = [],
-        public readonly array $tags = [],
-        public readonly array $thirdPartyAuthorizations = [],
+        public readonly ?int $id = null,
+        public readonly ?string $status = null,
+        public readonly ?string $transactionStatus = null,
+        public readonly ?Issuer $issuer = null,
+        public readonly ?Recipient $recipient = null,
+        public readonly ?Shipment $shipment = null,
+        #[ArrayOf(InvoiceItem::class)]
+        public readonly array $items = [],
+        public readonly ?string $issuedDate = null,
+        public readonly ?string $invoiceSeries = null,
+        public readonly ?int $invoiceNumber = null,
+        public readonly ?InvoiceAttributes $attributes = null,
+        public readonly ?InvoiceFiscalData $fiscalData = null,
+        public readonly ?float $amount = null,
+        public readonly ?float $itemsAmount = null,
+        public readonly array $errors = [],
+        public readonly ?int $itemsQuantity = null,
+        public readonly ?int $packId = null,
+        public readonly ?string $customIssuerAddress = null,
+        public readonly ?string $siteId = null,
+        public readonly ?float $otherAmount = null,
+        public readonly ?string $additionalInfo = null,
+        public readonly array $payments = [],
     ) {}
 
-    /** NFe localizada/autorizada na SEFAZ (cStat 138 = documento localizado). */
+    /** NFe localizada/autorizada na SEFAZ — delega pro bloco `attributes`. */
     public function isAuthorized(): bool
     {
-        return $this->statusCode === '138' || $this->authorizationDate !== null;
+        return $this->attributes?->isAuthorized() ?? false;
     }
 }

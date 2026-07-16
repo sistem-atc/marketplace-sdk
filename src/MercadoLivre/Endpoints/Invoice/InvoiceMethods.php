@@ -45,7 +45,8 @@ class InvoiceMethods extends BaseMethods
 
     /**
      * Parse UNICO das 3 chamadas de invoice-metadata: 404 -> null; erro ->
-     * exception; senao desembrulha `attributes` e hidrata o DTO.
+     * exception; senao hidrata a arvore completa (o DTO e' a RAIZ da resposta,
+     * com o bloco de emissao em `->attributes`).
      */
     private function toInvoiceDto(Response $response): ?InvoiceResponseDTO
     {
@@ -58,7 +59,7 @@ class InvoiceMethods extends BaseMethods
 
         $json = (array) $response->json();
 
-        return InvoiceResponseDTO::fromArray($json['attributes'] ?? $json);
+        return InvoiceResponseDTO::fromArray($json);
     }
 
     public function downloadXmlByLocation(string $xmlLocation): string
