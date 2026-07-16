@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Order;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderResponseDTO;
 
 class OrderMethods extends BaseMethods
 {
@@ -30,9 +31,20 @@ class OrderMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, '/orders/search', $query);
     }
 
-    public function get(int|string $orderId): array
+    /**
+     * Pedido completo (GET /orders/{id}) como DTO tipado — ponto UNICO de parse.
+     * A arvore inteira e' tipada (buyer/seller/order_items[].item/payments[]/
+     * shipping/taxes/context/...) e `toArray()` e' LOSSLESS (validado contra 800
+     * pedidos reais), entao serve tanto pra acesso tipado quanto pra gravar o raw.
+     *
+     * Mantem a semantica de erro do makeRequest: 404/falha estoura
+     * MercadoLivreRequestException (nao retorna null).
+     */
+    public function get(int|string $orderId): OrderResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}");
+        return OrderResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}")
+        );
     }
 
     /**

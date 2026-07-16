@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Http;
 use SistemAtc\Marketplaces\MarketPlaces;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Order\OrderResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 use SistemAtc\Marketplaces\Tests\Support\FakeIntegration;
 
@@ -73,16 +74,15 @@ describe('MarketPlaces::MercadoLivre()->orders()->get($orderId)', function () {
         $integration = mlOrdersIntegration();
         $payload = MarketPlaces::MercadoLivre()->orders($integration)->get('2000016428434244');
 
-        expect($payload)->toHaveKeys([
-            'id', 'status', 'date_created', 'date_last_updated',
-            'total_amount', 'shipping_cost', 'order_items',
-            'payments', 'buyer', 'seller', 'shipping', 'coupon', 'tags',
-        ]);
-        expect($payload['id'])->toBe(2000016428434244);
-        expect($payload['status'])->toBe('paid');
-        expect($payload['order_items'][0]['item']['seller_sku'])->toBe('SKU-A');
-        expect($payload['payments'][0]['status'])->toBe('approved');
-        expect($payload['buyer']['nickname'])->toBe('BUYER_TEST');
+        // get() agora devolve OrderResponseDTO (arvore tipada) em vez de array cru.
+        expect($payload)->toBeInstanceOf(OrderResponseDTO::class);
+        expect($payload->id)->toBe(2000016428434244);
+        expect($payload->status)->toBe('paid');
+        expect($payload->orderItems[0]->item->sellerSku)->toBe('SKU-A');
+        expect($payload->payments[0]->status)->toBe('approved');
+        expect($payload->buyer->nickname)->toBe('BUYER_TEST');
+        // toArray() e' lossless — serve pra gravar o raw (INSERT-first).
+        expect($payload->toArray()['id'])->toBe(2000016428434244);
     });
 
     it('aceita orderId int alem de string (numeros longos ja no integer-safe range)', function () {
@@ -96,7 +96,7 @@ describe('MarketPlaces::MercadoLivre()->orders()->get($orderId)', function () {
         $integration = mlOrdersIntegration();
         $payload = MarketPlaces::MercadoLivre()->orders($integration)->get(2000016428434244);
 
-        expect($payload['id'])->toBe(2000016428434244);
+        expect($payload->id)->toBe(2000016428434244);
         Http::assertSent(fn ($req) => str_contains($req->url(), '/orders/2000016428434244'));
     });
 
@@ -149,7 +149,7 @@ describe('MarketPlaces::MercadoLivre()->orders()->get($orderId)', function () {
         $integration = mlOrdersIntegration();
         $payload = MarketPlaces::MercadoLivre()->orders($integration)->get('2000000000000002');
 
-        expect($payload['id'])->toBe(2000000000000002);
+        expect($payload->id)->toBe(2000000000000002);
         Http::assertSentCount(2);
     });
 });
