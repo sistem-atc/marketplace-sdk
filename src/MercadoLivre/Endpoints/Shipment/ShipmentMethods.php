@@ -6,14 +6,25 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Shipment;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Shipment\ShipmentResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 
 class ShipmentMethods extends BaseMethods
 {
-    public function getShipment(int|string $shippingId): ?array
+    /**
+     * Envio completo (GET /shipments/{id}) como DTO tipado — ponto UNICO de parse.
+     * Arvore tipada (status/substatus, logistic_type, tracking, receiver_address,
+     * shipping_option, status_history); `toArray()` e' LOSSLESS (validado contra
+     * 600 envios reais), entao serve pra acesso tipado E pra gravar o raw.
+     *
+     * 404 -> null (envio inexistente), como antes.
+     */
+    public function getShipment(int|string $shippingId): ?ShipmentResponseDTO
     {
         try {
-            return $this->makeRequest(HttpMethod::GET, "/shipments/{$shippingId}");
+            return ShipmentResponseDTO::fromArray(
+                $this->makeRequest(HttpMethod::GET, "/shipments/{$shippingId}")
+            );
         } catch (MercadoLivreRequestException $e) {
             if ($e->status() === 404) return null;
             throw $e;
