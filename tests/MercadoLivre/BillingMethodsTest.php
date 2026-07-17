@@ -31,8 +31,12 @@ beforeEach(function () {
 describe('MarketPlaces::MercadoLivre()->billing()', function () {
     it('details aceita group+documentType enums + fromId/limit (assinatura que PullMercadoLivreBilling usa)', function () {
         Http::fake([
+            // Shape REAL do ML: a cobranca vem em blocos; detail_sub_type mora
+            // em charge_info (validado contra 800 cobrancas reais).
             'api.mercadolibre.com/billing/integration/periods/key/2026-04-01/group/ML/details*' => Http::response([
-                'results' => [['id' => 'd1', 'detail_sub_type' => 'CVVML']],
+                'results' => [[
+                    'charge_info' => ['detail_id' => 'd1', 'detail_sub_type' => 'CVVML', 'detail_amount' => 1.5],
+                ]],
                 'last_id' => 'd1',
             ], 200),
         ]);
@@ -46,7 +50,8 @@ describe('MarketPlaces::MercadoLivre()->billing()', function () {
             limit: 1000,
         );
 
-        expect($resp['results'][0]['detail_sub_type'])->toBe('CVVML');
+        // details() devolve BillingDetailsResponseDTO (v2.5.32).
+        expect($resp->results[0]->chargeInfo?->detailSubType)->toBe('CVVML');
         Http::assertSent(fn ($req) => str_contains($req->url(), '/group/ML/details')
             && str_contains($req->url(), 'document_type=BILL')
             && str_contains($req->url(), 'limit=1000'));

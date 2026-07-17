@@ -41,9 +41,9 @@ describe('MarketPlaces::MercadoLivre()->promotions()->listItems', function () {
         $resp = MarketPlaces::MercadoLivre()->promotions(mlPromotionIntegration())
             ->listItems('P-MLB1', 'SMART', limit: 50);
 
-        expect($resp['results'])->toHaveCount(1)
-            ->and($resp['results'][0]['id'])->toBe('MLB898490337')
-            ->and($resp['paging']['searchAfter'])->toBe('CURSOR1');
+        expect($resp->results)->toHaveCount(1)
+            ->and($resp->results[0]->id)->toBe('MLB898490337')
+            ->and(data_get($resp->paging, 'searchAfter'))->toBe('CURSOR1');
 
         Http::assertSent(function ($req) {
             return str_contains($req->url(), '/seller-promotions/promotions/P-MLB1/items')

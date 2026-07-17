@@ -38,9 +38,9 @@ it('fulfillmentStock usa /inventories/{id}/stock/fulfillment', function () {
     $resp = MarketPlaces::MercadoLivre()->inventory(mlInventoryIntegration())
         ->fulfillmentStock('LCQI05831');
 
-    expect($resp['available_quantity'])->toBe(59)
-        ->and($resp['total'])->toBe(60)
-        ->and($resp['inventory_id'])->toBe('LCQI05831');
+    expect($resp->availableQuantity)->toBe(59)
+        ->and($resp->total)->toBe(60)
+        ->and($resp->inventoryId)->toBe('LCQI05831');
 
     Http::assertSent(function ($req) {
         return str_contains($req->url(), '/inventories/LCQI05831/stock/fulfillment');

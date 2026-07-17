@@ -34,7 +34,7 @@ it('multiGet usa /items?ids=...&attributes=... (max 20 ids)', function () {
         ->multiGet(['MLB1', 'MLB2'], ['id', 'seller_custom_field']);
 
     expect($resp)->toHaveCount(2)
-        ->and($resp[0]['body']['seller_custom_field'])->toBe('14');
+        ->and($resp[0]->body?->sellerCustomField)->toBe('14');
 
     Http::assertSent(function ($req) {
         return str_contains($req->url(), '/items?')

@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Promotion;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Promotion\Promotion;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Promotion\PromotionListResponseDTO;
 
 /**
  * Seller Promotions API — campanhas e promoções do seller no ML.
@@ -42,7 +44,6 @@ class PromotionMethods extends BaseMethods
      *
      * @param  string|null  $status  Filtra por status: 'started'|'paused'|'finished'|'candidate'
      * @param  string|null  $type    Filtra por tipo: 'DEAL'|'LIGHTNING'|'PRE_NEGOTIATED'|...
-     * @return array{results: array<int, array<string, mixed>>, paging: array<string, int>}
      */
     public function list(
         int|string $sellerId,
@@ -50,7 +51,7 @@ class PromotionMethods extends BaseMethods
         ?string $type = null,
         int $limit = 50,
         int $offset = 0,
-    ): array {
+    ): PromotionListResponseDTO {
         $query = [
             'app_version' => self::APP_VERSION,
             'limit'       => min($limit, 50),
@@ -81,7 +82,7 @@ class PromotionMethods extends BaseMethods
      * Itera todas as páginas de promoções de um seller.
      * Útil para backfill ou sincronização completa.
      *
-     * @return array<int, array<string, mixed>>
+     * @return list<Promotion>
      */
     public function listAll(
         int|string $sellerId,
@@ -94,9 +95,9 @@ class PromotionMethods extends BaseMethods
 
         do {
             $page    = $this->list($sellerId, $status, $type, $limit, $offset);
-            $results = $page['results'];
+            $results = $page->results;
             $all     = array_merge($all, $results);
-            $total   = $page['paging']['total'] ?? 0;
+            $total   = (int) (data_get($page->paging, 'total') ?? 0);
             $offset += $limit;
         } while (count($results) === $limit && $offset < $total);
 
@@ -109,16 +110,14 @@ class PromotionMethods extends BaseMethods
     /**
      * Detalhe de uma campanha específica.
      * Aguardando: GET /seller-promotions/{promotionId}?app_version=v2
-     *
-     * @return array<string, mixed>
      */
-    public function get(string $promotionId): array
+    public function get(string $promotionId): Promotion
     {
-        return $this->makeRequest(
+        return Promotion::fromArray($this->makeRequest(
             HttpMethod::GET,
             "/seller-promotions/{$promotionId}",
             ['app_version' => self::APP_VERSION],
-        );
+        ));
     }
 
     /**
@@ -133,14 +132,17 @@ class PromotionMethods extends BaseMethods
      * status (candidate|started), price, original_price, meli_percentage,
      * seller_percentage, name, start_date/finish_date.
      *
-     * @return array<int, array<string, mixed>>
+     * @return list<Promotion>
      */
     public function getItemPromotions(string $itemId): array
     {
-        return $this->makeRequest(
-            HttpMethod::GET,
-            "/seller-promotions/items/{$itemId}",
-            ['app_version' => self::APP_VERSION],
+        return array_map(
+            fn (array $row) => Promotion::fromArray($row),
+            (array) $this->makeRequest(
+                HttpMethod::GET,
+                "/seller-promotions/items/{$itemId}",
+                ['app_version' => self::APP_VERSION],
+            ),
         );
     }
 
@@ -158,14 +160,13 @@ class PromotionMethods extends BaseMethods
      * meli_percentage (subsídio ML), seller_percentage, offer_id, start/end_date.
      *
      * @param  string  $promotionType  SMART|DEAL|LIGHTNING|PRE_NEGOTIATED|...
-     * @return array{results: array<int, array<string, mixed>>, paging: array<string, mixed>}
      */
     public function listItems(
         string $promotionId,
         string $promotionType,
         int $limit = 50,
         ?string $searchAfter = null,
-    ): array {
+    ): PromotionListResponseDTO {
         $query = [
             'app_version' => self::APP_VERSION,
             'promotion_type' => $promotionType,
@@ -181,10 +182,10 @@ class PromotionMethods extends BaseMethods
             $query,
         );
 
-        return [
+        return PromotionListResponseDTO::fromArray([
             'results' => $response['results'] ?? [],
             'paging'  => $response['paging'] ?? [],
-        ];
+        ]);
     }
 
     /**
