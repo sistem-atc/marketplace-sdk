@@ -14,6 +14,60 @@ use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\OrderResponseDTO;
 
 class OrderMethods extends BaseMethods
 {
+    /**
+     * Campos pedidos por padrao no get_order_detail.
+     *
+     * A Shopee so devolve o que esta em `response_optional_fields` — campo
+     * fora dessa lista simplesmente NAO vem, e o consumidor recebe null sem
+     * nenhum erro.
+     *
+     * ESTA LISTA E CRITICA. O conector interno antigo (app/Services/Shopee, no
+     * ERP) pedia 33 campos; a migracao pra esta lib em 2026-06-08 trocou o
+     * default por uma lista de 9 e derrubou `total_amount`, `fulfillment_flag`,
+     * `payment_method`, `shipping_carrier` e `package_list` em SILENCIO. Efeito
+     * no ERP: 99% dos pedidos Shopee de julho/2026 ficaram sem valor
+     * (total_value), sem classificacao Full/FBS (logistic_type) e sem
+     * order_payments. Ninguem viu por ~40 dias porque null nao levanta erro.
+     *
+     * Ao mexer aqui, lembre: TIRAR um campo desta lista APAGA o dado no
+     * consumidor, nao so deixa de trazer. Ver tests/Shopee/OrderDetailFieldsTest.
+     *
+     * edt_from/edt_to/prescription_images/prescription_check_status ficaram de
+     * fora: a Shopee BR nunca os devolve (verificado ao vivo em 2026-07-17).
+     */
+    private const DETAIL_FIELDS = [
+        'order_status',
+        'total_amount',
+        'fulfillment_flag',
+        'payment_method',
+        'shipping_carrier',
+        'package_list',
+        'item_list',
+        'invoice_data',
+        'recipient_address',
+        'buyer_user_id',
+        'buyer_username',
+        'buyer_cpf_id',
+        'pay_time',
+        'actual_shipping_fee',
+        'actual_shipping_fee_confirmed',
+        'estimated_shipping_fee',
+        'goods_to_declare',
+        'note',
+        'note_update_time',
+        'dropshipper',
+        'dropshipper_phone',
+        'split_up',
+        'buyer_cancel_reason',
+        'cancel_by',
+        'cancel_reason',
+        'pickup_done_time',
+        'order_chargeable_weight_gram',
+        'booking_sn',
+        'advance_package',
+        'return_request_due_date',
+    ];
+
     public function getOrderList(
         int $timeFrom,
         int $timeTo,
@@ -50,10 +104,7 @@ class OrderMethods extends BaseMethods
         if (empty($orderSnList)) return [];
         $query = [
             'order_sn_list' => implode(',', $orderSnList),
-            'response_optional_fields' => implode(',', $optionalFields ?? [
-                'buyer_user_id', 'buyer_username', 'buyer_cpf_id', 'recipient_address', 'item_list',
-                'pay_time', 'actual_shipping_fee', 'invoice_data', 'order_status'
-            ]),
+            'response_optional_fields' => implode(',', $optionalFields ?? self::DETAIL_FIELDS),
         ];
         $response = $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_order_detail', $query);
 
