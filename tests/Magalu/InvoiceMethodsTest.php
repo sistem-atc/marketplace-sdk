@@ -41,7 +41,7 @@ describe('MarketPlaces::Magalu()->invoices()->getFulfillmentSignedUrl', function
         $integration = makeMagaluIntegrationForSdk();
         $resp = MarketPlaces::Magalu()->invoices($integration)->getFulfillmentSignedUrl('2026-05-01', '2026-05-01');
 
-        expect($resp['signed_url'])->toBe('https://gcs.fake/zip');
+        expect($resp->signedUrl)->toBe('https://gcs.fake/zip');
 
         Http::assertSent(fn ($req) => str_contains($req->url(), '/seller/v1/invoices/fulfillment')
             && str_contains($req->url(), 'start_date=2026-05-01')
