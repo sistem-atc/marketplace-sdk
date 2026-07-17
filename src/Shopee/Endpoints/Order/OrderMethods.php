@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Order;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\FbsDownloadItem;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\FbsRequestListResponseDTO;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\InvoiceData;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\OrderListResponseDTO;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\OrderResponseDTO;
@@ -91,9 +93,15 @@ class OrderMethods extends BaseMethods
         ]);
     }
 
-    public function generateFbsInvoices(int $start, int $end, int $documentType = 7, int $fileType = 1, int $documentStatus = 1): array
+    /**
+     * Dispara a geracao dos ZIPs de NFe FBS (1 request_id por document_type).
+     * Assincrono: pergunte o status em getFbsInvoicesResult().
+     *
+     * ENVELOPE ATIPICO: result_list vem na RAIZ, nao em `response`.
+     */
+    public function generateFbsInvoices(int $start, int $end, int $documentType = 7, int $fileType = 1, int $documentStatus = 1): FbsRequestListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/generate_fbs_invoices', [], [
+        $response = $this->makeRequest(HttpMethod::POST, '/api/v2/order/generate_fbs_invoices', [], [
             'batch_download' => [
                 'start' => $start,
                 'end' => $end,
@@ -102,19 +110,41 @@ class OrderMethods extends BaseMethods
                 'document_status' => $documentStatus,
             ],
         ]);
+
+        return FbsRequestListResponseDTO::fromArray($response);
     }
 
-    public function getFbsInvoicesResult(array $requestIds): array
+    /**
+     * Status das tarefas: ->resultList[]->status = AVAILABLE|PROCESSING|ERROR.
+     * ENVELOPE ATIPICO: result_list vem na RAIZ, nao em `response`.
+     */
+    public function getFbsInvoicesResult(array $requestIds): FbsRequestListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/get_fbs_invoices_result', [], [
+        $response = $this->makeRequest(HttpMethod::POST, '/api/v2/order/get_fbs_invoices_result', [], [
             'request_id_list' => ['request_id' => array_values($requestIds)],
         ]);
+
+        return FbsRequestListResponseDTO::fromArray($response);
     }
 
+    /**
+     * Links dos ZIPs prontos. So' chame com request_id AVAILABLE — id ainda
+     * PROCESSING devolve erro ERR_DATA_NOT_FOUND.
+     *
+     * ENVELOPE ATIPICO (terceira variacao!): aqui `response` E' a propria
+     * LISTA, nao um objeto que a contem.
+     *
+     * @return list<FbsDownloadItem>
+     */
     public function downloadFbsInvoices(array $requestIds): array
     {
-        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/download_fbs_invoices', [], [
+        $response = $this->makeRequest(HttpMethod::POST, '/api/v2/order/download_fbs_invoices', [], [
             'request_id_list' => ['request_id' => array_values($requestIds)],
         ]);
+
+        return array_map(
+            static fn (array $r): FbsDownloadItem => FbsDownloadItem::fromArray($r),
+            $response['response'] ?? [],
+        );
     }
 }

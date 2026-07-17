@@ -48,7 +48,7 @@ describe('MarketPlaces::Shopee()->orders()->generateFbsInvoices', function () {
             documentStatus: 1,
         );
 
-        expect($resp['result_list'])->toHaveCount(1);
+        expect($resp->resultList)->toHaveCount(1);
 
         Http::assertSent(function ($req) {
             $bodyText = $req->body();
@@ -95,7 +95,7 @@ describe('MarketPlaces::Shopee()->orders()->getFbsInvoicesResult', function () {
         $integration = makeShopeeIntegrationForSdk();
         $resp = MarketPlaces::Shopee()->orders($integration)->getFbsInvoicesResult([1001, 1002]);
 
-        expect($resp['result_list'][0]['status'])->toBe('AVAILABLE');
+        expect($resp->resultList[0]->status)->toBe('AVAILABLE');
 
         Http::assertSent(function ($req) {
             $body = $req->body();
@@ -119,7 +119,9 @@ describe('MarketPlaces::Shopee()->orders()->downloadFbsInvoices', function () {
         $integration = makeShopeeIntegrationForSdk();
         $resp = MarketPlaces::Shopee()->orders($integration)->downloadFbsInvoices([1001]);
 
-        expect($resp['response'])->toHaveCount(1)
-            ->and($resp['response'][0]['file_link'])->toContain('sfile-origin-br');
+        // downloadFbsInvoices devolve list<FbsDownloadItem> (o `response` da
+        // Shopee E' a propria lista aqui).
+        expect($resp)->toHaveCount(1)
+            ->and($resp[0]->fileLink)->toContain('sfile-origin-br');
     });
 });
