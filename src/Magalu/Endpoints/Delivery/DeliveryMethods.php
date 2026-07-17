@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\Magalu\Endpoints\Delivery;
 
 use SistemAtc\Marketplaces\Magalu\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Delivery\Delivery;
 
 class DeliveryMethods extends BaseMethods
 {
@@ -16,9 +17,9 @@ class DeliveryMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, '/seller/v1/deliveries', $query);
     }
 
-    public function getDelivery(string $deliveryId): array
+    public function getDelivery(string $deliveryId): Delivery
     {
-        return $this->makeRequest(HttpMethod::GET, "/seller/v1/deliveries/{$deliveryId}");
+        return Delivery::fromArray($this->makeRequest(HttpMethod::GET, "/seller/v1/deliveries/{$deliveryId}"));
     }
 
     public function getDeliveryHistory(string $deliveryId): array

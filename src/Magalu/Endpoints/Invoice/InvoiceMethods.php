@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Magalu\Endpoints\Invoice;
 
 use SistemAtc\Marketplaces\Magalu\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Invoice\DeliveryInvoice;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Invoice\FulfillmentSignedUrl;
 use SistemAtc\Marketplaces\Magalu\Exceptions\MagaluRequestException;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
@@ -20,7 +22,7 @@ class InvoiceMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::POST, "/seller/v1/orders/{$orderId}/invoices", [], $data);
     }
 
-    public function getFulfillmentSignedUrl(string $startDate, string $endDate): array
+    public function getFulfillmentSignedUrl(string $startDate, string $endDate): FulfillmentSignedUrl
     {
         $this->assertValidDate($startDate, 'startDate');
         $this->assertValidDate($endDate, 'endDate');
@@ -41,11 +43,11 @@ class InvoiceMethods extends BaseMethods
             ));
         }
 
-        return $this->makeRequest(
+        return FulfillmentSignedUrl::fromArray($this->makeRequest(
             HttpMethod::GET,
             '/seller/v1/invoices/fulfillment',
             ['start_date' => $startDate, 'end_date' => $endDate]
-        );
+        ));
     }
 
     public function downloadFulfillmentZip(string $signedUrl): string
@@ -55,9 +57,15 @@ class InvoiceMethods extends BaseMethods
         return $response->body();
     }
 
+    /** @return list<DeliveryInvoice> */
     public function listForDelivery(string $deliveryId): array
     {
-        return $this->makeRequest(HttpMethod::GET, "/seller/v1/deliveries/{$deliveryId}/invoices");
+        $response = $this->makeRequest(HttpMethod::GET, "/seller/v1/deliveries/{$deliveryId}/invoices");
+
+        return array_map(
+            static fn (array $i): DeliveryInvoice => DeliveryInvoice::fromArray($i),
+            $response['results'] ?? [],
+        );
     }
 
     private function assertValidDate(string $date, string $field): void
