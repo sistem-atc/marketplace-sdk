@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Shipment;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Shipment\ShipmentHistoryEvent;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Shipment\ShipmentResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 
@@ -39,10 +40,21 @@ class ShipmentMethods extends BaseMethods
         return $response->body();
     }
 
+    /**
+     * Historico de transicoes do envio como DTOs tipados.
+     *
+     * @return list<ShipmentHistoryEvent>
+     */
     public function history(int|string $shipmentId): array
     {
         $response = $this->httpClient->withHeaders(['x-format-new' => 'true'])->get("/shipments/{$shipmentId}/history");
         if ($response->failed()) throw new MercadoLivreRequestException($response);
-        return $response->json()['history'] ?? $response->json();
+
+        $events = $response->json()['history'] ?? $response->json();
+
+        return array_map(
+            fn (array $e) => ShipmentHistoryEvent::fromArray($e),
+            (array) $events,
+        );
     }
 }
