@@ -13,6 +13,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Enum\BillingReportStatus;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 use InvalidArgumentException;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Billing\BillingDetailsResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Billing\BillingSummaryResponseDTO;
 
 /**
  * Endpoints de Billing Reports do Mercado Livre — cobrancas que ML faz
@@ -99,19 +100,18 @@ class BillingMethods extends BaseMethods
      *                      total_collected, total_debt}
      *   errors[]
      *
-     * @return array<string, mixed>
      */
     public function summary(
         string $periodKey,
         BillingDocumentType $documentType = BillingDocumentType::BILL,
-    ): array {
+    ): BillingSummaryResponseDTO {
         $this->assertPeriodKey($periodKey);
 
-        return $this->makeRequest(
+        return BillingSummaryResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::GET,
             path: "/billing/integration/periods/key/{$periodKey}/summary/details",
             query: ['document_type' => $documentType->value],
-        );
+        ));
     }
 
     /**

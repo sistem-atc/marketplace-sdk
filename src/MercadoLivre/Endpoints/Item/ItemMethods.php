@@ -8,6 +8,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\ItemMultiGetResult;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\ItemResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\ItemSearchResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\PriceSuggestionResponseDTO;
 use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\SalePriceResponseDTO;
 
@@ -42,12 +43,17 @@ class ItemMethods extends BaseMethods
     }
 
     /**
-     * Lista IDs de anuncios do seller (paginado).
+     * Lista IDs de anuncios do seller (paginado) — devolve so' os MLBs
+     * (`->results`), nao os anuncios; hidrate com multiGet(). Use `->scrollId`
+     * pra paginar com search_type=scan.
      */
-    public function search(int|string $sellerId, array $filters = []): array
+    public function search(int|string $sellerId, array $filters = []): ItemSearchResponseDTO
     {
         $query = array_merge(['seller_id' => $sellerId], $filters);
-        return $this->makeRequest(HttpMethod::GET, "/users/{$sellerId}/items/search", $query);
+
+        return ItemSearchResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/users/{$sellerId}/items/search", $query)
+        );
     }
 
     /**
