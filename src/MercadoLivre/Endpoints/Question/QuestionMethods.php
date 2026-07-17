@@ -6,15 +6,19 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Question;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Question\QuestionResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Question\QuestionSearchResponseDTO;
 
 class QuestionMethods extends BaseMethods
 {
     /**
      * Busca detalhes de uma pergunta especifica.
      */
-    public function get(int|string $questionId): array
+    public function get(int|string $questionId): QuestionResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/questions/{$questionId}");
+        return QuestionResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/questions/{$questionId}")
+        );
     }
 
     /**
@@ -31,9 +35,11 @@ class QuestionMethods extends BaseMethods
     /**
      * Pesquisa perguntas recebidas.
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): QuestionSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/questions/search', $filters);
+        return QuestionSearchResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, '/questions/search', $filters)
+        );
     }
 
     /**
@@ -47,7 +53,7 @@ class QuestionMethods extends BaseMethods
     /**
      * Lista perguntas nao respondidas de um item.
      */
-    public function unansweredByItem(string $itemId): array
+    public function unansweredByItem(string $itemId): QuestionSearchResponseDTO
     {
         return $this->search([
             'item' => $itemId,
