@@ -6,6 +6,9 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Order;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\InvoiceData;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\OrderListResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\OrderResponseDTO;
 
 class OrderMethods extends BaseMethods
 {
@@ -16,7 +19,7 @@ class OrderMethods extends BaseMethods
         ?string $orderStatus = null,
         int $pageSize = 50,
         string $cursor = '',
-    ): array {
+    ): OrderListResponseDTO {
         $query = [
             'time_range_field' => $timeRangeField,
             'time_from' => $timeFrom,
@@ -28,13 +31,18 @@ class OrderMethods extends BaseMethods
         if ($orderStatus !== null) $query['order_status'] = $orderStatus;
 
         $response = $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_order_list', $query);
-        return [
+
+        return OrderListResponseDTO::fromArray([
             'order_list' => $response['response']['order_list'] ?? [],
             'more' => $response['response']['more'] ?? false,
             'next_cursor' => $response['response']['next_cursor'] ?? '',
-        ];
+        ]);
     }
 
+    /**
+     * @return list<OrderResponseDTO> Pedidos PARCIAIS: so os campos pedidos em
+     *                                $optionalFields vem preenchidos.
+     */
     public function getOrderDetail(array $orderSnList, ?array $optionalFields = null): array
     {
         if (empty($orderSnList)) return [];
@@ -46,18 +54,22 @@ class OrderMethods extends BaseMethods
             ]),
         ];
         $response = $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_order_detail', $query);
-        return $response['response']['order_list'] ?? [];
+
+        return array_map(
+            static fn (array $o): OrderResponseDTO => OrderResponseDTO::fromArray($o),
+            $response['response']['order_list'] ?? [],
+        );
     }
 
     /**
      * Atalho: dados de NFe (invoice_data) de UM pedido. Usado pelo pipeline
      * de resolucao de NFe — retorna null quando o pedido nao tem invoice_data.
      */
-    public function getInvoiceInfo(string $orderSn): ?array
+    public function getInvoiceInfo(string $orderSn): ?InvoiceData
     {
         $details = $this->getOrderDetail([$orderSn], ['invoice_data']);
 
-        return $details[0]['invoice_data'] ?? null;
+        return $details[0]->invoiceData ?? null;
     }
 
     public function getBookingDetail(array $bookingSnList, ?array $optionalFields = null): array
