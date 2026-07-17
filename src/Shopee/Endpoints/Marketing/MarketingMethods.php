@@ -6,6 +6,9 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Marketing;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Marketing\DiscountListResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Marketing\DiscountResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Marketing\VoucherListResponseDTO;
 
 class MarketingMethods extends BaseMethods
 {
@@ -16,13 +19,15 @@ class MarketingMethods extends BaseMethods
      * paginacao por page_no 1-based). O antigo /api/v2/marketing nao existe
      * (retorna error_not_found).
      */
-    public function getDiscountList(string $status, int $pageNo = 1, int $pageSize = 100): array
+    public function getDiscountList(string $status, int $pageNo = 1, int $pageSize = 100): DiscountListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/discount/get_discount_list', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/discount/get_discount_list', [
             'discount_status' => $status,
             'page_no' => $pageNo,
             'page_size' => $pageSize,
         ]);
+
+        return DiscountListResponseDTO::fromArray($response['response'] ?? []);
     }
 
     /**
@@ -30,25 +35,29 @@ class MarketingMethods extends BaseMethods
      * `item_list` (itens/anúncios participantes com preço promo, original e
      * estoque), paginado por `page_no` (1-based) + flag `more` na resposta.
      */
-    public function getDiscount(int $discountId, int $pageNo = 1, int $pageSize = 100): array
+    public function getDiscount(int $discountId, int $pageNo = 1, int $pageSize = 100): DiscountResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/discount/get_discount', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/discount/get_discount', [
             'discount_id' => $discountId,
             'page_no' => $pageNo,
             'page_size' => $pageSize,
         ]);
+
+        return DiscountResponseDTO::fromArray($response['response'] ?? []);
     }
 
     /**
      * Lista cupons (Vouchers) do vendedor — /api/v2/voucher/get_voucher_list
      * (param status, paginacao por page_no 1-based).
      */
-    public function getVoucherList(string $status, int $pageNo = 1, int $pageSize = 100): array
+    public function getVoucherList(string $status, int $pageNo = 1, int $pageSize = 100): VoucherListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/voucher/get_voucher_list', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/voucher/get_voucher_list', [
             'status' => $status,
             'page_no' => $pageNo,
             'page_size' => $pageSize,
         ]);
+
+        return VoucherListResponseDTO::fromArray($response['response'] ?? []);
     }
 }
