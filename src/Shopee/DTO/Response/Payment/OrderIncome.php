@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Shopee\DTO\Response\Payment;
 
 use SistemAtc\Marketplaces\Common\Attributes\ArrayOf;
+use SistemAtc\Marketplaces\Common\Attributes\JsonKey;
 use SistemAtc\Marketplaces\Common\Traits\AutoHydrate;
 use SistemAtc\Marketplaces\Common\Traits\CastToArray;
 use SistemAtc\Marketplaces\Contracts\DTOInterface;
@@ -107,6 +108,9 @@ final class OrderIncome implements DTOInterface
         public readonly ?float $sellerShippingDiscount = null,
         public readonly ?float $sellerTransactionFee = null,
         public readonly ?float $serviceFee = null,
+        // A Shopee manda `..._from_3pl` (com '_' antes do digito); a conversao
+        // automatica geraria `..._from3pl` e o campo seria dropado.
+        #[JsonKey('shipping_fee_discount_from_3pl')]
         public readonly ?float $shippingFeeDiscountFrom3pl = null,
         public readonly ?float $shippingFeeSst = null,
         public readonly ?float $shippingSellerProtectionFeeAmount = null,

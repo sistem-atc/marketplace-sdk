@@ -20,15 +20,43 @@ trait CastToArray
     public function toArray(): array
     {
         $result = [];
+        $keys = $this->jsonKeyMap();
 
         foreach (get_object_vars($this) as $key => $value) {
             $formatted = $this->formatValue($value);
             if ($formatted !== null) {
-                $result[$this->camelToSnake($key)] = $formatted;
+                // #[JsonKey] manda; senao, conversao automatica.
+                $result[$keys[$key] ?? $this->camelToSnake($key)] = $formatted;
             }
         }
 
         return $result;
+    }
+
+    /**
+     * Mapa propriedade => chave declarada em #[JsonKey] (so' as que tem).
+     *
+     * Le do CONSTRUTOR: os DTOs usam promocao de propriedade, e o atributo
+     * fica no parametro.
+     *
+     * @return array<string, string>
+     */
+    private function jsonKeyMap(): array
+    {
+        $ctor = (new \ReflectionClass($this))->getConstructor();
+        if ($ctor === null) {
+            return [];
+        }
+
+        $map = [];
+        foreach ($ctor->getParameters() as $param) {
+            $attrs = $param->getAttributes(\SistemAtc\Marketplaces\Common\Attributes\JsonKey::class);
+            if ($attrs !== []) {
+                $map[$param->getName()] = $attrs[0]->newInstance()->key;
+            }
+        }
+
+        return $map;
     }
 
     private function formatValue(mixed $value): mixed

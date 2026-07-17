@@ -10,18 +10,17 @@ namespace SistemAtc\Marketplaces\Common\Traits;
  */
 trait StringCase
 {
+    /**
+     * camelCase -> snake_case. Quebra APENAS em maiuscula.
+     *
+     * NAO tente ser esperto com digito: `addressLine1` (TikTok) e
+     * `shippingFeeDiscountFrom3pl` (Shopee) sao ambos minuscula-seguida-de-
+     * digito, mas as APIs mandam `address_line1` e `..._from_3pl`. Qualquer
+     * regra automatica acerta um e QUEBRA o outro em silencio. Pra esses
+     * casos existe o atributo #[JsonKey('chave_exata')].
+     */
     private static function camelToSnake(string $name): string
     {
-        // Duas fronteiras: (1) maiuscula, (2) minuscula->digito.
-        //
-        // A (2) existe porque a Shopee manda `shipping_fee_discount_from_3pl`:
-        // so' com a regra de maiuscula, `shippingFeeDiscountFrom3pl` virava
-        // `..._from3pl` e o campo era DROPADO em silencio (achado no roundtrip
-        // contra escrow real).
-        //
-        // Nao afeta digito depois de MAIUSCULA (`stockInfoV2` -> `stock_info_v2`,
-        // `isB2cOwnedItem` -> `is_b2c_owned_item`), que e' o padrao das APIs
-        // pra versao/sigla.
-        return strtolower((string) preg_replace(['/(?<=[a-z])(?=[0-9])/', '/[A-Z]/'], ['_', '_$0'], $name));
+        return strtolower((string) preg_replace('/[A-Z]/', '_$0', $name));
     }
 }

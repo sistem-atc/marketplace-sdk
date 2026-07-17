@@ -29,6 +29,14 @@ trait AutoHydrate
 {
     use StringCase;
 
+    /** Chave declarada em #[JsonKey], se houver. */
+    private static function jsonKeyOf(\ReflectionParameter $param): ?string
+    {
+        $attrs = $param->getAttributes(\SistemAtc\Marketplaces\Common\Attributes\JsonKey::class);
+
+        return $attrs === [] ? null : $attrs[0]->newInstance()->key;
+    }
+
     /** @param array<string, mixed> $data */
     public static function fromArray(array $data): static
     {
@@ -45,8 +53,14 @@ trait AutoHydrate
             $name = $param->getName();
             $type = $param->getType();
 
-            // Lookup tolerante: camelCase (padrao do DTO) OU snake_case (API).
-            $value = $data[$name] ?? $data[self::camelToSnake($name)] ?? null;
+            // #[JsonKey] tem prioridade: e' a chave EXATA declarada pelo DTO
+            // pros casos que a conversao automatica nao acerta (ex.: digito
+            // colado — address_line1 vs ..._from_3pl). Sem ele, lookup
+            // tolerante: camelCase (padrao do DTO) OU snake_case (API).
+            $jsonKey = self::jsonKeyOf($param);
+            $value = $jsonKey !== null
+                ? ($data[$jsonKey] ?? null)
+                : ($data[$name] ?? $data[self::camelToSnake($name)] ?? null);
 
             if ($value === null) {
                 $params[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
