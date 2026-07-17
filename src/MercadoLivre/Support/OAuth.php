@@ -70,7 +70,7 @@ class OAuth
      * Troca o authorization_code (do callback) pelo par access_token +
      * refresh_token inicial. NAO persiste — o host decide como salvar.
      *
-     * @return array{access_token: string, refresh_token: string, expires_in: int}
+     * @return array{access_token: string, refresh_token: string, expires_in: int, user_id: ?int}
      */
     public static function exchangeAuthorizationCode(
         string $clientId,
@@ -118,6 +118,10 @@ class OAuth
             'access_token'  => (string) $data['access_token'],
             'refresh_token' => (string) $data['refresh_token'],
             'expires_in'    => (int) ($data['expires_in'] ?? 21600),
+            // O ML devolve o seller_id no token — o host grava em
+            // platform_user_id pra resolver a integration nos webhooks sem
+            // depender de backfill posterior.
+            'user_id'       => isset($data['user_id']) ? (int) $data['user_id'] : null,
         ];
     }
 

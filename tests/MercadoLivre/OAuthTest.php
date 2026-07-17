@@ -62,6 +62,7 @@ describe('OAuth::exchangeAuthorizationCode', function () {
                 'access_token'  => 'AT',
                 'refresh_token' => 'RT',
                 'expires_in'    => 21600,
+                'user_id'       => 64196652,
             ], 200),
         ]);
 
@@ -77,6 +78,7 @@ describe('OAuth::exchangeAuthorizationCode', function () {
             'access_token'  => 'AT',
             'refresh_token' => 'RT',
             'expires_in'    => 21600,
+            'user_id'       => 64196652,
         ]);
 
         Http::assertSent(function ($req) {
