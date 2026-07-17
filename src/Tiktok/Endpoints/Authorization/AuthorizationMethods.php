@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\Tiktok\Endpoints\Authorization;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\Tiktok\Bases\BaseMethods;
+use SistemAtc\Marketplaces\Tiktok\DTO\Response\Authorization\AuthorizedShop;
 
 /**
  * Authorization API do TikTok Shop.
@@ -19,13 +20,17 @@ class AuthorizationMethods extends BaseMethods
 {
     /**
      * GET /authorization/202309/shops — lojas autorizadas pro access_token
-     * atual. Retorna data.shops[] com { id, name, region, seller_type,
-     * cipher (=shop_cipher), code }.
+     * atual. Desembrulha `data.shops[]` em DTOs tipados.
      *
-     * @return array<string, mixed>
+     * @return list<AuthorizedShop>
      */
     public function getAuthorizedShops(): array
     {
-        return $this->makeRequest(HttpMethod::GET, '/authorization/202309/shops');
+        $response = $this->makeRequest(HttpMethod::GET, '/authorization/202309/shops');
+
+        return array_map(
+            static fn (array $s): AuthorizedShop => AuthorizedShop::fromArray($s),
+            $response['data']['shops'] ?? [],
+        );
     }
 }
