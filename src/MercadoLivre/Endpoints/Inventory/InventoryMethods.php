@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Inventory;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Inventory\FulfillmentStockResponseDTO;
 
 class InventoryMethods extends BaseMethods
 {
@@ -24,8 +25,10 @@ class InventoryMethods extends BaseMethods
      *   - not_available_detail[] {status, quantity} — transfer, damage, lost,
      *                            noFiscalCoverage, withdrawal, internal_process
      */
-    public function fulfillmentStock(string $inventoryId): array
+    public function fulfillmentStock(string $inventoryId): FulfillmentStockResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/inventories/{$inventoryId}/stock/fulfillment");
+        return FulfillmentStockResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/inventories/{$inventoryId}/stock/fulfillment")
+        );
     }
 }
