@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\Magalu\Endpoints\Order;
 
 use SistemAtc\Marketplaces\Magalu\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Order\OrderResponseDTO;
 
 class OrderMethods extends BaseMethods
 {
@@ -16,8 +17,10 @@ class OrderMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, '/seller/v1/orders', $query);
     }
 
-    public function getOrder(string $orderId): array
+    public function getOrder(string $orderId): OrderResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/seller/v1/orders/{$orderId}");
+        return OrderResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/seller/v1/orders/{$orderId}"),
+        );
     }
 }
