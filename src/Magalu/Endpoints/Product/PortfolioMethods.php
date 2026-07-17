@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Magalu\Endpoints\Product;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\Magalu\Bases\BaseMethods;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Product\SkuListResponseDTO;
+use SistemAtc\Marketplaces\Magalu\DTO\Response\Product\SkuPriceResponseDTO;
 
 /**
  * Endpoints de PORTFÓLIO (catálogo) da Seller API Magalu.
@@ -26,24 +28,24 @@ class PortfolioMethods extends BaseMethods
     /**
      * Uma página do catálogo de SKUs do seller (envelope `results`).
      *
-     * @return array<string, mixed>
      */
-    public function listSkus(int $limit = 50, int $offset = 0): array
+    public function listSkus(int $limit = 50, int $offset = 0): SkuListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/skus', [
+        return SkuListResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/skus', [
             '_limit' => $limit,
             '_offset' => $offset,
-        ]);
+        ]));
     }
 
     /**
      * Preço de um SKU (envelope `results` com list_price/price/normalizer).
      *
-     * @return array<string, mixed>
      */
-    public function priceBySku(string $sku): array
+    public function priceBySku(string $sku): SkuPriceResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/prices/'.rawurlencode($sku));
+        return SkuPriceResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/prices/'.rawurlencode($sku)),
+        );
     }
 
     /**
