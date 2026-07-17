@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Pricing\ItemOffersResponseDTO;
 
 /**
  * Product Pricing API. Diferente do "your price" do relatorio
@@ -25,15 +26,15 @@ class Pricing
      * exibido) + `LowestPrices`. Rate-limit ~0.5 req/s.
      *
      * GET /products/pricing/v0/items/{Asin}/offers
-     *
-     * @return array<string, mixed>
      */
-    public function getItemOffers(string $asin, string $marketplaceId, string $condition = 'New'): array
+    public function getItemOffers(string $asin, string $marketplaceId, string $condition = 'New'): ItemOffersResponseDTO
     {
-        return $this->client->get("/products/pricing/v0/items/{$asin}/offers", [
+        $resp = $this->client->get("/products/pricing/v0/items/{$asin}/offers", [
             'MarketplaceId' => $marketplaceId,
             'ItemCondition' => $condition,
         ]);
+
+        return ItemOffersResponseDTO::fromArray((array) data_get($resp, 'payload', []));
     }
 
     /**
