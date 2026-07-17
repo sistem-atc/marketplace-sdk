@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Message;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Message\MessagesResponseDTO;
 
 class MessageMethods extends BaseMethods
 {
@@ -15,11 +16,13 @@ class MessageMethods extends BaseMethods
      * Path correto = /messages/packs/{pack}/sellers/{seller}?tag=post_sale.
      * (O antigo /all retorna 404 "resource not found".)
      */
-    public function getPackMessages(string $packId, int|string $sellerId, array $params = []): array
+    public function getPackMessages(string $packId, int|string $sellerId, array $params = []): MessagesResponseDTO
     {
         $params = array_merge(['tag' => 'post_sale'], $params);
 
-        return $this->makeRequest(HttpMethod::GET, "/messages/packs/{$packId}/sellers/{$sellerId}", $params);
+        return MessagesResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/messages/packs/{$packId}/sellers/{$sellerId}", $params)
+        );
     }
 
     /**
@@ -27,11 +30,13 @@ class MessageMethods extends BaseMethods
      * Retorna `{messages: [ { id, from, to, text, message_date,
      * message_resources: [{id,name:packs},{id,name:sellers}], ... } ]}`.
      */
-    public function getMessage(string $messageId, array $params = []): array
+    public function getMessage(string $messageId, array $params = []): MessagesResponseDTO
     {
         $params = array_merge(['tag' => 'post_sale'], $params);
 
-        return $this->makeRequest(HttpMethod::GET, "/messages/{$messageId}", $params);
+        return MessagesResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/messages/{$messageId}", $params)
+        );
     }
 
     /**
@@ -61,9 +66,9 @@ class MessageMethods extends BaseMethods
     /**
      * Busca mensagens nao lidas.
      */
-    public function unread(array $params = []): array
+    public function unread(array $params = []): MessagesResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/messages/unread', $params);
+        return MessagesResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/messages/unread', $params));
     }
 
     /**
