@@ -6,10 +6,14 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Product;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Product\ItemBaseInfoResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Product\ItemListResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Product\ModelListResponseDTO;
 
 class ProductMethods extends BaseMethods
 {
-    public function getItemList(int $offset = 0, int $pageSize = 20, array $filters = []): array
+    /** Paginacao por OFFSET (nao cursor): pagine enquanto ->hasNextPage. */
+    public function getItemList(int $offset = 0, int $pageSize = 20, array $filters = []): ItemListResponseDTO
     {
         $query = array_merge([
             'offset' => $offset,
@@ -17,14 +21,18 @@ class ProductMethods extends BaseMethods
             'item_status' => 'NORMAL',
         ], $filters);
 
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_item_list', $query);
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_item_list', $query);
+
+        return ItemListResponseDTO::fromArray($response['response'] ?? []);
     }
 
-    public function getItemBaseInfo(array $itemIds): array
+    public function getItemBaseInfo(array $itemIds): ItemBaseInfoResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_item_base_info', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_item_base_info', [
             'item_id_list' => implode(',', $itemIds),
         ]);
+
+        return ItemBaseInfoResponseDTO::fromArray($response['response'] ?? []);
     }
 
     /**
@@ -37,11 +45,13 @@ class ProductMethods extends BaseMethods
      * price_info[{current_price, original_price}]; + response.tier_variation[] (os
      * nomes/opcoes das variacoes, ex.: "Peso" => 250g/500g/1Kg).
      */
-    public function getModelList(int $itemId): array
+    public function getModelList(int $itemId): ModelListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_model_list', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/product/get_model_list', [
             'item_id' => $itemId,
         ]);
+
+        return ModelListResponseDTO::fromArray($response['response'] ?? []);
     }
 
     public function updateStock(int $itemId, int $stock, ?int $variationId = null): array
