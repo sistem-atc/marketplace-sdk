@@ -83,8 +83,9 @@ describe('MarketPlaces::MercadoLivre()->user()->me', function () {
         $integration = mlInvoicesIntegration();
         $me = MarketPlaces::MercadoLivre()->user($integration)->me();
 
-        expect($me['id'])->toBe(64196652)
-            ->and($me['nickname'])->toBe('SOLDIERS NUTRITION');
+        // me() devolve UserResponseDTO (v2.5.36).
+        expect($me->id)->toBe(64196652)
+            ->and($me->nickname)->toBe('SOLDIERS NUTRITION');
     });
 });
 
