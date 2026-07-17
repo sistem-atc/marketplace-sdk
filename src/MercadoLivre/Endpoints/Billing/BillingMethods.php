@@ -12,6 +12,7 @@ use SistemAtc\Marketplaces\MercadoLivre\Enum\BillingReportFormat;
 use SistemAtc\Marketplaces\MercadoLivre\Enum\BillingReportStatus;
 use SistemAtc\Marketplaces\MercadoLivre\Exceptions\MercadoLivreRequestException;
 use InvalidArgumentException;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Billing\BillingDetailsResponseDTO;
 
 /**
  * Endpoints de Billing Reports do Mercado Livre — cobrancas que ML faz
@@ -129,7 +130,6 @@ class BillingMethods extends BaseMethods
      *
      * @param  BillingGroup  $group  ML ou MP (FLEX/FULL/INSURTECH/PAYMENT so via reports async)
      * @param  array<string, mixed>  $extra  Filtros avancados acima
-     * @return array{results?: array<int, array<string, mixed>>, last_id?: string, paging?: array<string, mixed>}
      */
     public function details(
         string $periodKey,
@@ -138,7 +138,7 @@ class BillingMethods extends BaseMethods
         int|string|null $fromId = null,
         int $limit = self::DEFAULT_LIMIT,
         array $extra = [],
-    ): array {
+    ): BillingDetailsResponseDTO {
         $this->assertPeriodKey($periodKey);
 
         if (! $group->supportsSyncEndpoints()) {
@@ -156,10 +156,12 @@ class BillingMethods extends BaseMethods
             $query['from_id'] = (string) $fromId;
         }
 
-        return $this->makeRequest(
-            method: HttpMethod::GET,
-            path: "/billing/integration/periods/key/{$periodKey}/group/{$group->value}/details",
-            query: $query,
+        return BillingDetailsResponseDTO::fromArray(
+            $this->makeRequest(
+                method: HttpMethod::GET,
+                path: "/billing/integration/periods/key/{$periodKey}/group/{$group->value}/details",
+                query: $query,
+            )
         );
     }
 
