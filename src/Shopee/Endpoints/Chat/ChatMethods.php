@@ -6,6 +6,10 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Chat;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Chat\Conversation;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Chat\ConversationListResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Chat\MessageListResponseDTO;
+use SistemAtc\Marketplaces\Shopee\DTO\Response\Chat\UnreadCountResponseDTO;
 
 /**
  * Shopee sellerchat API v2 (`/api/v2/sellerchat/...`) — chat buyer<->shop.
@@ -25,14 +29,13 @@ class ChatMethods extends BaseMethods
      *
      * @param  string  $direction  latest | older
      * @param  string  $type       all | unread | pinned
-     * @return array<string, mixed>
      */
     public function getConversationList(
         string $direction = 'latest',
         string $type = 'all',
         int $pageSize = 25,
         string $nextTimestampNano = '',
-    ): array {
+    ): ConversationListResponseDTO {
         $query = [
             'direction' => $direction,
             'type' => $type,
@@ -42,29 +45,27 @@ class ChatMethods extends BaseMethods
             $query['next_timestamp_nano'] = $nextTimestampNano;
         }
 
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_conversation_list', $query);
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_conversation_list', $query);
+
+        return ConversationListResponseDTO::fromArray($response['response'] ?? []);
     }
 
-    /**
-     * Detalhe de UMA conversa.
-     *
-     * @return array<string, mixed>
-     */
-    public function getOneConversation(int|string $conversationId): array
+    /** Detalhe de UMA conversa — mesma shape do item da listagem. */
+    public function getOneConversation(int|string $conversationId): Conversation
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_one_conversation', [
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_one_conversation', [
             'conversation_id' => $conversationId,
         ]);
+
+        return Conversation::fromArray($response['response'] ?? []);
     }
 
     /**
      * Mensagens de uma conversa (paginacao por OFFSET, nao cursor).
-     * `response.messages[]`: message_id, message_type, from_id, to_id,
-     * from_shop_id, to_shop_id, created_timestamp, source, source_content, content.
-     *
-     * @return array<string, mixed>
+     * `->messages[]` traz content POLIMORFICO por message_type (ver
+     * ChatMessageContent).
      */
-    public function getMessageList(int|string $conversationId, int $pageSize = 60, int|string $offset = ''): array
+    public function getMessageList(int|string $conversationId, int $pageSize = 60, int|string $offset = ''): MessageListResponseDTO
     {
         // `offset` na sellerchat e' um CURSOR (message_id_str da pagina anterior),
         // NAO um indice numerico. Vazio = pagina mais recente. Mandar offset=0
@@ -78,7 +79,9 @@ class ChatMethods extends BaseMethods
             $params['offset'] = (string) $offset;
         }
 
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message', $params);
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_message', $params);
+
+        return MessageListResponseDTO::fromArray($response['response'] ?? []);
     }
 
     /**
@@ -90,6 +93,11 @@ class ChatMethods extends BaseMethods
      *   text -> ['text' => '...']; item -> ['item_id'=>, 'shop_id'=>];
      *   order -> ['order_sn' => '...']; image -> ['image_url' => '...'];
      *   sticker -> ['sticker_id'=>, 'sticker_package_id'=>]
+     *
+     * NAO tipado de proposito: e' POST que envia mensagem REAL ao comprador —
+     * nao da pra validar o retorno sem mandar de verdade. Chutar a shape seria
+     * pior que array. Mesmo criterio do ML messages()->sendToBuyer().
+     *
      * @return array<string, mixed>
      */
     public function sendMessage(int|string $toId, string $messageType, array $content): array
@@ -126,13 +134,11 @@ class ChatMethods extends BaseMethods
         ]);
     }
 
-    /**
-     * Total de conversas nao lidas.
-     *
-     * @return array<string, mixed>
-     */
-    public function getUnreadConversationCount(): array
+    /** Total de conversas nao lidas. */
+    public function getUnreadConversationCount(): UnreadCountResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_unread_conversation_count');
+        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/sellerchat/get_unread_conversation_count');
+
+        return UnreadCountResponseDTO::fromArray($response['response'] ?? []);
     }
 }
