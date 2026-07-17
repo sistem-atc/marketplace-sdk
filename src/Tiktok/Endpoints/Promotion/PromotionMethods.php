@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Tiktok\Endpoints\Promotion;
 
 use SistemAtc\Marketplaces\Tiktok\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Tiktok\DTO\Response\Promotion\Activity;
+use SistemAtc\Marketplaces\Tiktok\DTO\Response\Promotion\ActivitySearchResponseDTO;
 
 /**
  * Endpoints de promoção/campanha do TikTok Shop (OpenAPI /promotion/{version}).
@@ -23,14 +25,13 @@ class PromotionMethods extends BaseMethods
      * Lista as activities (campanhas/promoções) da loja, paginada por page_token.
      *
      * @param  string|null  $status  ONGOING | NOT_START | EXPIRED | DEACTIVATED (omitido = todas)
-     * @return array{activities: array<int, array<string, mixed>>, next_page_token: string|null, total_count: int|null}
      */
     public function getActivities(
         int $pageSize = self::MAX_PAGE_SIZE,
         string $pageToken = '',
         ?string $status = null,
         string $version = self::DEFAULT_VERSION,
-    ): array {
+    ): ActivitySearchResponseDTO {
         // Listagem é o sub-recurso /search (POST) — o POST em /activities (sem
         // /search) é o CREATE (exige title). page_size/page_token vão no BODY
         // como tipos nativos (na query virariam string e o TikTok rejeita
@@ -46,22 +47,15 @@ class PromotionMethods extends BaseMethods
         }
 
         $response = $this->makeRequest(HttpMethod::POST, "/promotion/{$version}/activities/search", [], $body);
-        $data = $response['data'] ?? [];
 
-        return [
-            'activities' => $data['activities'] ?? [],
-            'next_page_token' => $data['next_page_token'] ?? null,
-            'total_count' => $data['total_count'] ?? null,
-        ];
+        return ActivitySearchResponseDTO::fromArray($response['data'] ?? []);
     }
 
-    /**
-     * Detalhe de uma activity (inclui produtos/itens participantes).
-     *
-     * @return array<string, mixed>
-     */
-    public function getActivity(string $activityId, string $version = self::DEFAULT_VERSION): array
+    /** Detalhe de uma activity (inclui produtos/itens participantes). */
+    public function getActivity(string $activityId, string $version = self::DEFAULT_VERSION): Activity
     {
-        return $this->makeRequest(HttpMethod::GET, "/promotion/{$version}/activities/{$activityId}");
+        $response = $this->makeRequest(HttpMethod::GET, "/promotion/{$version}/activities/{$activityId}");
+
+        return Activity::fromArray($response['data'] ?? []);
     }
 }
