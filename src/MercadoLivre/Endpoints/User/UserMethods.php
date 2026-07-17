@@ -6,16 +6,22 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\User;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\User\UserResponseDTO;
 
 class UserMethods extends BaseMethods
 {
-    public function me(): array
+    /**
+     * Usuario autenticado (GET /users/me) — a fonte do seller_id.
+     * `toArray()` e' LOSSLESS.
+     */
+    public function me(): UserResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/users/me');
+        return UserResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/users/me'));
     }
 
-    public function get(int|string $userId): array
+    /** Usuario por id (GET /users/{id}) — mesma arvore do me(). */
+    public function get(int|string $userId): UserResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/users/{$userId}");
+        return UserResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, "/users/{$userId}"));
     }
 }
