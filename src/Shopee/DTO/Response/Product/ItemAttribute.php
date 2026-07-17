@@ -23,6 +23,10 @@ final class ItemAttribute implements DTOInterface
     public function __construct(
         public readonly ?int $attributeId = null,
         public readonly ?string $originalAttributeName = null,
+        // A Shopee documenta display_* (nome ja' traduzido/exibivel) mas ele
+        // NAO aparece no corpus BR — fica mapeado pra nao virar perda se ela
+        // passar a mandar. Consumidor deve preferir display e cair no original.
+        public readonly ?string $displayAttributeName = null,
         public readonly ?bool $isMandatory = null,
         #[ArrayOf(AttributeValue::class)]
         public readonly ?array $attributeValueList = null,

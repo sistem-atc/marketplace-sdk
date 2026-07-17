@@ -17,6 +17,8 @@ final class AttributeValue implements DTOInterface
     public function __construct(
         public readonly ?int $valueId = null,
         public readonly ?string $originalValueName = null,
+        // Idem ItemAttribute::$displayAttributeName — ausente no corpus BR.
+        public readonly ?string $displayValueName = null,
         public readonly ?string $valueUnit = null,
     ) {}
 }
