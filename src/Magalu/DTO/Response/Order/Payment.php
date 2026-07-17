@@ -39,6 +39,6 @@ final class Payment implements DTOInterface
     /** `amount` em reais (÷ normalizer). */
     public function value(): ?float
     {
-        return $this->amount === null ? null : $this->amount / ($this->normalizer ?: 100);
+        return $this->amount === null ? null : $this->amount / ($this->normalizer ?: 1);
     }
 }

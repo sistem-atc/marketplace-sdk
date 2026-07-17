@@ -30,6 +30,6 @@ final class Amounts implements DTOInterface
     /** `total` em reais (÷ normalizer). */
     public function amount(): ?float
     {
-        return $this->total === null ? null : $this->total / ($this->normalizer ?: 100);
+        return $this->total === null ? null : $this->total / ($this->normalizer ?: 1);
     }
 }

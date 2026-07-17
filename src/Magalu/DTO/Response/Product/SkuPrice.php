@@ -33,12 +33,12 @@ final class SkuPrice implements DTOInterface
     /** Preço PARA em reais (÷ normalizer). */
     public function priceValue(): ?float
     {
-        return $this->price === null ? null : $this->price / ($this->normalizer ?: 100);
+        return $this->price === null ? null : $this->price / ($this->normalizer ?: 1);
     }
 
     /** Preço DE em reais (÷ normalizer). */
     public function listPriceValue(): ?float
     {
-        return $this->listPrice === null ? null : $this->listPrice / ($this->normalizer ?: 100);
+        return $this->listPrice === null ? null : $this->listPrice / ($this->normalizer ?: 1);
     }
 }

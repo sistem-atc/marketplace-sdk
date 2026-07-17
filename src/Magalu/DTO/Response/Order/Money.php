@@ -13,8 +13,8 @@ use SistemAtc\Marketplaces\Contracts\DTOInterface;
  *
  * O Magalu manda dinheiro como objeto {currency, normalizer, total/value}: o
  * valor cru é INT e `normalizer` é a escala (ex.: total=5990, normalizer=100
- * ⇒ R$ 59,90). NUNCA leia total/value como reais — divida por normalizer
- * (use o helper `amount()`).
+ * ⇒ R$ 59,90). NUNCA leia total/value como reais — divida por normalizer (use o helper `amount()`); sem normalizer, o valor
+ * ja esta na unidade final (÷1).
  *
  * Duas shapes convivem: os agregados (`amounts.*`) usam `total` (+ `type`);
  * o preço unitário (`unit_price`) usa `value`. Ambos mapeados; um só é
@@ -41,6 +41,6 @@ final class Money implements DTOInterface
             return null;
         }
 
-        return $raw / ($this->normalizer ?: 100);
+        return $raw / ($this->normalizer ?: 1);
     }
 }
