@@ -72,10 +72,10 @@ class PromotionMethods extends BaseMethods
             $query,
         );
 
-        return [
+        return PromotionListResponseDTO::fromArray([
             'results' => $response['results'] ?? [],
             'paging'  => $response['paging'] ?? ['total' => 0, 'limit' => $limit, 'offset' => $offset],
-        ];
+        ]);
     }
 
     /**
