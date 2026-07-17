@@ -6,15 +6,23 @@ namespace SistemAtc\Marketplaces\MercadoLivre\Endpoints\Item;
 
 use SistemAtc\Marketplaces\MercadoLivre\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\ItemMultiGetResult;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\ItemResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\PriceSuggestionResponseDTO;
+use SistemAtc\Marketplaces\MercadoLivre\DTO\Response\Item\SalePriceResponseDTO;
 
 class ItemMethods extends BaseMethods
 {
     /**
-     * Busca detalhes de um anuncio.
+     * Anuncio completo (GET /items/{id}) como DTO tipado — ponto UNICO de parse.
+     * Arvore tipada (preco/estoque/status/SKU/atributos/variacoes/frete);
+     * `toArray()` e' LOSSLESS (validado contra 34 anuncios reais da API).
      */
-    public function get(string $itemId): array
+    public function get(string $itemId): ItemResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/items/{$itemId}");
+        return ItemResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/items/{$itemId}")
+        );
     }
 
     /**
@@ -49,7 +57,7 @@ class ItemMethods extends BaseMethods
      *
      * @param  array<int, string>  $itemIds
      * @param  array<int, string>  $attributes  ex.: ['id','seller_custom_field','status']
-     * @return array<int, array<string, mixed>>
+     * @return list<ItemMultiGetResult>
      */
     public function multiGet(array $itemIds, array $attributes = []): array
     {
@@ -62,7 +70,10 @@ class ItemMethods extends BaseMethods
             $query['attributes'] = implode(',', $attributes);
         }
 
-        return $this->makeRequest(HttpMethod::GET, '/items', $query);
+        return array_map(
+            fn (array $row) => ItemMultiGetResult::fromArray($row),
+            (array) $this->makeRequest(HttpMethod::GET, '/items', $query),
+        );
     }
 
     /**
@@ -76,13 +87,12 @@ class ItemMethods extends BaseMethods
      * quando nao ha price rule ativa — o chamador deve tratar (fallback no
      * `price` do item).
      *
-     * @return array<string, mixed>
      */
-    public function salePrice(string $itemId, string $context = 'channel_marketplace'): array
+    public function salePrice(string $itemId, string $context = 'channel_marketplace'): SalePriceResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/items/{$itemId}/sale_price", [
-            'context' => $context,
-        ]);
+        return SalePriceResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/items/{$itemId}/sale_price", ['context' => $context])
+        );
     }
 
     /**
@@ -94,11 +104,12 @@ class ItemMethods extends BaseMethods
      * {id}/details) da 403 "Invalid caller.id"; o endpoint que responde 200 e'
      * este (/suggestions/...).
      *
-     * @return array<string, mixed>
      */
-    public function priceSuggestion(string $itemId): array
+    public function priceSuggestion(string $itemId): PriceSuggestionResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/suggestions/items/{$itemId}/details");
+        return PriceSuggestionResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::GET, "/suggestions/items/{$itemId}/details")
+        );
     }
 
     /**
