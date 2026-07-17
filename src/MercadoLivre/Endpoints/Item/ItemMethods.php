@@ -27,19 +27,23 @@ class ItemMethods extends BaseMethods
     }
 
     /**
-     * Cria um novo anuncio.
+     * Cria um novo anuncio. Devolve o anuncio CRIADO (mesma arvore do get()).
      */
-    public function create(array $data): array
+    public function create(array $data): ItemResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/items', [], $data);
+        return ItemResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::POST, '/items', [], $data)
+        );
     }
 
     /**
-     * Atualiza um anuncio existente.
+     * Atualiza um anuncio existente. Devolve o anuncio ATUALIZADO.
      */
-    public function update(string $itemId, array $data): array
+    public function update(string $itemId, array $data): ItemResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, "/items/{$itemId}", [], $data);
+        return ItemResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::PUT, "/items/{$itemId}", [], $data)
+        );
     }
 
     /**
@@ -121,7 +125,7 @@ class ItemMethods extends BaseMethods
     /**
      * Altera o status de um anuncio (active, paused, closed).
      */
-    public function updateStatus(string $itemId, string $status): array
+    public function updateStatus(string $itemId, string $status): ItemResponseDTO
     {
         return $this->update($itemId, ['status' => $status]);
     }
@@ -129,7 +133,7 @@ class ItemMethods extends BaseMethods
     /**
      * Atualiza estoque e preco de uma variacao ou do item principal.
      */
-    public function updatePriceAndStock(string $itemId, ?float $price = null, ?int $quantity = null): array
+    public function updatePriceAndStock(string $itemId, ?float $price = null, ?int $quantity = null): ItemResponseDTO
     {
         $data = [];
         if ($price !== null) $data['price'] = $price;
