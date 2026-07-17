@@ -116,18 +116,21 @@ it('tipa pagamento com parcelamento e campos pix', function () {
         ->and($p->parcelamento->valorParcela)->toBe(859.60);
 });
 
-it('OrderSearchResponseDTO tipa objects[] como OrderResponseDTO + meta Tastypie', function () {
+it('OrderSearchResponseDTO tipa meta Tastypie e preserva objects finos como passthrough', function () {
+    // A LISTAGEM Tastypie e' FINA: relacoes vem como resource_uri STRING, nao
+    // como objeto aninhado. objects e' passthrough cru (nao estoura no DTO cheio).
+    $thin = ['id' => 122551114, 'numero' => 15230, 'cliente' => '/api/v1/cliente/91367652', 'situacao' => '/api/v1/situacao/14'];
     $resp = OrderSearchResponseDTO::fromArray([
         'meta' => ['limit' => 50, 'offset' => 0, 'total_count' => 15230, 'next' => null, 'previous' => null],
-        'objects' => [fakeLiOrderPayload(), fakeLiOrderPayload()],
+        'objects' => [$thin, $thin],
     ]);
 
     expect($resp->meta->totalCount)->toBe(15230)
         ->and($resp->meta->limit)->toBe(50)
         ->and($resp->objects)->toHaveCount(2)
-        ->and($resp->objects[0])->toBeInstanceOf(OrderResponseDTO::class)
-        ->and($resp->objects[0]->numero)->toBe(15230)
-        ->and($resp->objects[0]->itens[0]->sku)->toBe('TOP-0003-0007-P');
+        // cliente STRING resource_uri preservado verbatim (nao vira Cliente DTO)
+        ->and($resp->objects[0])->toBe($thin)
+        ->and($resp->objects[0]['cliente'])->toBe('/api/v1/cliente/91367652');
 });
 
 it('OrderSearchResponseDTO aguenta busca vazia', function () {
