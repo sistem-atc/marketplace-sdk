@@ -12,7 +12,6 @@ use SistemAtc\Marketplaces\Amazon\Amazon;
 use SistemAtc\Marketplaces\Shopify\Shopify;
 use SistemAtc\Marketplaces\MercadoPago\MercadoPago;
 use SistemAtc\Marketplaces\LojaIntegrada\LojaIntegrada;
-use SistemAtc\Marketplaces\Mirakl\Mirakl;
 use SistemAtc\Marketplaces\Netshoes\Netshoes;
 
 class MarketPlaces
@@ -55,11 +54,6 @@ class MarketPlaces
     public static function LojaIntegrada(): LojaIntegrada
     {
         return new LojaIntegrada();
-    }
-
-    public static function Mirakl(): Mirakl
-    {
-        return new Mirakl();
     }
 
     public static function Netshoes(): Netshoes
