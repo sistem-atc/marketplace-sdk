@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
 use SistemAtc\Marketplaces\Amazon\DTO\Response\Order\OrderItem;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Order\OrderListResponseDTO;
 use SistemAtc\Marketplaces\Amazon\DTO\Response\Order\OrderResponseDTO;
 
 /**
@@ -20,6 +21,18 @@ class Orders
     public function __construct(
         private readonly Client $client,
     ) {}
+
+    /**
+     * Lista de pedidos (GET /orders/v0/orders). Paginacao por NextToken.
+     *
+     * @param  array<string, mixed>  $query  MarketplaceIds, LastUpdatedAfter, NextToken, ...
+     */
+    public function getOrders(array $query): OrderListResponseDTO
+    {
+        $resp = $this->client->get('/orders/v0/orders', $query);
+
+        return OrderListResponseDTO::fromArray((array) data_get($resp, 'payload', []));
+    }
 
     /**
      * Header do pedido (GET /orders/v0/orders/{orderId}). Pedido inexistente
