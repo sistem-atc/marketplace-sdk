@@ -43,6 +43,11 @@ final class StatementTransaction implements DTOInterface
         public readonly ?string $affiliatePartnerCommissionAmount = null,
         public readonly ?string $afterSellerDiscountsSubtotalAmount = null,
         public readonly ?string $currency = null,
+        // Componentes que o TiktokFeeTranslator conhece mas nao apareceram nos
+        // 15 statements da validacao — o TikTok manda quando ha taxa de cartao
+        // ou servico SFP. Sem eles no DTO, o toArray() dropava a taxa.
+        public readonly ?string $creditCardHandlingFeeAmount = null,
+        public readonly ?string $sfpServiceFeeAmount = null,
         public readonly ?string $customerOrderRefundAmount = null,
         public readonly ?string $customerPaidShippingFeeAmount = null,
         public readonly ?string $customerPaidShippingFeeRefundAmount = null,
