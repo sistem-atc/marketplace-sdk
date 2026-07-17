@@ -56,7 +56,7 @@ it('refreshes and retries once on 105002 expired credentials, then succeeds', fu
         sortField: 'update_time',
     );
 
-    expect($result['orders'])->toBe([]);
+    expect($result->orders)->toBe([]);
 
     // Token foi rotacionado e a 2a chamada usou o token novo no header.
     expect($i->getAccessToken())->toBe('NEW-ACCESS');

@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Tiktok\Endpoints\Order;
 
 use SistemAtc\Marketplaces\Tiktok\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Tiktok\DTO\Response\Order\OrderResponseDTO;
+use SistemAtc\Marketplaces\Tiktok\DTO\Response\Order\OrderSearchResponseDTO;
 use InvalidArgumentException;
 
 /**
@@ -31,7 +33,6 @@ class OrderMethods extends BaseMethods
      *
      * @param  string  $sortField  'create_time' | 'update_time'
      * @param  string|null  $orderStatus  UNPAID | AWAITING_SHIPMENT | AWAITING_COLLECTION | IN_TRANSIT | DELIVERED | COMPLETED | CANCELLED
-     * @return array{orders: array<int, array<string, mixed>>, next_page_token: string|null, total_count: int|null}
      */
     public function getOrderList(
         int $timeGe,
@@ -41,7 +42,7 @@ class OrderMethods extends BaseMethods
         int $pageSize = 50,
         string $pageToken = '',
         string $version = self::DEFAULT_VERSION,
-    ): array {
+    ): OrderSearchResponseDTO {
         if ($timeLt - $timeGe > self::MAX_TIME_RANGE_SECONDS) {
             throw new InvalidArgumentException(sprintf(
                 'Janela maior que %d dias (TikTok max). Use janelas menores.',
@@ -71,20 +72,14 @@ class OrderMethods extends BaseMethods
             $body,
         );
 
-        $data = $response['data'] ?? [];
-
-        return [
-            'orders' => $data['orders'] ?? [],
-            'next_page_token' => $data['next_page_token'] ?? null,
-            'total_count' => $data['total_count'] ?? null,
-        ];
+        return OrderSearchResponseDTO::fromArray($response['data'] ?? []);
     }
 
     /**
      * Detalhes de pedidos por lote. Max 50 order_ids por chamada.
      *
      * @param  array<int, string>  $orderIds
-     * @return array<int, array<string, mixed>>
+     * @return list<OrderResponseDTO>
      */
     public function getOrderDetail(array $orderIds, string $version = self::DEFAULT_VERSION): array
     {
@@ -106,6 +101,9 @@ class OrderMethods extends BaseMethods
             ['ids' => implode(',', $orderIds)],
         );
 
-        return $response['data']['orders'] ?? [];
+        return array_map(
+            static fn (array $o): OrderResponseDTO => OrderResponseDTO::fromArray($o),
+            $response['data']['orders'] ?? [],
+        );
     }
 }
