@@ -29,6 +29,12 @@ trait AutoHydrate
 {
     use StringCase;
 
+    /** O DTO marca chaves PascalCase (Amazon)? */
+    private static function usesPascalKeys(): bool
+    {
+        return is_subclass_of(static::class, \SistemAtc\Marketplaces\Contracts\UsesPascalCaseKeys::class);
+    }
+
     /** Chave declarada em #[JsonKey], se houver. */
     private static function jsonKeyOf(\ReflectionParameter $param): ?string
     {
@@ -55,12 +61,16 @@ trait AutoHydrate
 
             // #[JsonKey] tem prioridade: e' a chave EXATA declarada pelo DTO
             // pros casos que a conversao automatica nao acerta (ex.: digito
-            // colado — address_line1 vs ..._from_3pl). Sem ele, lookup
-            // tolerante: camelCase (padrao do DTO) OU snake_case (API).
+            // colado, ou siglas Amazon como SellerSKU/ASIN). Sem ele: DTO
+            // PascalCase (Amazon) tenta PascalCase; senao camelCase OU snake_case.
             $jsonKey = self::jsonKeyOf($param);
-            $value = $jsonKey !== null
-                ? ($data[$jsonKey] ?? null)
-                : ($data[$name] ?? $data[self::camelToSnake($name)] ?? null);
+            if ($jsonKey !== null) {
+                $value = $data[$jsonKey] ?? null;
+            } elseif (self::usesPascalKeys()) {
+                $value = $data[self::camelToPascal($name)] ?? $data[$name] ?? null;
+            } else {
+                $value = $data[$name] ?? $data[self::camelToSnake($name)] ?? null;
+            }
 
             if ($value === null) {
                 $params[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;

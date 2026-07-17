@@ -49,10 +49,10 @@ it('getOrder parses the payload header from GET /orders/{id}', function () {
 
     $header = $orders->getOrder('701-6247639-1914647');
 
-    expect($header['AmazonOrderId'])->toBe('701-6247639-1914647');
-    expect($header['OrderStatus'])->toBe('Shipped');
-    expect($header['FulfillmentChannel'])->toBe('AFN');
-    expect(data_get($header, 'OrderTotal.Amount'))->toBe('99.90');
+    expect($header->amazonOrderId)->toBe('701-6247639-1914647');
+    expect($header->orderStatus)->toBe('Shipped');
+    expect($header->fulfillmentChannel)->toBe('AFN');
+    expect($header->orderTotal?->amount)->toBe('99.90');
 });
 
 it('getOrderItems returns the OrderItems list from GET /orders/{id}/orderItems', function () {
@@ -78,8 +78,8 @@ it('getOrderItems returns the OrderItems list from GET /orders/{id}/orderItems',
     $items = $orders->getOrderItems('701-6247639-1914647');
 
     expect($items)->toHaveCount(1);
-    expect($items[0]['SellerSKU'])->toBe('SKU-A');
-    expect($items[0]['QuantityOrdered'])->toBe(2);
+    expect($items[0]->sellerSku)->toBe('SKU-A');
+    expect($items[0]->quantityOrdered)->toBe(2);
 });
 
 it('getOrder returns [] on 404 (order não existe mais)', function () {
@@ -91,7 +91,7 @@ it('getOrder returns [] on 404 (order não existe mais)', function () {
 
     $orders = MarketPlaces::Amazon()->client(amazonClientIntegration())->orders();
 
-    expect($orders->getOrder('000-0000000-0000000'))->toBe([]);
+    expect($orders->getOrder('000-0000000-0000000')->amazonOrderId)->toBeNull();
 });
 
 it('getOrderItems returns [] when payload has no OrderItems', function () {

@@ -23,4 +23,10 @@ trait StringCase
     {
         return strtolower((string) preg_replace('/[A-Z]/', '_$0', $name));
     }
+
+    /** camelCase -> PascalCase (amazonOrderId -> AmazonOrderId). */
+    private static function camelToPascal(string $name): string
+    {
+        return ucfirst($name);
+    }
 }

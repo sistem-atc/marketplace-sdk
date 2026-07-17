@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Order\OrderItem;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Order\OrderResponseDTO;
 
 /**
  * Endpoint Orders v0 da SP-API (busca por AmazonOrderId individual).
@@ -20,29 +22,30 @@ class Orders
     ) {}
 
     /**
-     * Header do pedido (GET /orders/v0/orders/{orderId}). Retorna `payload`
-     * ou [] em 404.
-     *
-     * @return array<string, mixed>
+     * Header do pedido (GET /orders/v0/orders/{orderId}). Pedido inexistente
+     * (404) vem com AmazonOrderId null.
      */
-    public function getOrder(string $amazonOrderId): array
+    public function getOrder(string $amazonOrderId): OrderResponseDTO
     {
         $resp = $this->client->get('/orders/v0/orders/'.rawurlencode($amazonOrderId));
 
-        return data_get($resp, 'payload', []);
+        return OrderResponseDTO::fromArray((array) data_get($resp, 'payload', []));
     }
 
     /**
-     * Itens do pedido (GET /orders/v0/orders/{orderId}/orderItems). Retorna
-     * `payload.OrderItems` ou [] em 404 / sem itens. NAO pagina NextToken
-     * (pedidos BR raramente passam de 1 pagina).
+     * Itens do pedido (GET /orders/v0/orders/{orderId}/orderItems). Vazio em
+     * 404 / sem itens. NAO pagina NextToken (pedidos BR raramente passam de 1
+     * pagina).
      *
-     * @return array<int, array<string, mixed>>
+     * @return list<OrderItem>
      */
     public function getOrderItems(string $amazonOrderId): array
     {
         $resp = $this->client->get('/orders/v0/orders/'.rawurlencode($amazonOrderId).'/orderItems');
 
-        return data_get($resp, 'payload.OrderItems', []);
+        return array_map(
+            static fn (array $i): OrderItem => OrderItem::fromArray($i),
+            data_get($resp, 'payload.OrderItems', []),
+        );
     }
 }
