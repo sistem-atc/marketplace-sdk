@@ -41,7 +41,7 @@ describe('MarketPlaces::Shopee()->marketing()', function () {
         $resp = MarketPlaces::Shopee()->marketing(makeShopeeMarketingIntegration())
             ->getDiscountList('ongoing', pageNo: 1, pageSize: 100);
 
-        expect($resp['response']['discount_list'])->toHaveCount(1);
+        expect($resp->discountList)->toHaveCount(1);
 
         Http::assertSent(function ($req) {
             return str_contains($req->url(), '/api/v2/discount/get_discount_list')
@@ -62,7 +62,7 @@ describe('MarketPlaces::Shopee()->marketing()', function () {
         $resp = MarketPlaces::Shopee()->marketing(makeShopeeMarketingIntegration())
             ->getVoucherList('ongoing', pageNo: 1, pageSize: 100);
 
-        expect($resp['response']['voucher_list'])->toHaveCount(1);
+        expect($resp->voucherList)->toHaveCount(1);
 
         Http::assertSent(function ($req) {
             return str_contains($req->url(), '/api/v2/voucher/get_voucher_list')
@@ -82,7 +82,7 @@ describe('MarketPlaces::Shopee()->marketing()', function () {
         $resp = MarketPlaces::Shopee()->marketing(makeShopeeMarketingIntegration())
             ->getDiscount(123, pageNo: 2, pageSize: 50);
 
-        expect($resp['response']['item_list'])->toHaveCount(1);
+        expect($resp->itemList)->toHaveCount(1);
 
         Http::assertSent(function ($req) {
             return str_contains($req->url(), '/api/v2/discount/get_discount')
