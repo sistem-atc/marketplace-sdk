@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Notification\Destination;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Notification\Subscription;
 
 /**
  * Notifications API v1 da SP-API — destinations e subscriptions.
@@ -42,11 +44,15 @@ class Notifications
     /**
      * @return array<int, array<string, mixed>>
      */
+    /** @return list<Destination> */
     public function listDestinations(): array
     {
         $resp = $this->client->getGrantless('/notifications/v1/destinations', self::GRANTLESS_SCOPE);
 
-        return data_get($resp, 'payload', []);
+        return array_map(
+            static fn (array $d): Destination => Destination::fromArray($d),
+            data_get($resp, 'payload', []),
+        );
     }
 
     /** @return array<string, mixed> */
@@ -128,11 +134,11 @@ class Notifications
      *
      * @return array<string, mixed>
      */
-    public function getSubscription(string $notificationType): array
+    public function getSubscription(string $notificationType): Subscription
     {
         $resp = $this->client->get('/notifications/v1/subscriptions/'.rawurlencode($notificationType));
 
-        return data_get($resp, 'payload', []);
+        return Subscription::fromArray(data_get($resp, 'payload', []));
     }
 
     /**
