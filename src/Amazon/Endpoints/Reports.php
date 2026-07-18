@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Report\Report;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Report\ReportDocument;
 
 /**
  * Reports API v2021-06-30.
@@ -29,9 +31,9 @@ class Reports
     /**
      * Consulta o status de um relatorio.
      */
-    public function getReport(string $reportId): array
+    public function getReport(string $reportId): Report
     {
-        return $this->client->get("/reports/2021-06-30/reports/{$reportId}");
+        return Report::fromArray($this->client->get("/reports/2021-06-30/reports/{$reportId}"));
     }
 
     /**
@@ -45,8 +47,8 @@ class Reports
     /**
      * Obtem o documento do relatorio (URL para download).
      */
-    public function getReportDocument(string $reportDocumentId): array
+    public function getReportDocument(string $reportDocumentId): ReportDocument
     {
-        return $this->client->get("/reports/2021-06-30/documents/{$reportDocumentId}");
+        return ReportDocument::fromArray($this->client->get("/reports/2021-06-30/documents/{$reportDocumentId}"));
     }
 }

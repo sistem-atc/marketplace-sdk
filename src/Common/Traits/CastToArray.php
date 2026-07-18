@@ -22,12 +22,18 @@ trait CastToArray
         $result = [];
         $keys = $this->jsonKeyMap();
         $pascal = $this instanceof \SistemAtc\Marketplaces\Contracts\UsesPascalCaseKeys;
+        $camel = $this instanceof \SistemAtc\Marketplaces\Contracts\UsesCamelCaseKeys;
 
         foreach (get_object_vars($this) as $key => $value) {
             $formatted = $this->formatValue($value);
             if ($formatted !== null) {
-                // #[JsonKey] manda; senao PascalCase (Amazon) ou snake_case.
-                $result[$keys[$key] ?? ($pascal ? $this->camelToPascal($key) : $this->camelToSnake($key))] = $formatted;
+                // #[JsonKey] manda; senao PascalCase (Amazon Orders/Pricing),
+                // camelCase (Amazon Reports/Notifications) ou snake_case (default).
+                $result[$keys[$key] ?? match (true) {
+                    $pascal => $this->camelToPascal($key),
+                    $camel => $key,
+                    default => $this->camelToSnake($key),
+                }] = $formatted;
             }
         }
 
