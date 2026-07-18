@@ -52,8 +52,8 @@ it('getExport GETs the export status by id', function () {
 
     $resp = MarketPlaces::Amazon()->invoices(amazonInvoicesIntegration())->getExport('EXP-123');
 
-    expect(data_get($resp, 'export.status'))->toBe('DONE')
-        ->and(data_get($resp, 'export.documentIds'))->toBe(['DOC-1']);
+    expect($resp->export->status)->toBe('DONE')
+        ->and($resp->export->documentIds)->toBe(['DOC-1']);
 });
 
 it('getDocument GETs the document metadata with the presigned url', function () {
@@ -65,7 +65,7 @@ it('getDocument GETs the document metadata with the presigned url', function () 
 
     $resp = MarketPlaces::Amazon()->invoices(amazonInvoicesIntegration())->getDocument('DOC-1');
 
-    expect($resp['invoicesDocumentUrl'])->toBe('https://s3.example/doc.zip');
+    expect($resp->invoicesDocumentUrl)->toBe('https://s3.example/doc.zip');
 });
 
 it('downloadDocument fetches the raw binary from the presigned url', function () {

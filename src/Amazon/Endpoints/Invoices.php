@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use Illuminate\Support\Facades\Http;
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Invoice\ExportResponse;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Invoice\InvoiceDocument;
 
 /**
  * Invoices API v2024-06-19 (Brazil FBA).
@@ -48,9 +50,9 @@ class Invoices
      *
      * @return array<string, mixed>
      */
-    public function getExport(string $exportId): array
+    public function getExport(string $exportId): ExportResponse
     {
-        return $this->client->getRestricted(self::BASE.'/invoices/exports/'.rawurlencode($exportId));
+        return ExportResponse::fromArray($this->client->getRestricted(self::BASE.'/invoices/exports/'.rawurlencode($exportId)));
     }
 
     /**
@@ -69,9 +71,9 @@ class Invoices
      *
      * @return array<string, mixed>
      */
-    public function getDocument(string $documentId): array
+    public function getDocument(string $documentId): InvoiceDocument
     {
-        return $this->client->getRestricted(self::BASE.'/invoices/documents/'.rawurlencode($documentId));
+        return InvoiceDocument::fromArray($this->client->getRestricted(self::BASE.'/invoices/documents/'.rawurlencode($documentId)));
     }
 
     /**
