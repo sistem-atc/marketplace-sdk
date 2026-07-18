@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Finance\FinancialEvents;
 
 /**
  * Endpoint Finances v0 da SP-API — eventos financeiros (taxas, comissoes,
@@ -36,17 +37,15 @@ class Finances
     }
 
     /**
-     * Eventos financeiros de UM pedido. Retorna `payload.FinancialEvents`
-     * ou [] em 404 / sem eventos (settlement nao postou).
-     *
-     * @return array<string, mixed>
+     * Eventos financeiros de UM pedido → `payload.FinancialEvents` tipado
+     * (FinancialEvents; vazio quando o settlement não postou).
      */
-    public function listOrderFinancialEvents(string $amazonOrderId): array
+    public function listOrderFinancialEvents(string $amazonOrderId): FinancialEvents
     {
         $resp = $this->client->get(
             '/finances/v0/orders/'.rawurlencode($amazonOrderId).'/financialEvents'
         );
 
-        return data_get($resp, 'payload.FinancialEvents', []);
+        return FinancialEvents::fromArray(data_get($resp, 'payload.FinancialEvents', []));
     }
 }
