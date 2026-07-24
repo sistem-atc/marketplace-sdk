@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\Amazon\Endpoints;
 
 use SistemAtc\Marketplaces\Amazon\Client;
 use SistemAtc\Marketplaces\Amazon\DTO\Response\Finance\FinancialEvents;
+use SistemAtc\Marketplaces\Amazon\DTO\Response\Finance\FinancialEventsPage;
 
 /**
  * Endpoint Finances v0 da SP-API — eventos financeiros (taxas, comissoes,
@@ -47,5 +48,27 @@ class Finances
         );
 
         return FinancialEvents::fromArray(data_get($resp, 'payload.FinancialEvents', []));
+    }
+
+    /**
+     * Eventos financeiros de UM PERÍODO (GET /finances/v0/financialEvents) —
+     * devolve os eventos de VÁRIOS pedidos postados no intervalo, paginados por
+     * NextToken. É o caminho eficiente pro backfill histórico: ~centenas de
+     * eventos por chamada em vez de 1 chamada por pedido.
+     *
+     * Query aceita: PostedAfter (ISO8601, obrigatório na 1ª página), PostedBefore,
+     * MaxResultsPerPage (1–100, default 100), NextToken (nas páginas seguintes —
+     * quando presente, a Amazon IGNORA os demais filtros).
+     *
+     * Rate limit: 0.5 req/s + burst 30 (mesmo teto do por-pedido, mas rende
+     * MUITO mais por chamada). Percorra as páginas até `nextToken === null`.
+     *
+     * @param  array<string, mixed>  $query
+     */
+    public function listFinancialEvents(array $query): FinancialEventsPage
+    {
+        $resp = $this->client->get('/finances/v0/financialEvents', $query);
+
+        return FinancialEventsPage::fromArray(data_get($resp, 'payload', []));
     }
 }
