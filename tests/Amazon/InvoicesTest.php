@@ -8,6 +8,15 @@ use SistemAtc\Marketplaces\Tests\Support\FakeIntegration;
 
 beforeEach(function () {
     Http::preventStrayRequests();
+    // Os endpoints tax/invoices sao RESTRITOS: o client busca um RDT (restricted
+    // data token) em /tokens/2021-03-01/restrictedDataToken ANTES de cada chamada.
+    // Sem fakear esse hit o teste estoura StrayRequestException. Fica no beforeEach
+    // (o Http::fake dos testes acumula em cima deste).
+    Http::fake([
+        'https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken' => Http::response([
+            'restrictedDataToken' => 'rdt-fake-token',
+        ], 200),
+    ]);
 });
 
 function amazonInvoicesIntegration(): FakeIntegration
