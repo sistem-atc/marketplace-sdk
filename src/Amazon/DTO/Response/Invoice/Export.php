@@ -11,9 +11,9 @@ use SistemAtc\Marketplaces\Contracts\UsesCamelCaseKeys;
 
 /**
  * Export de NFs (Invoices API 2024-06-19). `status`: PROCESSING|DONE|CANCELLED|
- * FATAL; quando DONE vem `documentIds` pra baixar os ZIPs.
+ * FATAL; quando DONE vem `invoicesDocumentIds` pra baixar os ZIPs.
  *
- * @property list<string>|null $documentIds
+ * @property list<string>|null $invoicesDocumentIds
  */
 final class Export implements DTOInterface, UsesCamelCaseKeys
 {
@@ -23,7 +23,7 @@ final class Export implements DTOInterface, UsesCamelCaseKeys
     public function __construct(
         public readonly ?string $exportId = null,
         public readonly ?string $status = null,
-        public readonly ?array $documentIds = null,
+        public readonly ?array $invoicesDocumentIds = null,
         public readonly ?string $errorMessage = null,
     ) {}
 }

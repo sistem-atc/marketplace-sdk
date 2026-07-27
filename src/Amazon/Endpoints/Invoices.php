@@ -19,7 +19,9 @@ use SistemAtc\Marketplaces\Amazon\DTO\Response\Invoice\InvoiceDocument;
  *   3. getDocument(documentId) -> invoicesDocumentUrl (presigned)
  *   4. downloadDocument(url) -> ZIP de XMLs
  *
- * Requer a role SP-API "Tax Invoicing (Restricted)" (senao HTTP 403).
+ * Requer a role SP-API "Tax Invoicing" selecionada no registro da app +
+ * consentida pelo seller (senao HTTP 403 Unauthorized). Usa o access token
+ * LWA direto — NAO precisa de RDT (Restricted Data Token).
  * Disponivel apenas pra invoices FBA Brasil.
  */
 class Invoices
@@ -38,7 +40,7 @@ class Invoices
      */
     public function createExport(string $marketplaceId, string $dateStart, string $dateEnd, array $options = []): array
     {
-        return $this->client->postRestricted(self::BASE.'/invoices/exports', array_merge([
+        return $this->client->post(self::BASE.'/exports', array_merge([
             'marketplaceId' => $marketplaceId,
             'dateStart' => $dateStart,
             'dateEnd' => $dateEnd,
@@ -46,13 +48,13 @@ class Invoices
     }
 
     /**
-     * Status de um export (processingStatus: PROCESSING | DONE | CANCELLED | FATAL).
+     * Status de um export (export.status: PROCESSING | DONE | CANCELLED | FATAL).
      *
      * @return array<string, mixed>
      */
     public function getExport(string $exportId): ExportResponse
     {
-        return ExportResponse::fromArray($this->client->getRestricted(self::BASE.'/invoices/exports/'.rawurlencode($exportId)));
+        return ExportResponse::fromArray($this->client->get(self::BASE.'/exports/'.rawurlencode($exportId)));
     }
 
     /**
@@ -63,7 +65,7 @@ class Invoices
      */
     public function getExports(array $query = []): array
     {
-        return $this->client->get(self::BASE.'/invoices/exports', $query);
+        return $this->client->get(self::BASE.'/exports', $query);
     }
 
     /**
@@ -73,7 +75,10 @@ class Invoices
      */
     public function getDocument(string $documentId): InvoiceDocument
     {
-        return InvoiceDocument::fromArray($this->client->getRestricted(self::BASE.'/invoices/documents/'.rawurlencode($documentId)));
+        $resp = $this->client->get(self::BASE.'/documents/'.rawurlencode($documentId));
+
+        // A Amazon aninha o payload em `invoicesDocument`; desembrulha pro DTO flat.
+        return InvoiceDocument::fromArray($resp['invoicesDocument'] ?? $resp);
     }
 
     /**
@@ -83,7 +88,7 @@ class Invoices
      */
     public function getAttributes(string $marketplaceId): array
     {
-        return $this->client->get(self::BASE.'/invoices/attributes', ['marketplaceId' => $marketplaceId]);
+        return $this->client->get(self::BASE.'/attributes', ['marketplaceId' => $marketplaceId]);
     }
 
     /**

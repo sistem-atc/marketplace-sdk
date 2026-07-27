@@ -8,15 +8,9 @@ use SistemAtc\Marketplaces\Tests\Support\FakeIntegration;
 
 beforeEach(function () {
     Http::preventStrayRequests();
-    // Os endpoints tax/invoices sao RESTRITOS: o client busca um RDT (restricted
-    // data token) em /tokens/2021-03-01/restrictedDataToken ANTES de cada chamada.
-    // Sem fakear esse hit o teste estoura StrayRequestException. Fica no beforeEach
-    // (o Http::fake dos testes acumula em cima deste).
-    Http::fake([
-        'https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken' => Http::response([
-            'restrictedDataToken' => 'rdt-fake-token',
-        ], 200),
-    ]);
+    // Os endpoints tax/invoices usam o access token LWA direto — NAO precisam de
+    // RDT (confirmado contra a API real + doc oficial). Path correto: o segmento
+    // "invoices" ja' esta no base tax/invoices, entao NAO se repete no sub-path.
 });
 
 function amazonInvoicesIntegration(): FakeIntegration
@@ -34,47 +28,53 @@ function amazonInvoicesIntegration(): FakeIntegration
     );
 }
 
-it('createExport POSTs to /tax/invoices/2024-06-19/invoices/exports and returns the payload', function () {
+it('createExport POSTs to /tax/invoices/2024-06-19/exports and returns the payload', function () {
     Http::fake([
-        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/invoices/exports' => Http::response([
-            'export' => ['exportId' => 'EXP-123'],
-        ], 200),
+        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/exports' => Http::response([
+            'exportId' => 'EXP-123',
+        ], 202),
     ]);
 
     $resp = MarketPlaces::Amazon()->invoices(amazonInvoicesIntegration())
-        ->createExport('A2Q3Y263D00KWC', '2024-06-01T00:00:00Z', '2024-06-30T23:59:59Z');
+        ->createExport('A2Q3Y263D00KWC', '2024-06-01', '2024-06-30');
 
-    expect(data_get($resp, 'export.exportId'))->toBe('EXP-123');
+    expect(data_get($resp, 'exportId'))->toBe('EXP-123');
 
     Http::assertSent(fn ($request) => $request->method() === 'POST'
-        && str_contains($request->url(), '/tax/invoices/2024-06-19/invoices/exports')
+        && str_contains($request->url(), '/tax/invoices/2024-06-19/exports')
+        && ! str_contains($request->url(), '/invoices/exports')
         && $request['marketplaceId'] === 'A2Q3Y263D00KWC'
-        && $request['dateStart'] === '2024-06-01T00:00:00Z');
+        && $request['dateStart'] === '2024-06-01'
+        && $request['dateEnd'] === '2024-06-30');
 });
 
-it('getExport GETs the export status by id', function () {
+it('getExport GETs the export status by id (export.status + invoicesDocumentIds)', function () {
     Http::fake([
-        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/invoices/exports/EXP-123' => Http::response([
-            'export' => ['status' => 'DONE', 'documentIds' => ['DOC-1']],
+        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/exports/EXP-123' => Http::response([
+            'export' => ['status' => 'DONE', 'invoicesDocumentIds' => ['DOC-1']],
         ], 200),
     ]);
 
     $resp = MarketPlaces::Amazon()->invoices(amazonInvoicesIntegration())->getExport('EXP-123');
 
     expect($resp->export->status)->toBe('DONE')
-        ->and($resp->export->documentIds)->toBe(['DOC-1']);
+        ->and($resp->export->invoicesDocumentIds)->toBe(['DOC-1']);
 });
 
-it('getDocument GETs the document metadata with the presigned url', function () {
+it('getDocument GETs /documents/{id} and unwraps invoicesDocument', function () {
     Http::fake([
-        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/invoices/documents/DOC-1' => Http::response([
-            'invoicesDocumentUrl' => 'https://s3.example/doc.zip',
+        'https://sellingpartnerapi-na.amazon.com/tax/invoices/2024-06-19/documents/DOC-1' => Http::response([
+            'invoicesDocument' => [
+                'invoicesDocumentUrl' => 'https://s3.example/doc.zip',
+                'invoicesDocumentId' => 'DOC-1',
+            ],
         ], 200),
     ]);
 
     $resp = MarketPlaces::Amazon()->invoices(amazonInvoicesIntegration())->getDocument('DOC-1');
 
-    expect($resp->invoicesDocumentUrl)->toBe('https://s3.example/doc.zip');
+    expect($resp->invoicesDocumentUrl)->toBe('https://s3.example/doc.zip')
+        ->and($resp->invoicesDocumentId)->toBe('DOC-1');
 });
 
 it('downloadDocument fetches the raw binary from the presigned url', function () {

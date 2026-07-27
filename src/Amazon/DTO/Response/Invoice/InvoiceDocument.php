@@ -9,7 +9,10 @@ use SistemAtc\Marketplaces\Common\Traits\CastToArray;
 use SistemAtc\Marketplaces\Contracts\DTOInterface;
 use SistemAtc\Marketplaces\Contracts\UsesCamelCaseKeys;
 
-/** Metadados do documento de NFs — `invoicesDocumentUrl` é o ZIP pré-assinado. */
+/**
+ * Metadados do documento de NFs — `invoicesDocumentUrl` é o ZIP pré-assinado
+ * (atencao: a URL S3 expira em ~10s, entao baixe imediatamente).
+ */
 final class InvoiceDocument implements DTOInterface, UsesCamelCaseKeys
 {
     use AutoHydrate;
@@ -17,5 +20,6 @@ final class InvoiceDocument implements DTOInterface, UsesCamelCaseKeys
 
     public function __construct(
         public readonly ?string $invoicesDocumentUrl = null,
+        public readonly ?string $invoicesDocumentId = null,
     ) {}
 }
