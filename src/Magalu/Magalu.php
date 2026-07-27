@@ -10,6 +10,7 @@ use SistemAtc\Marketplaces\Magalu\Endpoints\Invoice\InvoiceMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Delivery\DeliveryMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Logistics\LogisticsMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Webhooks\WebhookMethods;
+use SistemAtc\Marketplaces\Magalu\Endpoints\Product\CategoryMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Product\PortfolioMethods;
 use SistemAtc\Marketplaces\Magalu\Endpoints\Claim\ClaimMethods;
 use SistemAtc\Marketplaces\Magalu\Support\HttpClientFactory;
@@ -44,6 +45,12 @@ class Magalu
     public function portfolio(MarketplaceIntegration $integration): PortfolioMethods
     {
         return new PortfolioMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /** Categorias e atributos (o que define os campos exigidos do SKU). */
+    public function categories(MarketplaceIntegration $integration): CategoryMethods
+    {
+        return new CategoryMethods(HttpClientFactory::make($integration), $integration);
     }
 
     public function claims(MarketplaceIntegration $integration): ClaimMethods
