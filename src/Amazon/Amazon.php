@@ -8,6 +8,7 @@ use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Orders;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Finances;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Definitions;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
@@ -44,6 +45,12 @@ class Amazon
     public function listings(MarketplaceIntegration $integration): Listings
     {
         return $this->client($integration)->listings();
+    }
+
+    /** Product Type Definitions — o que define os atributos do cadastro. */
+    public function definitions(MarketplaceIntegration $integration): Definitions
+    {
+        return $this->client($integration)->definitions();
     }
 
     public function messaging(MarketplaceIntegration $integration): Messaging

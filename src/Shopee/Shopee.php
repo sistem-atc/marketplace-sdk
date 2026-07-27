@@ -8,6 +8,7 @@ use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Logistics\LogisticsMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Payment\PaymentMethods;
+use SistemAtc\Marketplaces\Shopee\Endpoints\Product\CategoryMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Product\ProductMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Webhook\WebhookMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Invoice\InvoiceMethods;
@@ -36,6 +37,12 @@ class Shopee
     public function products(MarketplaceIntegration $integration): ProductMethods
     {
         return new ProductMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /** Catalogo de categorias e atributos (equivalente ao /categories do ML). */
+    public function categories(MarketplaceIntegration $integration): CategoryMethods
+    {
+        return new CategoryMethods(HttpClientFactory::make($integration), $integration);
     }
 
     public function webhooks(MarketplaceIntegration $integration): WebhookMethods

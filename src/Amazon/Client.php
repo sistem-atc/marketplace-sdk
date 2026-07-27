@@ -8,6 +8,7 @@ use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Finances;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Orders;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Definitions;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Listings;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
@@ -50,6 +51,11 @@ class Client
     public function notifications(): Notifications
     {
         return new Notifications($this);
+    }
+
+    public function definitions(): Definitions
+    {
+        return new Definitions($this);
     }
 
     public function listings(): Listings
