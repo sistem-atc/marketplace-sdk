@@ -84,4 +84,87 @@ class OrderMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::POST, "/orders/{$orderId}/open");
     }
+
+    /**
+     * Itera TODOS os pedidos do periodo seguindo a paginacao por CURSOR da
+     * Admin API REST (Link header -> page_info). Rende um pedido (array) por vez.
+     *
+     * Necessario porque `list()`/`listByPeriod()` devolvem so' 1 pagina (max 250):
+     * o `makeRequest` retorna apenas o corpo JSON e descarta o `Link` header. Aqui
+     * usamos o httpClient direto pra ler o header.
+     *
+     * Regras da Shopify:
+     *   - A 1a pagina leva os filtros (created_at_min/max + status).
+     *   - As paginas seguintes SO' podem levar `page_info` + `limit` (qualquer
+     *     outro filtro junto com page_info = 400 Bad Request).
+     *
+     * Formato data: ISO 8601 (ex: 2024-04-01T00:00:00-03:00).
+     *
+     * @param  array<string, mixed>  $extraParams  filtros extras so' na 1a pagina
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function eachByPeriod(
+        string $startDate,
+        string $endDate,
+        int $limit = 250,
+        array $extraParams = []
+    ): \Generator {
+        $query = array_merge([
+            'created_at_min' => $startDate,
+            'created_at_max' => $endDate,
+            'status' => 'any',
+            'limit' => $limit,
+        ], $extraParams);
+
+        $attempt = 0;
+        while (true) {
+            $response = $this->httpClient->get('/orders.json', $query);
+
+            // Retry simples em 429/5xx (mesma politica do makeRequest).
+            if (($response->status() === 429 || $response->status() >= 500) && $attempt < 3) {
+                $attempt++;
+                sleep((int) ($response->header('Retry-After') ?: 2 ** $attempt));
+
+                continue;
+            }
+            $attempt = 0;
+
+            if ($response->failed()) {
+                $this->handleError($response);
+            }
+
+            foreach (($response->json('orders') ?? []) as $order) {
+                yield $order;
+            }
+
+            $pageInfo = $this->nextPageInfo($response->header('Link'));
+            if ($pageInfo === null) {
+                break;
+            }
+
+            // page_info sozinho — a Shopify rejeita filtros junto com o cursor.
+            $query = ['limit' => $limit, 'page_info' => $pageInfo];
+        }
+    }
+
+    /**
+     * Extrai o `page_info` do segmento rel="next" do Link header. null = fim.
+     */
+    private function nextPageInfo(?string $linkHeader): ?string
+    {
+        if ($linkHeader === null || $linkHeader === '') {
+            return null;
+        }
+
+        foreach (explode(',', $linkHeader) as $segment) {
+            if (! str_contains($segment, 'rel="next"')) {
+                continue;
+            }
+            if (preg_match('/[?&]page_info=([^&>]+)/', $segment, $m)) {
+                return urldecode($m[1]);
+            }
+        }
+
+        return null;
+    }
 }
