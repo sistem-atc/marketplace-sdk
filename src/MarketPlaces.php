@@ -13,12 +13,18 @@ use SistemAtc\Marketplaces\Shopify\Shopify;
 use SistemAtc\Marketplaces\MercadoPago\MercadoPago;
 use SistemAtc\Marketplaces\LojaIntegrada\LojaIntegrada;
 use SistemAtc\Marketplaces\Netshoes\Netshoes;
+use SistemAtc\Marketplaces\ConectaLa\ConectaLa;
 
 class MarketPlaces
 {
     public static function MercadoLivre(): MercadoLivre
     {
         return new MercadoLivre();
+    }
+
+    public static function ConectaLa(): ConectaLa
+    {
+        return new ConectaLa();
     }
 
     public static function Shopee(): Shopee

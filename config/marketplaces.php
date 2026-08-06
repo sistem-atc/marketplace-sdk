@@ -34,6 +34,12 @@ return [
         'api_base' => env('MARKETPLACES_NETSHOES_BASE_URL', 'https://api-marketplace.netshoes.com.br'),
         'sandbox_base' => env('MARKETPLACES_NETSHOES_SANDBOX_URL', 'http://api-sandbox.netshoes.com.br'),
     ],
+    // Conecta La (plataforma do "Shophub"). Auth por HEADER (x-api-key,
+    // x-store-key, x-provider-key, x-user-email...). HOMOLOG = teste.conectala.
+    'conectala' => [
+        'api_base' => env('MARKETPLACES_CONECTALA_BASE_URL', 'http://teste.conectala.com.br/app/Api/V1'),
+        'sellercenter_base' => env('MARKETPLACES_CONECTALA_SELLERCENTER_URL', 'http://teste.conectala.com.br/app'),
+    ],
     'webhooks' => [
         // Catch-all legado (api/webhooks/{marketplace}). So' usar quando NAO
         // houver lista per-MP em `routes`. Default false — preferir `routes`.
