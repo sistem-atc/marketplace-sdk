@@ -1,9 +1,9 @@
 # Conecta Lá — conector (marca **Shophub**)
 
-> ⚠️ **Shophub == Conecta Lá.** No Bunker esta integração aparece com o nome
-> **`shophub`** (marca do seller). "Conecta Lá" é a **plataforma/API** que o
-> Shophub usa (domínio `conectala.com.br`); o conector ficou com o nome técnico
-> da API (`ConectaLa`). Anotado aqui pra não depender de memória.
+> ⚠️ **INTEGRAÇÃO SHOPHUB — Shophub == Conecta Lá.** A marca comercial desta
+> integração é **Shophub**. "Conecta Lá" é a **plataforma/API** que o Shophub usa
+> (domínio `conectala.com.br`); o conector ficou com o nome técnico da API
+> (`ConectaLa`). Anotado aqui pra não depender de memória.
 
 ## Acesso
 
@@ -38,9 +38,10 @@ A API **não tem webhook**. O modelo é fila:
 - **Pedidos**: `orders()->queue()` (novos) → processa → `orders()->removeFromQueue($id)`.
 - **Produtos**: `products()->modifiedQueue()` (alterados) → reflete → `products()->removeFromQueue($sku)`.
 
-No Bunker isso vira um **scheduler de polling** (não há assinatura de webhook).
-A única exceção "push" é a **cotação de frete**: a plataforma chama a URL do
-seller (`POST .../cotacao`) — endpoint que o **Bunker expõe**, não é método daqui.
+Na aplicação consumidora isso vira um **polling agendado** (não há assinatura de
+webhook). A única exceção "push" é a **cotação de frete**: a plataforma chama a
+URL do seller (`POST .../cotacao`) — endpoint que a **aplicação consumidora
+expõe**, não é método deste SDK.
 
 ## Domínios (`MarketPlaces::ConectaLa()->…`)
 
