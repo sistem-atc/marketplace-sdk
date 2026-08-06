@@ -12,6 +12,11 @@ use SistemAtc\Marketplaces\ConectaLa\Endpoints\Financial\FinancialMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Info\InfoMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Product\ProductMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Product\VariantMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Logistics\TrackingMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Account\CompanyMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Account\StoreMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Account\UserMethods;
 use SistemAtc\Marketplaces\ConectaLa\Support\HttpClientFactory;
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 
@@ -64,5 +69,30 @@ class ConectaLa
     public function financial(MarketplaceIntegration $integration): FinancialMethods
     {
         return new FinancialMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function variations(MarketplaceIntegration $integration): VariantMethods
+    {
+        return new VariantMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function tracking(MarketplaceIntegration $integration): TrackingMethods
+    {
+        return new TrackingMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function companies(MarketplaceIntegration $integration): CompanyMethods
+    {
+        return new CompanyMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function stores(MarketplaceIntegration $integration): StoreMethods
+    {
+        return new StoreMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function users(MarketplaceIntegration $integration): UserMethods
+    {
+        return new UserMethods(HttpClientFactory::make($integration), $integration);
     }
 }

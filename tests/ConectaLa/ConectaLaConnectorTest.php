@@ -89,3 +89,20 @@ it('catalogs()->stores e collections()->list batem nos paths certos', function (
     Http::assertSent(fn ($req) => str_contains($req->url(), '/GetCatalogs/stores'));
     Http::assertSent(fn ($req) => str_contains($req->url(), '/Collections/all'));
 });
+
+it('variations/tracking/companies/stores/users batem nos paths certos', function () {
+    Http::fake(['*' => Http::response(['ok' => true], 200)]);
+    $i = conectaLaIntegration();
+
+    MarketPlaces::ConectaLa()->variations($i)->get('SKU1');
+    MarketPlaces::ConectaLa()->tracking($i)->send('ORD1', ['code' => 'BR1']);
+    MarketPlaces::ConectaLa()->companies($i)->list();
+    MarketPlaces::ConectaLa()->stores($i)->update('9', ['name' => 'x']);
+    MarketPlaces::ConectaLa()->users($i)->create(['email' => 'u@x.com']);
+
+    Http::assertSent(fn ($r) => str_contains($r->url(), '/Variations/SKU1') && $r->method() === 'GET');
+    Http::assertSent(fn ($r) => str_contains($r->url(), '/Tracking/ORD1') && $r->method() === 'POST');
+    Http::assertSent(fn ($r) => str_contains($r->url(), '/Companies') && $r->method() === 'GET');
+    Http::assertSent(fn ($r) => str_contains($r->url(), '/Stores/9') && $r->method() === 'PUT');
+    Http::assertSent(fn ($r) => str_contains($r->url(), '/Users') && $r->method() === 'POST');
+});
