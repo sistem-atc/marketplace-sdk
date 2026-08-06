@@ -21,8 +21,17 @@ use SistemAtc\Marketplaces\ConectaLa\Support\HttpClientFactory;
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
 
 /**
- * Conector da Conecta Lá (plataforma do "Shophub"). Ponto de entrada: cada
- * método devolve o grupo de endpoints já autenticado pra Integration.
+ * ⚠️ NO BUNKER ESTA INTEGRAÇÃO CHAMA-SE "SHOPHUB". "Conecta Lá" é o nome da
+ * PLATAFORMA/API (domínio conectala.com.br) que o Shophub usa; o conector ficou
+ * com o nome técnico da API, mas a Integration no Bunker entra como `shophub`.
+ * (Registrado aqui pra não depender de memória — Shophub == ConectaLa.)
+ *
+ * Conector da Conecta Lá. Auth por HEADER (x-api-key/x-store-key/...). Sincronismo
+ * é por FILA/POLLING (não há webhook): `orders()->queue()` + baixa via remove;
+ * `products()->modifiedQueue()` + baixa. Cotação de frete é callback INBOUND (a
+ * plataforma chama a URL do seller) — endpoint que o Bunker expõe, não daqui.
+ *
+ * Ponto de entrada: cada método devolve o grupo de endpoints já autenticado.
  *
  *   $conecta = new ConectaLa();
  *   $conecta->infos($integration)->store();          // smoke test de credencial
