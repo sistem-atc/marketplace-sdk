@@ -66,3 +66,26 @@ it('sem api_key lanca ConectaLaAuthenticationException', function () {
     expect(fn () => MarketPlaces::ConectaLa()->infos(conectaLaIntegration(['store_key' => 'S']))->store())
         ->toThrow(ConectaLaAuthenticationException::class);
 });
+
+it('financial()->extract bate no GET /financeiro/extrato/extrato', function () {
+    Http::fake(['*/financeiro/extrato/extrato*' => Http::response(['data' => []], 200)]);
+    MarketPlaces::ConectaLa()->financial(conectaLaIntegration())->extract(['start_date' => '2026-06-01']);
+    Http::assertSent(fn ($req) => str_contains($req->url(), '/financeiro/extrato/extrato'));
+});
+
+it('financial()->conciliationBatches bate no GET /Financial/conciliationlote', function () {
+    Http::fake(['*/Financial/conciliationlote*' => Http::response(['data' => []], 200)]);
+    MarketPlaces::ConectaLa()->financial(conectaLaIntegration())->conciliationBatches();
+    Http::assertSent(fn ($req) => str_contains($req->url(), '/Financial/conciliationlote'));
+});
+
+it('catalogs()->stores e collections()->list batem nos paths certos', function () {
+    Http::fake([
+        '*/GetCatalogs/stores*' => Http::response(['data' => []], 200),
+        '*/Collections/all*' => Http::response(['data' => []], 200),
+    ]);
+    MarketPlaces::ConectaLa()->catalogs(conectaLaIntegration())->stores();
+    MarketPlaces::ConectaLa()->collections(conectaLaIntegration())->list(['name' => 'x']);
+    Http::assertSent(fn ($req) => str_contains($req->url(), '/GetCatalogs/stores'));
+    Http::assertSent(fn ($req) => str_contains($req->url(), '/Collections/all'));
+});

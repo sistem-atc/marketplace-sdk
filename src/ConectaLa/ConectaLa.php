@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\ConectaLa;
 
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Catalog\BrandMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Catalog\CatalogMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Catalog\CategoryMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Catalog\CollectionMethods;
+use SistemAtc\Marketplaces\ConectaLa\Endpoints\Financial\FinancialMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Info\InfoMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\ConectaLa\Endpoints\Product\ProductMethods;
@@ -46,5 +49,20 @@ class ConectaLa
     public function categories(MarketplaceIntegration $integration): CategoryMethods
     {
         return new CategoryMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function catalogs(MarketplaceIntegration $integration): CatalogMethods
+    {
+        return new CatalogMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function collections(MarketplaceIntegration $integration): CollectionMethods
+    {
+        return new CollectionMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function financial(MarketplaceIntegration $integration): FinancialMethods
+    {
+        return new FinancialMethods(HttpClientFactory::make($integration), $integration);
     }
 }
