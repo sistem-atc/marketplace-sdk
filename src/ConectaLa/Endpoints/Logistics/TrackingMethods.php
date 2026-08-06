@@ -10,7 +10,8 @@ use SistemAtc\Marketplaces\ConectaLa\Bases\BaseMethods;
 /**
  * Rastreio e frete (Freight & Tracking). A COTAÇÃO de frete é um callback INBOUND
  * (a Conecta Lá chama a URL do seller `POST .../cotacao`) — não é método daqui;
- * é um endpoint que o Bunker EXPÕE. Os métodos abaixo são os OUTBOUND (nós → API).
+ * é um endpoint que a aplicação CONSUMIDORA expõe. Os métodos abaixo são os
+ * OUTBOUND (nós → API).
  */
 class TrackingMethods extends BaseMethods
 {
