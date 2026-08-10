@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Shopee;
 
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
+use SistemAtc\Marketplaces\Shopee\Endpoints\Ads\AdsMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Logistics\LogisticsMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Order\OrderMethods;
 use SistemAtc\Marketplaces\Shopee\Endpoints\Payment\PaymentMethods;
@@ -68,5 +69,14 @@ class Shopee
     public function marketing(MarketplaceIntegration $integration): MarketingMethods
     {
         return new MarketingMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Publicidade CPC (`/api/v2/ads`) — gasto diário da loja. Não confundir com
+     * marketing(), que é desconto/voucher.
+     */
+    public function ads(MarketplaceIntegration $integration): AdsMethods
+    {
+        return new AdsMethods(HttpClientFactory::make($integration), $integration);
     }
 }

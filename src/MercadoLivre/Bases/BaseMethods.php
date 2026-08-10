@@ -24,26 +24,33 @@ abstract class BaseMethods
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * @param  array<string, string>  $headers  Headers extras DESTA chamada (não
+     *   do client). As rotas de publicidade exigem `Api-Version` (1 ou 2 conforme
+     *   o produto) e sem ele devolvem 400/404. Parâmetro opcional e no FIM da
+     *   assinatura, de propósito: nenhum caller existente quebra.
+     */
     protected function makeRequest(
         HttpMethod $method,
         string $path,
         array $query = [],
         array $body = [],
-        int $retryAttempt = 0
+        int $retryAttempt = 0,
+        array $headers = []
     ): array {
         $path = $this->normalizePath($path);
-        $response = $this->executeRequest($method, $path, $query, $body);
+        $response = $this->executeRequest($method, $path, $query, $body, $headers);
 
         // Retry on 429 (Rate Limit) or 5xx (Server Error) - simple backoff
         if (($response->status() === 429 || $response->status() >= 500) && $retryAttempt < 3) {
             $sleep = (int) ($response->header('Retry-After') ?: pow(2, $retryAttempt + 1));
             sleep($sleep);
-            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1);
+            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1, $headers);
         }
 
         if ($response->status() === 401 && $retryAttempt === 0) {
             $this->httpClient = HttpClientFactory::make($this->integration);
-            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1);
+            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1, $headers);
         }
 
         if ($response->failed()) {
@@ -53,13 +60,21 @@ abstract class BaseMethods
         return $response->json() ?? [];
     }
 
+    /**
+     * @param  array<string, string>  $headers
+     */
     protected function executeRequest(
         HttpMethod $method,
         string $path,
         array $query,
         array $body,
+        array $headers = [],
     ): Response {
-        $client = $this->httpClient;
+        // CLONE obrigatório: `withHeaders()` MUTA o PendingRequest e faz
+        // array_merge_recursive nos headers — sem o clone, o `Api-Version: 2` de
+        // Product Ads vazaria pra próxima chamada do mesmo client e viraria
+        // `Api-Version: [2, 1]` em Display/Brand.
+        $client = $headers !== [] ? (clone $this->httpClient)->withHeaders($headers) : $this->httpClient;
         return match ($method) {
             HttpMethod::GET => $client->get($path, $query),
             HttpMethod::POST => $client->post($path.($query ? '?'.http_build_query($query) : ''), $body),
