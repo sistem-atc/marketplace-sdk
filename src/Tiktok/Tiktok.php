@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Tiktok;
 
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
+use SistemAtc\Marketplaces\Tiktok\Ads\Endpoints\Reporting\ReportingMethods as AdsReportingMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Authorization\AuthorizationMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\CustomerService\CustomerServiceMethods;
 use SistemAtc\Marketplaces\Tiktok\Endpoints\Finance\FinanceMethods;
@@ -68,5 +69,16 @@ class Tiktok
     public function customerService(MarketplaceIntegration $integration): CustomerServiceMethods
     {
         return new CustomerServiceMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Marketing API (business-api.tiktok.com) — relatórios de gasto de ads
+     * (GMV Max + auction). A integration aqui é a de ADS (token de longa
+     * duração do portal TikTok for Business), NÃO a do Shop: outro host,
+     * auth por header `Access-Token`, sem assinatura HMAC/shop_cipher.
+     */
+    public function ads(MarketplaceIntegration $integration): AdsReportingMethods
+    {
+        return new AdsReportingMethods($integration);
     }
 }

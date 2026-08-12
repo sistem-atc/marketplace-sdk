@@ -16,6 +16,11 @@ return [
     'tiktok' => [
         'base_url' => env('MARKETPLACES_TIKTOK_BASE_URL', 'https://open-api.tiktokglobalshop.com'),
     ],
+    // Marketing API do TikTok for Business (ads/GMV Max) — host e auth
+    // próprios, separados do TikTok Shop acima.
+    'tiktok_ads' => [
+        'base_url' => env('MARKETPLACES_TIKTOK_ADS_BASE_URL', 'https://business-api.tiktok.com'),
+    ],
     'amazon' => [
         'spapi_base_url' => env('MARKETPLACES_AMAZON_BASE_URL', 'https://sellingpartnerapi-na.amazon.com'),
         'lwa_token_url' => env('MARKETPLACES_AMAZON_LWA_TOKEN_URL', 'https://api.amazon.com/auth/o2/token'),
