@@ -44,7 +44,7 @@ describe('MarketPlaces::Tiktok()->ads()', function () {
             return str_contains($req->url(), '/open_api/v1.3/gmv_max/report/get/')
                 && $req->header('Access-Token')[0] === 'ads-long-lived-token'
                 && str_contains(urldecode($req->url()), 'store_ids=["7495"]')
-                && str_contains(urldecode($req->url()), 'dimensions=["stat_time_day"]');
+                && str_contains(urldecode($req->url()), 'dimensions=["campaign_id","stat_time_day"]');
         });
     });
 
