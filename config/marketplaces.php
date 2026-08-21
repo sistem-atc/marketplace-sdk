@@ -25,6 +25,10 @@ return [
         'spapi_base_url' => env('MARKETPLACES_AMAZON_BASE_URL', 'https://sellingpartnerapi-na.amazon.com'),
         'lwa_token_url' => env('MARKETPLACES_AMAZON_LWA_TOKEN_URL', 'https://api.amazon.com/auth/o2/token'),
     ],
+    // Amazon Ads API (host próprio; região NA cobre o BR) — separada da SP-API.
+    'amazon_ads' => [
+        'base_url' => env('MARKETPLACES_AMAZON_ADS_BASE_URL', 'https://advertising-api.amazon.com'),
+    ],
     'shopify' => [
         'api_version' => env('MARKETPLACES_SHOPIFY_API_VERSION', '2024-04'),
     ],

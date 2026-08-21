@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\Amazon;
 
 use SistemAtc\Marketplaces\Contracts\MarketplaceIntegration;
+use SistemAtc\Marketplaces\Amazon\Ads\Endpoints\Reporting\ReportingMethods as AdsReportingMethods;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Orders;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Finances;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Notifications;
@@ -20,6 +21,17 @@ class Amazon
     public function client(MarketplaceIntegration $integration): Client
     {
         return new Client($integration);
+    }
+
+    /**
+     * Amazon Ads API (advertising-api.amazon.com) — a integration aqui é a
+     * de ADS (LwA próprio, escopo advertising::campaign_management), NÃO a
+     * da SP-API; \$clientId é o client do Security Profile de ads, passado
+     * pelo host (o SDK não lê config de consumidor).
+     */
+    public function ads(MarketplaceIntegration $integration, string $clientId): AdsReportingMethods
+    {
+        return new AdsReportingMethods($integration, $clientId);
     }
 
     public function orders(MarketplaceIntegration $integration): Orders
