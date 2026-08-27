@@ -78,3 +78,49 @@ it('preserva "0.00" como string — nao vira "0"', function () {
     expect($dto->adjustmentAmount)->toBe('0.00')
         ->and($dto->toArray()['adjustment_amount'])->toBe('0.00');
 });
+
+/**
+ * Ajuste que o canal lança FORA do pedido — pacote perdido, avaria. Vem na
+ * listagem por statement (nunca na do pedido) e traz o vínculo pronto em
+ * `adjustment_order_id`.
+ */
+function fakeTiktokLogisticsReimbursement(): array
+{
+    return [
+        'id' => '7667016574267557648',
+        'type' => 'LOGISTICS_REIMBURSEMENT',
+        'adjustment_id' => '7667014659456124679',
+        'adjustment_order_id' => '585157474576139327',
+        'adjustment_amount' => '30.9',
+        'settlement_amount' => '30.9',
+        'currency' => 'BRL',
+        'order_create_time' => 1785116072,
+    ];
+}
+
+it('hidrata o ajuste de logistica com o pedido que ele ressarce', function () {
+    $t = StatementTransaction::fromArray(fakeTiktokLogisticsReimbursement());
+
+    expect($t->type)->toBe('LOGISTICS_REIMBURSEMENT')
+        ->and($t->adjustmentId)->toBe('7667014659456124679')
+        ->and($t->adjustmentOrderId)->toBe('585157474576139327')
+        ->and($t->settlementAmount)->toBe('30.9');
+});
+
+it('transacao de venda nao traz campos de ajuste', function () {
+    // Sem isso, um ORDER poderia ser confundido com ajuste e creditar duas vezes.
+    $t = StatementTransaction::fromArray(fakeTiktokStatement());
+
+    expect($t->adjustmentOrderId)->toBeNull()
+        ->and($t->adjustmentId)->toBeNull();
+});
+
+it('roundtrip nao perde os campos de ajuste', function () {
+    $payload = fakeTiktokLogisticsReimbursement();
+    $t = StatementTransaction::fromArray($payload);
+    $back = $t->toArray();
+
+    expect($back['type'])->toBe($payload['type'])
+        ->and($back['adjustment_order_id'])->toBe($payload['adjustment_order_id'])
+        ->and($back['adjustment_id'])->toBe($payload['adjustment_id']);
+});

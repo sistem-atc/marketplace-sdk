@@ -37,6 +37,13 @@ final class StatementTransaction implements DTOInterface
         public readonly ?string $actualReturnShippingFeeAmount = null,
         public readonly ?string $actualShippingFeeAmount = null,
         public readonly ?string $adjustmentAmount = null,
+        /**
+         * Só em transação de ajuste (`type` != ORDER): o id do ajuste no
+         * TikTok e o pedido que ele ressarce. É por `adjustmentOrderId` que o
+         * ajuste se liga ao título — o `orderId` vem vazio nesses casos.
+         */
+        public readonly ?string $adjustmentId = null,
+        public readonly ?string $adjustmentOrderId = null,
         public readonly ?string $affiliateAdsCommissionAmount = null,
         public readonly ?string $affiliateCommissionAmount = null,
         public readonly ?string $affiliateCommissionBeforePit = null,
@@ -98,6 +105,12 @@ final class StatementTransaction implements DTOInterface
         public readonly ?int $statementTime = null,
         public readonly ?string $status = null,
         public readonly ?string $transactionFeeAmount = null,
+        /**
+         * ORDER para a venda; LOGISTICS_REIMBURSEMENT e afins para os ajustes
+         * que o canal lança fora do pedido (pacote perdido, avaria). Sem este
+         * campo não há como separar um do outro na mesma listagem.
+         */
+        public readonly ?string $type = null,
         #[ArrayOf(SkuStatementTransaction::class)]
         public readonly ?array $skuStatementTransactions = null,
     ) {}
