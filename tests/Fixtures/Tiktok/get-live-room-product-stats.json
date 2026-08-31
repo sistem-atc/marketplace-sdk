@@ -1,0 +1,29 @@
+{
+  "product_stats": [
+    {
+      "main_image_url": "https://example.com/images/products/1732333333333333629-main.jpg",
+      "product_id": "1732333333333333629",
+      "is_live": true,
+      "click_through_rate": "0.11",
+      "sellable_region": "ID",
+      "created_order_count": 123,
+      "exposure_count": 123,
+      "total_click_count": 123,
+      "local_gmv": {
+        "amount": "123.45",
+        "currency": "USD"
+      },
+      "product_name": "Wireless Charging Stand",
+      "local_unit_price": {
+        "amount": "12.34",
+        "currency": "USD"
+      },
+      "paid_order_count": 123,
+      "inventory_left_count": 123,
+      "inventory_consumption_count": 123,
+      "created_order_user_count": 123,
+      "paid_user_count": 123,
+      "click_order_rate": "0.11"
+    }
+  ]
+}

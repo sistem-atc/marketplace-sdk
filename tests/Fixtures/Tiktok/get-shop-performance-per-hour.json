@@ -1,0 +1,26 @@
+{
+  "performance": {
+    "overall": {
+      "gmv": {
+        "amount": "2344.00",
+        "currency": "SGD"
+      },
+      "items_sold": 543,
+      "visitors": 234324,
+      "customers": 2332
+    },
+    "intervals": [
+      {
+        "index": 2,
+        "gmv": {
+          "amount": "2332.22",
+          "currency": "SGD"
+        },
+        "items_sold": 23,
+        "visitors": 2332,
+        "customers": 223
+      }
+    ],
+    "latest_available_timestamp": 1623812664
+  }
+}

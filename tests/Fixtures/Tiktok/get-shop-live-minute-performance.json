@@ -1,0 +1,70 @@
+{
+  "performance": {
+    "overall": {
+      "live_title": "BAJU BARU!!!",
+      "start_time": 1623812664,
+      "end_time": 1623812664,
+      "duration": 3600,
+      "gmv": {
+        "amount": "39440.00",
+        "currency": "USD"
+      },
+      "items_sold": 432,
+      "unique_viewers": 10230,
+      "impressions": 87939
+    },
+    "intervals": [
+      {
+        "start_time": 1623812664,
+        "end_time": 1623812664,
+        "sales": {
+          "gmv": {
+            "amount": "39440.00",
+            "currency": "USD"
+          },
+          "items_sold": 57,
+          "customers": 49,
+          "sku_orders": 57,
+          "main_orders": 51
+        },
+        "traffic": {
+          "viewers": 229,
+          "views": 2092,
+          "product_impressions": 8989,
+          "ctr": "0.3264",
+          "enter_room_rate": "0.1636",
+          "product_clicks": 595,
+          "impressions": 13862
+        },
+        "interactions": {
+          "new_followers": 9,
+          "shares": 4,
+          "comments": 42,
+          "likes": 1146,
+          "comment_rate": "0.0242",
+          "follow_rate": "0.0040",
+          "like_rate": "0.8956",
+          "share_rate": "0.0022"
+        },
+        "conversion": {
+          "avg_price": {
+            "amount": "7.29",
+            "currency": "SGD"
+          },
+          "click_to_order_rate": {
+            "sku_order_ctor": "0.0187",
+            "main_order_ctor": "0.015757"
+          },
+          "gpm": {
+            "watch_gpm": "158.18",
+            "show_gpm": "20.75"
+          },
+          "created_sku_orders": 12,
+          "sku_order_rate": "0.0057"
+        }
+      }
+    ]
+  },
+  "next_page_token": "cGFnZV9udW1iZXI9MQ==",
+  "total_count": 20
+}

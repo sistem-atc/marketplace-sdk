@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": 10007014,
+      "message": "package in freeze status",
+      "detail": {
+        "package_id": "123123123123131"
+      }
+    }
+  ]
+}

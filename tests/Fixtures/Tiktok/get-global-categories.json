@@ -1,0 +1,13 @@
+{
+    "categories": [
+        {
+            "id": "600001",
+            "parent_id": "0",
+            "local_name": "Home Supplies",
+            "is_leaf": false,
+            "permission_statuses": [
+                "AVAILABLE"
+            ]
+        }
+    ]
+}

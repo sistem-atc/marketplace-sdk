@@ -1,0 +1,24 @@
+{
+    "total_count": 100,
+    "next_page_token": "b2Zmc2V0PTAK",
+    "target_collaborations": [
+        {
+            "id": "789078671231123124",
+            "name": "target_collaboration",
+            "message": "test",
+            "start_time": 1715654330,
+            "end_time": 1715654330,
+            "create_time": 1715654330,
+            "update_time": 1715654330,
+            "creator_inivited_count": 10,
+            "showcase_creator_count": 2,
+            "content_creator_count": 1,
+            "product_count": 30,
+            "free_sample_rule": {
+                "has_free_sample": true,
+                "is_sample_approval_exempt": true
+            },
+            "type": "STANDARD"
+        }
+    ]
+}

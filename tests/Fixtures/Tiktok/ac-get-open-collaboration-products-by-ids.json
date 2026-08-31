@@ -1,0 +1,42 @@
+{
+  "products": [
+    {
+      "shop": {
+        "name": "Test shop"
+      },
+      "id": "1729432087292775344",
+      "has_inventory": false,
+      "units_sold": 12,
+      "title": "Blue t-shirt",
+      "sale_region": "ID",
+      "main_image_url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499",
+      "detail_link": "https://shop.tiktok.com/view/product/1729624807198591373?region=ID&local=en",
+      "original_price": {
+        "currency": "USD",
+        "minimum_amount": "12.21",
+        "maximum_amount": "100.00"
+      },
+      "category_chains": [
+        {
+          "id": "3435545",
+          "local_name": "COMPUTER",
+          "is_leaf": false,
+          "parent_id": "12345"
+        }
+      ],
+      "commission": {
+        "rate": 100,
+        "currency": "USD",
+        "amount": "123"
+      },
+      "sales_price": {
+        "currency": "USD",
+        "minimum_amount": "34.3",
+        "maximum_amount": "55.7"
+      },
+      "shop_ads_commission": {
+        "rate": 100
+      }
+    }
+  ]
+}

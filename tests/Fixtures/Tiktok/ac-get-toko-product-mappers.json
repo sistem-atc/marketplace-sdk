@@ -1,0 +1,12 @@
+{
+  "error": {
+    "code": 1,
+    "message": "empty_product_id"
+  },
+  "product": [
+    {
+      "toko_pid": 2177906740,
+      "tts_pid": 1735209287836403000
+    }
+  ]
+}

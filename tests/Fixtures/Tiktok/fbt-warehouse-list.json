@@ -1,0 +1,33 @@
+{
+  "warehouses": [
+    {
+      "fbt_warehouse_id": "121219993203023",
+      "warehouse_ids": [
+        "161213293423029",
+        "181213293423030"
+      ],
+      "name": "TikTok_Eastvale(CA)",
+      "type": "PLATFORM_WAREHOUSE",
+      "subscribed": true,
+      "addresses": [
+        {
+          "postal_code": "92376",
+          "region_code": "US",
+          "state": "CA",
+          "district": "San Bernardino",
+          "city": "Rialto",
+          "address_line_1": "1420 Tamarind Ave, Rialto, San Bernardino",
+          "address_line_2": " ",
+          "address_line_3": " "
+        }
+      ],
+      "logistics_services": [
+        {
+          "id": "12123232323",
+          "name": "Fulfilled by TikTok Shop-Standard",
+          "subscribed": true
+        }
+      ]
+    }
+  ]
+}

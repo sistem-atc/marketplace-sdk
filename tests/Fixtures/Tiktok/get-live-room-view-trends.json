@@ -1,0 +1,13 @@
+{
+  "view_trend_performances": [
+    {
+      "stats_type": "TREND_ONLINE_VIEWER",
+      "data_points": [
+        {
+          "value": "123",
+          "timestamp": 1623812664
+        }
+      ]
+    }
+  ]
+}

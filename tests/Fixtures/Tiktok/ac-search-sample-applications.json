@@ -1,0 +1,23 @@
+{
+  "next_page_token": "aDU2dHIzMlFhME5CUzJKUDhDdVJhTDM1WmJkeFVTVW9LTkRaSnNaZCtuWjJXVU5CSDhlaA==",
+  "sample_applications": [
+    {
+      "id": "8070590921506065183",
+      "sample_product": {
+        "id": "1729432087292775344",
+        "sku_id": "1729480364147774364",
+        "sku_sale_property_value_names": "red, large size"
+      },
+      "main_order_id": "13444222",
+      "activity_id": "13456677",
+      "status": "Pending",
+      "creator_fulfillment": {
+        "id": "123456",
+        "expiration_time": 1726301400,
+        "total_suspend_duration": 123,
+        "status": "PENDING",
+        "bound_product_status": "LIVE"
+      }
+    }
+  ]
+}

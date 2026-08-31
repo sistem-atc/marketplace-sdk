@@ -1,0 +1,8 @@
+{
+  "features": [
+    {
+      "name": "CUSTOM_MSG",
+      "is_authorized": true
+    }
+  ]
+}

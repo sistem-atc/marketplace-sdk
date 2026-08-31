@@ -1,0 +1,17 @@
+{
+    "has_more": true,
+    "next_page_token": "b2Zmc2V0PTAK",
+    "messages": [
+        {
+            "conversation_index": "1735032460678899",
+            "message_body": {
+                "id": "7451907556216407553",
+                "conversation_id": "7451873679308620048",
+                "type": "TEXT",
+                "content": "{\"content\": \"simple text message\"}",
+                "create_time": 1691411573,
+                "sender_id": "2368694990397660924"
+            }
+        }
+    ]
+}

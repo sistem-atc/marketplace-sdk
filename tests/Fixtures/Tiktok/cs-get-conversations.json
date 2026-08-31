@@ -1,0 +1,41 @@
+{
+  "next_page_token": "1612353423",
+  "conversations": [
+    {
+      "id": "7494560109732334261",
+      "participant_count": 3,
+      "can_send_message": true,
+      "unread_count": 0,
+      "create_time": 1691411573,
+      "participants": [
+        {
+          "im_user_id": "7494560109732334261",
+          "avatar": "https://p16-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/566c497faaaf4491a84d3ce55d9cb095~tplv-omjb5zjo8w-origin-image.image?",
+          "user_id": "7494560109732334262",
+          "role": "BUYER",
+          "nickname": "Albert",
+          "buyer_platform": "TIKTOK_SHOP"
+        }
+      ],
+      "latest_message": {
+        "id": "7494560109732334263",
+        "type": "TEXT",
+        "content": "{\"content\": \"simple text message\"}",
+        "create_time": 1691411573,
+        "is_visible": true,
+        "sender": {
+          "im_user_id": "7494560109732334261",
+          "avatar": "https://p16-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/566c497faaaf4491a84d3ce55d9cb095~tplv-omjb5zjo8w-origin-image.image?",
+          "role": "BUYER",
+          "nickname": "Albert"
+        },
+        "index": "7494560109732334274"
+      },
+      "cur_session_id": "7494472109882334261",
+      "cur_session": {
+        "id": "7494472109882334261",
+        "phase": "ASSIGNED"
+      }
+    }
+  ]
+}

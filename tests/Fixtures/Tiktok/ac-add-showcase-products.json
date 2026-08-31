@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": 16001001,
+      "message": "Encounter network error, please try again.",
+      "detail": {
+        "product_id": "12390753231"
+      }
+    }
+  ]
+}

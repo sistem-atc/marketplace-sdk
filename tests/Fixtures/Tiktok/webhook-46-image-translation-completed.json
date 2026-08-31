@@ -1,0 +1,22 @@
+{
+  "type": 46,
+  "shop_id": "7494049642642441621",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "translation_task": {
+      "id": "764c6e87eedcea90399a0dafcd572b71",
+      "status": "COMPLETED",
+      "fail_reason": "",
+      "target_lang": "it-IT",
+      "original_image": {
+        "uri": "tos-useast2a-i-tulkllf4y5-euttp/748e39ecff38453ab8396a36a53dbb92",
+        "url": "https://p16-oec-sg.ibyteimg.com/tos-alisg-i-aphluv4xyz-sg/sample.jpeg"
+      },
+      "translated_image": {
+        "uri": "tos-maliva-i-o3syd03w52-us/53b55d6e8cdf1f315affa7e70b45707d",
+        "url": "https://p16-oec-sg.ibyteimg.com/tos-alisg-i-aphluv4xwc-sg/sample.jpeg"
+      }
+    }
+  }
+}

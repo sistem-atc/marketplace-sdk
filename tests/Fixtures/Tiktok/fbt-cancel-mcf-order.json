@@ -1,0 +1,12 @@
+{
+  "mcf_order": {
+    "external_order_id": "shopify7136104329798256386",
+    "mcf_order_id": "7136104329798256386",
+    "consign_orders": [
+      {
+        "id": "OBF1234",
+        "status": "cancelled"
+      }
+    ]
+  }
+}

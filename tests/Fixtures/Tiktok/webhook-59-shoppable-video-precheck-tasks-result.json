@@ -1,0 +1,27 @@
+{
+  "type": 59,
+  "creator_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "task_id": "task_202402011200001234",
+    "violation_check_result": {
+      "status": "FAIL",
+      "issues": [
+        {
+          "risk": "HIGH",
+          "suggestions": "Remove prohibited visual elements and resubmit the video."
+        }
+      ]
+    },
+    "good_quality_check_result": {
+      "status": "SUCCESS",
+      "issues": [
+        {
+          "code": "LOW_RESOLUTION",
+          "suggestions": "Consider uploading a higher-resolution video for better viewing experience."
+        }
+      ]
+    }
+  }
+}

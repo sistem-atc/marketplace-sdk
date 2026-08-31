@@ -1,0 +1,43 @@
+{
+    "next_page_token": "aDU2dHIzMlFhME5CUzJKUDhDdVJhTDM1WmJkeFVTVW9LTkRaSnNaZCtuWjJXVU5CSDhlaA==",
+    "total_count": 100,
+    "sample_applications": [
+        {
+            "id": "123456",
+            "commission_rate": "0.1",
+            "status": "PENDING",
+            "order_id": "123456",
+            "available_quantity": 50,
+            "approve_expiration_time": 1728674995,
+            "shipment_expiration_time": 1728674995,
+            "tracking_number": "123456",
+            "fulfillment_status": "ONGOING",
+            "is_approvable": true,
+            "disapprovable_reasons": [
+                "Product out of stock"
+            ],
+            "partner_name": "ABC",
+            "creator": {
+                "creator_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg",
+                "username": "test.name",
+                "nickname": "Test Name",
+                "follower_count": 200,
+                "avatar_url": "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068xxxxx",
+                "gmv": {
+                    "amount": "500",
+                    "currency": "USD"
+                },
+                "content_count": 4,
+                "fulfillment_percentage": "60.50",
+                "ec_video_view": 1200
+            },
+            "product": {
+                "id": "123456",
+                "title": "A women dress",
+                "sku_id": "123456",
+                "sku_image_url": "https://p16-oec-va.ibyteimg.com/tos-malivaxxxxx",
+                "sku_name": "Soft Cover"
+            }
+        }
+    ]
+}

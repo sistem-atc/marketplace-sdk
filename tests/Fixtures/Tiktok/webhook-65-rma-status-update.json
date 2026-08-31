@@ -1,0 +1,14 @@
+{
+  "type": 65,
+  "tts_notification_id": "1111111113",
+  "shop_id": "1234567890",
+  "timestamp": 1644412889,
+  "data": {
+    "rma_id": "576486316948490002",
+    "aftersales_request_id": "576486316948490001",
+    "return_role": "BUYER",
+    "rma_status": "RMA_CREATED",
+    "rma_create_time": 1627587601,
+    "rma_update_time": 1644412889
+  }
+}

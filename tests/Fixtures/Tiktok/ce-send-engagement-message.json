@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": 68009003,
+      "message": "The user adresss is invalid",
+      "detail": {
+        "buyer_email": "v4b1232DOUSGKQQ7YLNEMPPEPBORFEQ2A@scs.tiktokw.us"
+      }
+    }
+  ]
+}

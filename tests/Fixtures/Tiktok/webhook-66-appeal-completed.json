@@ -1,0 +1,24 @@
+{
+  "shop_id": "7494049642642441621",
+  "type": 66,
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "appeal_task": {
+      "size_chart_id": "7136104329798256386",
+      "size_chart_image_uri": "tos-maliva-i-o3syd03w52-us/1c2b3a4d5e6f7890",
+      "appeal_audit_result": [
+        {
+          "indicator_type": "SIZE_CHART_IMAGE",
+          "status": "APPROVED"
+        },
+        {
+          "indicator_type": "SIZE_CHART_TEMPLATE",
+          "status": "REJECTED",
+          "reject_reason": "The size chart image is not clear enough."
+        }
+      ]
+    },
+    "product_id": "1729859829942358814"
+  }
+}

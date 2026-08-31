@@ -1,0 +1,8 @@
+{
+    "open_collaboration_settings": {
+        "auto_add_product": {
+            "enable": true,
+            "commission_rate": 1000
+        }
+    }
+}

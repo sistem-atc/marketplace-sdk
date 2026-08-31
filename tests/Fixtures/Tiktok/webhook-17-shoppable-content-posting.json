@@ -1,0 +1,14 @@
+{
+  "type": 17,
+  "creator_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "product_id": "789078671231",
+    "event": {
+      "type": "ADD",
+      "scene": "VIDEO",
+      "content_id": "789078671231"
+    }
+  }
+}

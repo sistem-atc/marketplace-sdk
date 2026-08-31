@@ -1,0 +1,30 @@
+{
+  "label": {
+    "can_apply": true,
+    "status": "ONGOING",
+    "application_id": "86427198341982134",
+    "reach_limit": true,
+    "sample_product": {
+      "sample_sku_list": [
+        {
+          "id": "1731055098570377347",
+          "sale_property_value_ids": "7068196393634072325",
+          "price": {
+            "amount": "7588986",
+            "currency": "USD"
+          },
+          "sale_properties": [
+            {
+              "id": "100000",
+              "name": "color",
+              "value_id": "7425668826861520646",
+              "value_name": "Default"
+            }
+          ],
+          "is_available": true,
+          "unavailable_reason": "IS_PREORDER"
+        }
+      ]
+    }
+  }
+}

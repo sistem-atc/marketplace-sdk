@@ -1,0 +1,49 @@
+{
+  "live_stream_sessions": [
+    {
+      "id": "75xxxxxxxxxxxxxxx28",
+      "title": "abxxxxx",
+      "username": "rey20195",
+      "start_time": "1623812664",
+      "end_time": "1623812864",
+      "sales_performance": {
+        "gmv": {
+          "amount": "99",
+          "currency": "USD"
+        },
+        "products_added": 12,
+        "different_products_sold": 5,
+        "created_sku_orders": 100,
+        "sku_orders": 80,
+        "items_sold": 122,
+        "customers": 50,
+        "avg_price": {
+          "amount": "9",
+          "currency": "USD"
+        },
+        "click_to_order_rate": "18%",
+        "24h_live_gmv": {
+          "amount": "340",
+          "currency": "USD"
+        }
+      },
+      "interaction_performance": {
+        "acu": 123,
+        "pcu": 1332,
+        "viewers": 18323,
+        "views": 112993,
+        "avg_viewing_duration": "46",
+        "comments": 534,
+        "shares": 156,
+        "likes": 2442,
+        "new_followers": 12,
+        "product_impressions": 12,
+        "product_clicks": 3882,
+        "click_through_rate": "13.99%"
+      }
+    }
+  ],
+  "latest_available_date": "2024-09-07",
+  "next_page_token": "cGFnZV9udW1iZXI9MQ==",
+  "total_count": 233
+}

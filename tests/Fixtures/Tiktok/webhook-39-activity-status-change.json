@@ -1,0 +1,13 @@
+{
+  "type": 39,
+  "shop_id": "7494049642642441621",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "activity_id": "7136104329798256386",
+    "update_time": 1644412885,
+    "activity_type": "FIXED_PRICE",
+    "product_level": "PRODUCT",
+    "status": "ONGOING"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "available_inbound_method_list": [
+    {
+      "inbound_method": "D2FC",
+      "available_time_window_list": [
+        {
+          "start_timestamp": "1774162800",
+          "end_timestamp": "1774767600"
+        }
+      ],
+      "warehouse_list": [
+        {
+          "warehouse_name": "FC09_ATL2",
+          "warehouse_id": "7542187927317874487"
+        }
+      ],
+      "placement_fee_estimate": {
+        "amount": "13.50",
+        "currency": "USD"
+      }
+    }
+  ]
+}

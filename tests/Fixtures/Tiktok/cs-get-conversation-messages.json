@@ -1,0 +1,22 @@
+{
+  "next_page_token": "162312320",
+  "unsupported_msg_tips": "Please check this message in Seller Center.\n",
+  "messages": [
+    {
+      "id": "7494560109732334263",
+      "type": "TEXT",
+      "content": "{\"content\": \"simple text message\"}",
+      "create_time": 1691411573,
+      "is_visible": true,
+      "sender": {
+        "im_user_id": "7494560109732334261",
+        "role": "BUYER",
+        "nickname": "Albert",
+        "avatar": "https://p16-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/566c497faaaf4491a84d3ce55d9cb095~tplv-omjb5zjo8w-origin-image.image?"
+      },
+      "index": "7494560109732334274",
+      "data": "{}",
+      "plaintext": "Product card shared:\n- Product ID: 1732529206731441911; \n- Product name: Áo Khoác Cardigan Logo Thêu Phong Cách Hàn Quốc By Zonef, Áo Khoác Thu Đông Chất Vải Cotton Tổ Ong Nam Nữ Unisex; \n- Product price: ; \n- Strike-through price: \n- Sold: 40013. \n\nView full details at: https://seller-vn.tiktok.com/product/manage?search_content=1732529206731441911"
+    }
+  ]
+}

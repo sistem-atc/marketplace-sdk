@@ -1,0 +1,134 @@
+{
+  "sku_orders": [
+    {
+      "id": "576962796354307765",
+      "tags": "test-01",
+      "create_time": 1685548800,
+      "delivery_time": 1685548800,
+      "settle_status": "SETTLED",
+      "sku_id": "1729478689395213981",
+      "open_collaboration_id": "7324371012170024705",
+      "target_collaboration_id": "7324371012170024705",
+      "creator_username": "liuyi_id_creator1jigo",
+      "product_name": "Black Hoodie",
+      "product_id": "1729435310697057093",
+      "price": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "quantity": 1,
+      "shop_name": "xuyann aaaaa",
+      "content_type": "VIDEO",
+      "content_id": "7494337156519332665",
+      "attribution_type": "Direct",
+      "commission_model": "Tiered commission",
+      "commission_tier_setting": "3.0 OR 5.0",
+      "standard_commission_rate": 3000,
+      "commission_bonus_rate": 3000,
+      "shop_ads_commission_rate": 3000,
+      "tap_bonus_commission_rate": 3000,
+      "revenue_sharing_portion_rate": 3000,
+      "estimated_commission_base": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_standard_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_bonus_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_shop_ads_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_tap_bonus_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_creator_tax_isr": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_creator_tax_iva": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_creator_tax_pit": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_creator_total_earnings_after_tax": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_total_agency_earnings": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "estimated_agency_isr": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_agency_iva": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_commission_base": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_standard_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_bonus_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_shop_ads_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_tap_bonus_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_creator_tax_isr": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "actual_creator_tax_iva": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "actual_creator_tax_pit": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "actual_creator_total_earnings_after_tax": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "actual_total_agency_commission": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "actual_agency_isr": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_agency_iva": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "fully_return": "Yes",
+      "settlement_time": 1775548800,
+      "last_update_time": 1685548800
+    }
+  ],
+  "next_page_token": "6AsPQsUMvH3RkchNUPPh22NROHkE0D8pmq/N5M1kHYcZmtRyv9aVrNv65W7Q6tFA+7D1ud64MPNz5OaT",
+  "total_count": 100
+}

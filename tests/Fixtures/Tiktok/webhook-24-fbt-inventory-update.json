@@ -1,0 +1,21 @@
+{
+  "type": 24,
+  "seller_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "goods_id": "732357708734418520388",
+    "sku_id": "123513234",
+    "fbt_warehouse_inventory": [
+      {
+        "fbt_warehouse_id": "73823232239293999999",
+        "on_hand_detail": {
+          "total_quantity": 7,
+          "reserved_quantity": 5,
+          "available_quantity": 2
+        }
+      }
+    ],
+    "update_time": 1644412845
+  }
+}

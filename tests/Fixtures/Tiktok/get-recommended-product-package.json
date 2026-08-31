@@ -1,0 +1,35 @@
+{
+  "next_page_token": "b2Zmc2V0PTAK",
+  "total_count": 200,
+  "products": [
+    {
+      "product_id": "23423",
+      "abnormality_types": [
+        "Dimension",
+        "Weight"
+      ],
+      "weight_recommendation": {
+        "unit": "GRAM",
+        "weight": {
+          "min_value": "550",
+          "max_value": "650"
+        }
+      },
+      "dimension_recommendation": {
+        "unit": "CENTIMETER",
+        "length": {
+          "min_value": "19",
+          "max_value": "22"
+        },
+        "height": {
+          "min_value": "19",
+          "max_value": "22"
+        },
+        "width": {
+          "min_value": "19",
+          "max_value": "22"
+        }
+      }
+    }
+  ]
+}

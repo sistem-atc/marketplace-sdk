@@ -1,0 +1,29 @@
+{
+    "data": {
+        "shop_id": "1234",
+        "quota_type": "BONUS",
+        "gmv_tier": "1",
+        "quota_sum": "1000",
+        "quota_use": "500",
+        "unlimited": false,
+        "reached_max_follower_cnt": "1000",
+        "new_connect_count": "100",
+        "pair_connect_count": "100",
+        "start_time": "1754296736852",
+        "end_time": "1754296736852",
+        "gmv_level_rule": [
+            {
+                "reached_max_follower_cnt": "1000",
+                "gmv_tier": "1",
+                "left_gmv": {
+                    "amount": "1000",
+                    "currency": "JPY"
+                },
+                "right_gmv": {
+                    "amount": "2000",
+                    "currency": "JPY"
+                }
+            }
+        ]
+    }
+}

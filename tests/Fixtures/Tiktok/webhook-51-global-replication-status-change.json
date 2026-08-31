@@ -1,0 +1,17 @@
+{
+  "type": 51,
+  "shop_id": "7494049642642441621",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "source_product_id": "764c6e87eedcea90399a0dafcd572b71",
+    "replicated_product": {
+      "product_id": "576486316948490000",
+      "region": "GB",
+      "result": "SUCCESS",
+      "fail_reasons": {
+        "message": ""
+      }
+    }
+  }
+}

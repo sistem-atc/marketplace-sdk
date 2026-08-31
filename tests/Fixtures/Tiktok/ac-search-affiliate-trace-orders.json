@@ -1,0 +1,79 @@
+{
+  "orders": [
+    {
+      "id": 789078671231123100,
+      "status": "SETTLED",
+      "skus": [
+        {
+          "id": "1729793769377925388",
+          "product_id": "1729793769377859852",
+          "price": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "quantity": 2,
+          "commission_rate": 1000,
+          "estimated_commission_base": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "actual_commission": {
+            "amount": "Rp1.900",
+            "currency": "IDR"
+          },
+          "shop_ads_commission_rate": 5000,
+          "commission_bonus_rate": 1000,
+          "product_name": "black suit",
+          "shop_name": "TestCase idl2l",
+          "returned_quantity": 1,
+          "refunded_quantity": 0,
+          "campaign_id": "73661290629",
+          "actual_commission_base": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "actual_shop_ads_commission": {
+            "amount": "Rp5.000",
+            "currency": "IDR"
+          },
+          "estimated_shop_ads_commission": {
+            "amount": "Rp8.000",
+            "currency": "IDR"
+          },
+          "estimated_bonus_commission": {
+            "amount": "Rp1.00",
+            "currency": "IDR"
+          },
+          "delivery_time": 1685548800,
+          "creator_commission_reward_rate": 1000,
+          "estimated_creator_commission_reward_fee": {
+            "amount": "250",
+            "currency": "IDR"
+          },
+          "actual_creator_commission_reward_fee": {
+            "amount": "100",
+            "currency": "IDR"
+          },
+          "content_type": "LIVE",
+          "content_id": "7493990579714164574",
+          "trace": {
+            "id": "15678763",
+            "type": "SPECIFIC"
+          },
+          "estimated_commission": {
+            "amount": "1",
+            "currency": "USD"
+          },
+          "actual_bonus_commission": {
+            "amount": "1",
+            "currency": "USD"
+          }
+        }
+      ],
+      "create_time": 1685548800,
+      "delivery_time": 1685548800
+    }
+  ],
+  "next_page_token": "b2Zmc2V0PTEw",
+  "total_count": 10
+}

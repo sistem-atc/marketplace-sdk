@@ -1,0 +1,105 @@
+{
+  "sku_orders": [
+    {
+      "id": "576962796354307765",
+      "create_time": 1685548800,
+      "delivery_time": 1685548800,
+      "settle_status": "SETTLED",
+      "sku_id": "1729793769377925388",
+      "campaign_id": "7324371012170024705",
+      "creator_username": "liuyi_id_creator1jigo",
+      "product_name": "Black Hoodie",
+      "product_id": "1729435310697057093",
+      "price": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "quantity": 1,
+      "content_type": "VIDEO",
+      "content_id": "7494337156519332665",
+      "creator_standard_commission_rate": 3000,
+      "partner_standard_commission_rate": 4000,
+      "creator_shop_ads_commission_rate": 3000,
+      "partner_shop_ads_commission_rate": 4000,
+      "partner_tap_bonus_commission_rate": 1000,
+      "creator_tap_bonus_commission_rate": 2000,
+      "estimated_commission_base": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_creator_standard_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "estimated_partner_standard_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "estimated_creator_shop_ads_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_partner_shop_ads_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_partner_tap_bonus_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "estimated_creator_tap_bonus_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "estimated_partner_isr": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "estimated_partner_iva": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_commission_base": {
+        "amount": "200",
+        "currency": "USD"
+      },
+      "actual_creator_standard_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "actual_partner_standard_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_creator_shop_ads_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_partner_shop_ads_commission": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_partner_isr": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_partner_iva": {
+        "amount": "99",
+        "currency": "USD"
+      },
+      "actual_partner_tap_bonus_commission": {
+        "amount": "200",
+        "currency": "USD"
+      },
+      "actual_creator_tap_bonus_commission": {
+        "amount": "100",
+        "currency": "USD"
+      },
+      "fully_return": "Yes",
+      "settlement_time": 1685548800,
+      "last_update_time": 1685548800
+    }
+  ],
+  "next_page_token": "6AsPQsUMvH3RkchNUPPh22NROHkE0D8pmq/N5M1kHYcZmtRyv9aVrNv65W7Q6tFA+7D1ud64MPNz5OaT",
+  "total_count": 100
+}

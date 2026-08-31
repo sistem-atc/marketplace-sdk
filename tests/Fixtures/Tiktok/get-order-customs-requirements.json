@@ -1,0 +1,29 @@
+{
+  "order_clearance_list": [
+    {
+      "order_id": "584882846571463232",
+      "need_fill_clearance": true,
+      "already_filled_clearance": false,
+      "target_country": "JP",
+      "biz_type": 1,
+      "shipment_type": 1,
+      "item_list": [
+        {
+          "order_line_id": "584882846571423334",
+          "product_id": "1729476373250999503",
+          "sku_id": "1735885807280883357",
+          "is_virtual_unboxing": true,
+          "is_temporary_listing": false,
+          "related_item_detail": [
+            {
+              "product_id": "1729476373250999503",
+              "sku_id": "1735885807280883357",
+              "qty": 2,
+              "price_percent": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

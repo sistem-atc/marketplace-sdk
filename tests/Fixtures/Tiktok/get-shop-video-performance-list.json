@@ -1,0 +1,43 @@
+{
+  "videos": [
+    {
+      "id": "172xxxxxxxxxxxxx089",
+      "title": "How to Style Summer Outfits",
+      "username": "creator_shop_01",
+      "creator": {
+        "open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg",
+        "user_name": "creator_shop_01",
+        "nick_name": "abc_bec",
+        "author_type": "OFFICIAL"
+      },
+      "video_post_time": "2025-01-01 00:00:00",
+      "duration": 34,
+      "hash_tags": [
+        "#racuntiktok",
+        "fyp"
+      ],
+      "gmv": {
+        "amount": "125.50",
+        "currency": "USD"
+      },
+      "gpm": {
+        "amount": "32.40",
+        "currency": "USD"
+      },
+      "avg_customers": 35,
+      "sku_orders": 12,
+      "items_sold": 18,
+      "views": 1200,
+      "click_through_rate": "0.0528",
+      "products": [
+        {
+          "id": "105xxxxxxxxxxxxx247",
+          "name": "Wireless Earbuds"
+        }
+      ]
+    }
+  ],
+  "latest_available_date": "2024-09-07",
+  "next_page_token": "cGFnZV9udW1iZXI9MQ==",
+  "total_count": 10
+}

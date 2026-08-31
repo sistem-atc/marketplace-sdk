@@ -1,0 +1,27 @@
+{
+  "mcf_order": {
+    "external_order_id": "shopify202208291503530001100220033",
+    "mcf_order_id": "7136104329798256386",
+    "consign_orders": [
+      {
+        "id": "OBF1234",
+        "goods": [
+          {
+            "id": "123124124",
+            "quantity": 1
+          }
+        ],
+        "tracking_number": "TN87654321",
+        "carrier": "USPS",
+        "status": "PENDING",
+        "is_platform_closed": false,
+        "issue": "Lack of inventory",
+        "shipping_provider": {
+          "id": "7345645330412603141",
+          "name": "UPS"
+        }
+      }
+    ],
+    "create_time": 1661756811
+  }
+}

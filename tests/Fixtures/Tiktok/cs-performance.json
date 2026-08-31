@@ -1,0 +1,11 @@
+{
+  "performance": {
+    "support_session_count": 15,
+    "response_percentage": "93.4",
+    "satisfaction_percentage": "95.2",
+    "response_time_mins": "3.4",
+    "conversion_rate": "66.67",
+    "cs_guided_gmv": "36500",
+    "currency": "USD"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "benchmarks": {
+    "excellent_threshold": "0.98",
+    "poor_threshold": "0.80"
+  },
+  "calculation_rule": {
+    "denominator_label": "Delivered orders",
+    "denominator_value": "1000",
+    "numerator_label": "On-time delivered orders",
+    "numerator_value": "947"
+  },
+  "dimension": "Product satisfaction",
+  "distribution_details": [
+    {
+      "count": 820,
+      "name": "Dispatch 24-48 Hours",
+      "percent": "82.0"
+    }
+  ],
+  "evaluate_duration_days": 30,
+  "end_evaluation_time": 1761264000,
+  "start_evaluation_time": 1758672000,
+  "metric_code": "OTDR",
+  "score": "4.3",
+  "status": "GOOD",
+  "status_text": "Excellent",
+  "trend": {
+    "data_points": [
+      {
+        "record_date": "20260601",
+        "value": "0.947"
+      }
+    ]
+  },
+  "value": "0.947",
+  "value_unit": "PERCENT",
+  "analyses": [
+    {
+      "summaries": "Stable performance. Top 3 issues to address.",
+      "details": "Your 30-day on-time delivery rate is only higher than **% of peers, which is hurting your SPS."
+    }
+  ]
+}

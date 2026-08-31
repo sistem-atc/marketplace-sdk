@@ -1,0 +1,29 @@
+{
+    "next_page_token": "b2Zmc2V0PTEw",
+    "total_count": 10000,
+    "open_collaborations": [
+        {
+            "id": "94297006405",
+            "status": "NORMAL",
+            "current_commission": {
+                "rate": 3000,
+                "start_time": 1725334422,
+                "end_time": 1727625600
+            },
+            "showcase_creator_count": 15,
+            "content_creator_count": 10,
+            "product": {
+                "id": "1729432087292775344",
+                "title": "Blue t-shirt",
+                "main_image_url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499",
+                "status": "LIVE",
+                "inventory": 1274,
+                "original_price": {
+                    "currency": "USD",
+                    "minimum_amount": "12.21",
+                    "maximum_amount": "100.00"
+                }
+            }
+        }
+    ]
+}

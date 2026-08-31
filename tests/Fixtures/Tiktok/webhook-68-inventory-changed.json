@@ -1,0 +1,28 @@
+{
+  "event_id": "d7813cae-9997-4d24-a583-7d85801250f1",
+  "occurred_at": "2026-04-02T09:28:34.979101552Z",
+  "seller_id": "7498123456789012345",
+  "product_id": "1891234567890123456",
+  "sku_id": "1729507467923261408",
+  "quantity_snapshot_after_change": {
+    "total_quantity": 7,
+    "total_available_quantity": 7,
+    "total_committed_quantity": 0,
+    "in_shop_quantity": 7,
+    "campaign_locked_quantity": 0,
+    "creator_locked_quantity": 0
+  },
+  "change_detail": [
+    {
+      "idempotency_key": "d7813cae-9997-4d24-a583-7d85801250f1",
+      "trigger_source": "manual_adjustment",
+      "occurred_at": "2026-04-02T09:28:34.979101552Z",
+      "total_quantity_delta": 4,
+      "available_quantity_delta": 4,
+      "committed_quantity_delta": 0,
+      "in_shop_quantity_delta": 4,
+      "campaign_locked_quantity_delta": 0,
+      "creator_locked_quantity_delta": 0
+    }
+  ]
+}

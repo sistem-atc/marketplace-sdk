@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": 10007014,
+      "message": "order not in sof service",
+      "detail": {
+        "package_id": "1231231231231"
+      }
+    }
+  ]
+}

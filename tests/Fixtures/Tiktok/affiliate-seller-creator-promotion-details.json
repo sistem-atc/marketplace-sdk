@@ -1,0 +1,47 @@
+{
+    "data": {
+        "product_details": [
+            {
+                "product_base_info": {
+                    "product_id": "1234",
+                    "title": "product title",
+                    "image": {
+                        "url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/2ca53c34ad8443e6b39f4e0153d3aed4~tplv-o3syd03w52-origin-image.image?from=1320446476"
+                    },
+                    "price": {
+                        "min_price": {
+                            "amount": "1",
+                            "currency": "GBP"
+                        },
+                        "max_price": {
+                            "amount": "1",
+                            "currency": "GBP"
+                        }
+                    },
+                    "promotion_price": {
+                        "min_price": {
+                            "amount": "1",
+                            "currency": "GBP"
+                        },
+                        "max_price": {
+                            "amount": "1",
+                            "currency": "GBP"
+                        }
+                    },
+                    "target_commission": 2200,
+                    "open_commission": 2200,
+                    "target_ads_commission": 2200,
+                    "old_target_commission": 2200,
+                    "old_target_ads_commission": 2200,
+                    "commission_effective_time": 1786592565735,
+                    "ads_commission_effective_time": 1786592565735,
+                    "product_status": "1"
+                },
+                "product_add_status": false,
+                "video_count": 1,
+                "live_count": 1,
+                "is_commission_effective": false
+            }
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "type": 55,
+  "creator_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "precheck_task_id": "7493990579714164574",
+    "result": "FAIL",
+    "issues": [
+      {
+        "risk": "Pirated Content",
+        "suggestion": "Your video may include unoriginal content. Creating original content is essential for standing out from the crowd."
+      }
+    ]
+  }
+}

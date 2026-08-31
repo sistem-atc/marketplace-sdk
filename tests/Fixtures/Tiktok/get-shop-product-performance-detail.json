@@ -1,0 +1,86 @@
+{
+  "performance": {
+    "intervals": [
+      {
+        "start_date": "2024-04-01",
+        "end_date": "2024-04-08",
+        "sales": {
+          "gmv": {
+            "amount": "233",
+            "currency": "USD"
+          },
+          "orders": 23,
+          "items_sold": 23,
+          "breakdowns": [
+            {
+              "content_type": "LIVE",
+              "sales": {
+                "gmv": {
+                  "amount": "43",
+                  "currency": "USD"
+                },
+                "items_sold": 454,
+                "avg_customers": 34
+              }
+            }
+          ]
+        },
+        "traffic": {
+          "breakdowns": [
+            {
+              "traffic": {
+                "impressions": 34,
+                "page_views": 43,
+                "avg_unique_page_views": 34,
+                "ctr": "0.034",
+                "avg_conversion_rate": "0.033"
+              },
+              "content_type": "LIVE"
+            }
+          ]
+        },
+        "cancel_and_refunds": {
+          "returned": 2,
+          "canceled": 23,
+          "refunded": 3,
+          "replacements": 3
+        }
+      }
+    ],
+    "ratings": [
+      {
+        "stars": "1_STAR",
+        "count": 23,
+        "percentage": "0.23"
+      }
+    ],
+    "top_contents": [
+      {
+        "type": "LIVE",
+        "contents": [
+          {
+            "content_id": "2304002883",
+            "items_sold": 23,
+            "gmv": {
+              "amount": "323",
+              "currency": "GBP"
+            }
+          }
+        ]
+      }
+    ],
+    "top_creators": [
+      {
+        "creator_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg",
+        "creator_name": "nick.name",
+        "creator_profile": "https://www.example.com/images/creator-profile.webp",
+        "gmv": {
+          "amount": "2365",
+          "currency": "GBP"
+        },
+        "items_sold": 32
+      }
+    ]
+  },
+  "latest_available_date": "2024-04-07"
+}

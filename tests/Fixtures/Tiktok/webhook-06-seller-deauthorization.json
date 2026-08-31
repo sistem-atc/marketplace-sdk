@@ -1,0 +1,9 @@
+{
+  "type": 6,
+  "tts_notification_id": "7327112393057371910",
+  "shop_id": "7494049642642441621",
+  "timestamp": 1644412885,
+  "data": {
+    "message": "Shop_id {xxx} is deauthorized from your APP by merchant."
+  }
+}

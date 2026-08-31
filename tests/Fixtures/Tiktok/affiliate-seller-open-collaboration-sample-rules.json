@@ -1,0 +1,22 @@
+{
+    "sample_rules": [
+        {
+            "product_id": "123456",
+            "sample_quota": 100,
+            "is_sample_time_unlimited": true,
+            "status": "ONGOING",
+            "available_quantity": 50,
+            "start_time": 1728546888,
+            "end_time": 1728546888,
+            "thresholds": {
+                "minimum_follower_count": 200,
+                "minimum_gmv": 1000,
+                "avg_ec_video_views": 5,
+                "category_ids": [
+                    "601152"
+                ],
+                "predicted_fulfillment_rank": "ALL"
+            }
+        }
+    ]
+}

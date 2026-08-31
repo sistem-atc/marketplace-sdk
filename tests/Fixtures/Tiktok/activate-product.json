@@ -1,0 +1,17 @@
+{
+  "errors": [
+    {
+      "code": 12052990,
+      "message": "Check failed",
+      "detail": {
+        "product_id": "1729382588639839583",
+        "extra_errors": [
+          {
+            "code": 12052048,
+            "message": "You can't edit other sellers' products"
+          }
+        ]
+      }
+    }
+  ]
+}

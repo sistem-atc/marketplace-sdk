@@ -1,0 +1,20 @@
+{
+  "performance": {
+    "intervals": [
+      {
+        "start_date": "2024-09-01",
+        "end_date": "2024-09-08",
+        "gmv": {
+          "amount": "11",
+          "currency": "USD"
+        },
+        "sku_orders": 20,
+        "customers": 4,
+        "items_sold": 2,
+        "click_to_order_rate": "0.23",
+        "click_through_rate": "0.23"
+      }
+    ]
+  },
+  "latest_available_date": "2024-09-07"
+}

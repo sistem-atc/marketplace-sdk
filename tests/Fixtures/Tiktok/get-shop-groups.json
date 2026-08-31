@@ -1,0 +1,14 @@
+{
+  "shop_group": {
+    "source": "1",
+    "shop_group_name": "shop group name A"
+  },
+  "shops": [
+    {
+      "shop_id": "36123502970007",
+      "seller_id": "74901234567890",
+      "shop_name": "shop name A",
+      "shop_region": "US"
+    }
+  ]
+}

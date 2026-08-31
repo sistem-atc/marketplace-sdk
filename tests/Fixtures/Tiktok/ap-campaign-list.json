@@ -1,0 +1,15 @@
+{
+  "campaigns": [
+    {
+      "id": "7360590375814268715",
+      "name": "test",
+      "status": "READY",
+      "registration_start_time": 1712941200,
+      "registration_end_time": 1713891599,
+      "campaign_start_time": 1712941200,
+      "campaign_end_time": 1715878799
+    }
+  ],
+  "next_page_token": "absdfV231as2V0PTAK",
+  "total_count": 1570
+}

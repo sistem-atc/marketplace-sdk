@@ -1,0 +1,34 @@
+{
+    "line_items": [
+        {
+            "return_line_item_id": "4035319218955782461",
+            "sub_return_line_item_id": "4035227657962164815",
+            "decisions": [
+                {
+                    "decision": "OFFER_PARTIAL_REFUND_AFTER_RECEIVING_PKG",
+                    "eligible": false,
+                    "ineligible_code": 25005020,
+                    "ineligible_reason": "the return is already completed, you can't approve again.",
+                    "available_reject_reasons": [
+                        {
+                            "name": "seller_reject_apply_product_has_been_packed",
+                            "text": "The display text for the reject reason."
+                        }
+                    ],
+                    "partial_refund_amount_range": {
+                        "min_amount": "2.34",
+                        "max_amount": "3.33",
+                        "currency": "USD"
+                    }
+                }
+            ]
+        }
+    ],
+    "request_log_id": "20260713225708FB…",
+    "errors": [
+        {
+            "code": "98001004",
+            "message": "Invalid parameters. Please verify your input before retrying"
+        }
+    ]
+}

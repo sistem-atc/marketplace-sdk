@@ -1,0 +1,45 @@
+{
+  "benefits": [
+    {
+      "benefit_name": "LIVE giveaway",
+      "is_unlocked": true,
+      "unlock_score": "4.5"
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "Product satisfaction",
+      "score": "4.8",
+      "status": "EXCELLENT",
+      "status_text": "Excellent",
+      "weight": "70"
+    }
+  ],
+  "evaluate_duration_days": 90,
+  "end_evaluation_time": 1782518400,
+  "start_evaluation_time": 1774828800,
+  "peer_percentile": "86.5",
+  "primary_category": {
+    "category_id": "601450",
+    "category_name": "Home Supplies"
+  },
+  "sps_score": "4.6",
+  "sps_tier": "GOOD",
+  "sps_tier_text": "Excellent",
+  "top_issues": {
+    "issues": [
+      {
+        "description": "Your on-time delivery performance is lower than peer shops.",
+        "evaluate_duration_days": 30,
+        "end_evaluation_time": 1761264000,
+        "start_evaluation_time": 1758672000,
+        "metric_code": "OTDR",
+        "metric_name": "On-time delivery rate",
+        "percentile": "72.4",
+        "rank": 1
+      }
+    ],
+    "summary": "Improve late dispatch and negative reviews to increase your SPS score."
+  },
+  "update_time": 1761264000
+}

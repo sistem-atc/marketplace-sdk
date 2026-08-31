@@ -1,0 +1,23 @@
+{
+  "type": 58,
+  "creator_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "mcf_order": {
+      "external_order_id": "shopify202208291503530001100220033",
+      "mcf_order_id": "7136104329798256386",
+      "consign_orders": {
+        "id": "OBF12345678",
+        "tracking_number": "TN87654321",
+        "carrier": "USPS",
+        "status": "processing",
+        "goods": {
+          "id": "1231231",
+          "quantity": 1
+        }
+      },
+      "create_time": 1661756811
+    }
+  }
+}

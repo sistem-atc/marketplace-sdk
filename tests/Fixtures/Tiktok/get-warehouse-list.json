@@ -1,0 +1,33 @@
+{
+  "id": "7000714532876273410",
+  "entity_id": "7395366865142499073",
+  "name": "Guangzhou",
+  "effect_status": "ENABLED",
+  "type": "SALES_WAREHOUSE",
+  "sub_type": "DOMESTIC_WAREHOUSE",
+  "is_default": true,
+  "address": {
+    "region": "China",
+    "state": "GuangDong",
+    "city": "GuanZhou",
+    "distict": "HuaDu",
+    "town": "town",
+    "contact_person": "Lee",
+    "first_name": "新一",
+    "last_name": "工藤",
+    "first_name_local_script": "くどう",
+    "last_name_local_script": "しんいち",
+    "postal_code": "510000",
+    "full_address": "South Sea 11 floor",
+    "region_code": "CN",
+    "phone_number": "188****2234",
+    "address_line1": "Bairro/Distrito",
+    "address_line2": "Caminho Trinta e Três",
+    "address_line3": "3",
+    "address_line4": "11 floor",
+    "geolocation": {
+      "latitude": "45.41634",
+      "longitude": "-75.6868"
+    }
+  }
+}

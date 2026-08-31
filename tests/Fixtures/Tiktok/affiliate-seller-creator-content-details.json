@@ -1,0 +1,25 @@
+{
+    "next_page_token": "b2Zmc2V0PTEw",
+    "total_count": 1,
+    "creator_content_details": [
+        {
+            "creator_profile": {
+                "username": "example_creator",
+                "nickname": "nickname",
+                "follower_count": 10023,
+                "avatar": {
+                    "url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499"
+                },
+                "creator_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg"
+            },
+            "video_count": 101,
+            "live_count": 2,
+            "promotion_status": "NORMAL",
+            "promotion_end_time": 1734682697
+        }
+    ],
+    "product": {
+        "id": "1734823553672710512",
+        "image_url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499"
+    }
+}

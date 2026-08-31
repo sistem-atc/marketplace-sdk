@@ -1,0 +1,16 @@
+{
+    "global_product_id": "1729592969712207008",
+    "global_skus": [
+        {
+            "id": "1729592969712207012",
+            "seller_sku": "Color-Red-XM001",
+            "sales_attributes": [
+                {
+                    "id": "100000",
+                    "value_id": "1729592969712207123"
+                }
+            ],
+            "external_global_sku_id": "1234567890"
+        }
+    ]
+}

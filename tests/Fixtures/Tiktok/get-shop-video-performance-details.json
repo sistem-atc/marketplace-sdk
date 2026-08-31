@@ -1,0 +1,76 @@
+{
+  "performance": {
+    "intervals": [
+      {
+        "start_date": "2024-09-01",
+        "end_date": "2024-09-08",
+        "sales": {
+          "overall": {
+            "gmv": {
+              "amount": "230.02",
+              "currency": "USD"
+            },
+            "gpm": {
+              "amount": "1.02",
+              "currency": "USD"
+            },
+            "customers": 12,
+            "items_sold": 22,
+            "ctr": "0.029",
+            "product_impressions": 32092,
+            "product_clicks": 21232
+          },
+          "breakdowns": [
+            {
+              "product_id": "19332235",
+              "gmv": {
+                "amount": "230.02",
+                "currency": "USD"
+              },
+              "gpm": {
+                "amount": "1.02",
+                "currency": "USD"
+              },
+              "customers": 12,
+              "items_sold": 22,
+              "ctr": "0.029",
+              "product_impressions": 32092,
+              "product_clicks": 21232
+            }
+          ]
+        },
+        "traffic": {
+          "views": 76649,
+          "new_followers": 11,
+          "shares": 23,
+          "comments": 8,
+          "likes": 2
+        }
+      }
+    ],
+    "viewer_profile": [
+      {
+        "type": "VIEWERS",
+        "gender_distribution": [
+          {
+            "gender": "MALE",
+            "percentage": "0.349"
+          }
+        ],
+        "age_distribution": [
+          {
+            "age": "25-34",
+            "percentage": "0.293"
+          }
+        ],
+        "country_distribution": [
+          {
+            "country_code": "MY",
+            "percentage": "0.993"
+          }
+        ]
+      }
+    ]
+  },
+  "latest_available_date": "2024-09-07"
+}

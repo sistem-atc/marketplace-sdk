@@ -1,0 +1,25 @@
+{
+  "videos": [
+    {
+      "id": "7271486684427046149",
+      "performances": [
+        {
+          "time_range": {
+            "start_time": 1704067200,
+            "end_time": 1704067200
+          },
+          "metrics": {
+            "anchor_display_rate": "0.64",
+            "click_through_rate": "0.08",
+            "order_count": 3,
+            "item_sold_count": 3,
+            "gmv": {
+              "amount": "27.85",
+              "currency": "USD"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

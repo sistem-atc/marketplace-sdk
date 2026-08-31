@@ -1,0 +1,71 @@
+{
+  "inbound_orders": [
+    {
+      "order_id": "5766071177167344427",
+      "order_id_string": "IBR5766071177167344427",
+      "order_plan_id": "5766071177167345050",
+      "merchant": {
+        "id": "493493403043",
+        "name": "ExampleCompany"
+      },
+      "create_time": 1773778751,
+      "ship_time": 1773778751,
+      "expected_arrival_time": 1773778751,
+      "actual_arrival_time": 1773778751,
+      "warehouse": {
+        "fbt_warehouse_id": "121219993203023",
+        "business_warehouse_ids": [
+          "121219993209983"
+        ],
+        "name": "TikTok Warehouse",
+        "type": "FC"
+      },
+      "status_logs": [
+        {
+          "operate_time": 1715398048,
+          "new_status": "RECEIVED",
+          "previous_status": "PARTIALLY_RECEIVED",
+          "operator": "Warehouse"
+        }
+      ],
+      "logistic_info_list": [
+        {
+          "provider_name": "UPS",
+          "waybill_number": "889042812410",
+          "related_number": "C0001"
+        }
+      ],
+      "carton_details": [
+        {
+          "carton_no": "C0001",
+          "carton_type": "SINGLE_SKU",
+          "box_measurements": {
+            "weight": "5",
+            "weight_unit": "KILOGRAM",
+            "width": "6",
+            "height": "7",
+            "length": "8",
+            "length_unit": "METER"
+          },
+          "items": [
+            {
+              "goods_id": "Goods id.",
+              "quantity": 10
+            }
+          ]
+        }
+      ],
+      "inbound_goods_lot_receive_item_details": [
+        {
+          "goods_id": "7603596185",
+          "lot_code": "LOT-2024-XP9",
+          "expiration_time": 1735689600,
+          "planned_count": 100,
+          "normal_received_count": 98,
+          "defective_received_count": 2,
+          "total_received_count": 100
+        }
+      ]
+    }
+  ]
+}

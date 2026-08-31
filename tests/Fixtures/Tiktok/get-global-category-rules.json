@@ -1,0 +1,53 @@
+{
+  "product_certifications": [
+    {
+      "id": "7267563252536723205",
+      "name": "product_cert_name",
+      "is_required": false,
+      "sample_image_url": "https://p-boei18n.byted.org/tos-boei18n-i-jvtte31kaf/80b32f2896829eeb69d4b278c4f3aa75.jpg~tplv-jvtte31kaf-origin-jpeg.jpeg",
+      "required_regions": [
+        "GB",
+        "MY",
+        "PH",
+        "SG",
+        "TH",
+        "VN"
+      ],
+      "optional_regions": [
+        "US"
+      ],
+      "requirement_conditions": [
+        {
+          "region": "IE",
+          "condition_type": "VALUE_ID_MATCH",
+          "attribute_id": "101610",
+          "attribute_value_id": "1024358"
+        }
+      ]
+    }
+  ],
+  "size_chart": {
+    "is_supported": true,
+    "is_required": true
+  },
+  "responsible_person": {
+    "is_required": false,
+    "optional_regions": [
+      "IE"
+    ],
+    "required_regions": [
+      "DE",
+      "ES"
+    ]
+  },
+  "manufacturer": {
+    "is_required": false,
+    "optional_regions": [
+      "IE"
+    ],
+    "required_regions": [
+      "DE",
+      "ES"
+    ]
+  }
+}

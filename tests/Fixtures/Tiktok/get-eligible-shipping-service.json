@@ -1,0 +1,32 @@
+{
+  "order_id": "28823355942588",
+  "order_line_id": [
+    "32132124331234"
+  ],
+  "weight": {
+    "value": "1.2",
+    "unit": "GRAM"
+  },
+  "shipping_services": [
+    {
+      "id": "288233559123860015",
+      "name": "UPS-first class",
+      "price": "5",
+      "currency": "USD",
+      "earliest_delivery_days": 3,
+      "latest_delivery_days": 5,
+      "is_default": false,
+      "shipping_provider_name": "UPS",
+      "shipping_provider_id": "288233559123860012",
+      "shipping_fee": "3",
+      "shipping_app_service_fee": "1",
+      "signature_fee": "1"
+    }
+  ],
+  "dimension": {
+    "length": "0.3",
+    "width": "0.2",
+    "height": "0.04",
+    "unit": "INCH"
+  }
+}

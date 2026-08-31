@@ -1,0 +1,32 @@
+{
+  "latest_available_date": "2024-04-07",
+  "performance": {
+    "product_id": 123456789,
+    "sku_id": "123456789",
+    "intervals": [
+      {
+        "start_date": "2024-04-01",
+        "end_date": "2024-04-07",
+        "gmv": {
+          "amount": "135.42",
+          "currency": "USD"
+        },
+        "gmv_breakdown": [
+          {
+            "amount": "82.15",
+            "currency": "USD",
+            "type": "LIVE"
+          }
+        ],
+        "items_sold": 10,
+        "items_sold_breakdown": [
+          {
+            "amount": 10,
+            "type": "LIVE"
+          }
+        ],
+        "sku_orders": 10
+      }
+    ]
+  }
+}

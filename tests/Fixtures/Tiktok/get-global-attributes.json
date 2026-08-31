@@ -1,0 +1,37 @@
+{
+  "attributes": [
+    {
+      "id": "100392",
+      "name": "Occasion",
+      "type": "PRODUCT_PROPERTY",
+      "is_requried": false,
+      "values": [
+        {
+          "id": "1001533",
+          "name": "Birthday"
+        }
+      ],
+      "is_multiple_selection": false,
+      "is_customizable": false,
+      "requirement_conditions": [
+        {
+          "region": "IE",
+          "condition_type": "VALUE_ID_MATCH",
+          "attribute_id": "101610",
+          "attribute_value_id": "1024358"
+        }
+      ],
+      "optional_regions": [
+        "US"
+      ],
+      "required_regions": [
+        "GB",
+        "MY",
+        "PH",
+        "SG",
+        "TH",
+        "VN"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": 64,
+  "tts_notification_id": "1111111111",
+  "shop_id": "1234567890",
+  "timestamp": 1644412885,
+  "data": {
+    "aftersales_request_id": "576486316948490001",
+    "return_role": "BUYER",
+    "aftersales_request_status": "PENDING_REQUEST_REVIEW",
+    "aftersales_request_create_time": 1627587600,
+    "aftersales_request_update_time": 1644412885
+  }
+}

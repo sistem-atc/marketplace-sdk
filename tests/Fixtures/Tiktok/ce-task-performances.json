@@ -1,0 +1,13 @@
+{
+  "task_performances": [
+    {
+      "id": "8646958016719848812",
+      "status": "SENDING",
+      "sent_recipient_count": 100,
+      "read_recipient_count": 20,
+      "order_count": 10,
+      "gmv_amount": "5.5",
+      "claimed_coupons_count": 1
+    }
+  ]
+}

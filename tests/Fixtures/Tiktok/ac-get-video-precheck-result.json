@@ -1,0 +1,23 @@
+{
+  "precheck_task": {
+    "id": "7493990579714164574",
+    "violation_check_result": {
+      "status": "FAIL",
+      "issues": [
+        {
+          "risk": "Pirated Content",
+          "suggestions": "Your video may include unoriginal content. Creating original content is essential for standing out from the crowd."
+        }
+      ]
+    },
+    "good_quality_check_result": {
+      "status": "FAIL",
+      "issues": [
+        {
+          "code": "LOW_CONTENT_PROMOTIO",
+          "suggestions": "You can try to showcase the product from multiple perspectives."
+        }
+      ]
+    }
+  }
+}

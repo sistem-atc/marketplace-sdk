@@ -160,3 +160,25 @@ it('search devolve o pedido COMPLETO + page token opaco', function () {
         ->and($dto->nextPageToken)->toBe('b2Zmc2V0PTUw')
         ->and($dto->totalCount)->toBe(120);
 });
+
+it('nao descarta NENHUM campo do exemplo OFICIAL da doc', function () {
+    // O roundtrip acima compara contra um fixture escrito A MAO: campo que
+    // nunca entrou no fixture jamais era cobrado, e o teste passava verde
+    // enquanto a API mandava dado que morria na desserializacao. Foram 24
+    // campos assim — entre eles `is_refundable_sample`, o unico sinal que
+    // distingue amostra reembolsavel de venda normal.
+    //
+    // Este teste usa o exemplo OFICIAL da doc como fonte. Quando o TikTok
+    // adicionar campo novo, basta atualizar o fixture: o teste quebra e a
+    // gente fica sabendo, em vez de perder dado em silencio.
+    $payload = json_decode(
+        file_get_contents(__DIR__.'/../Fixtures/Tiktok/get-order-detail.json'),
+        true,
+    );
+
+    $reconstruido = OrderResponseDTO::fromArray($payload)->toArray();
+
+    $perdidos = array_diff(array_keys($payload), array_keys($reconstruido));
+
+    expect($perdidos)->toBe([], 'campos descartados: '.implode(', ', $perdidos));
+});

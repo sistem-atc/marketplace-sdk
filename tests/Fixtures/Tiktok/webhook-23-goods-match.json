@@ -1,0 +1,14 @@
+{
+  "type": 23,
+  "seller_open_id": "VIyStQAAAADCBQ40s4TzOSSOEIW-bM5O9cod3vK8OytW8m-bnBYlXw",
+  "tts_notification_id": "7327112393057371910",
+  "timestamp": 1644412885,
+  "data": {
+    "match_type": "MATCH",
+    "product_type": "LOCAL",
+    "goods_id": "732357708734418520388",
+    "product_id": "123513234",
+    "sku_id": "123563781",
+    "update_time": 1644412845
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "submissions": [
+    {
+      "id": "8001234567890123456",
+      "opportunity_id": "7123456789012345678",
+      "opportunity_title": "Women's High-Waist Yoga Leggings",
+      "status": "APPROVED",
+      "product_id": "7298374612938475620",
+      "product_name": "Premium Yoga Leggings - Black",
+      "submit_time": 1775973876,
+      "review_time": 1775973876,
+      "rejection_reason": "Product does not match the opportunity category requirements",
+      "product_orders": 121,
+      "product_pv": 320
+    }
+  ],
+  "next_page_token": "100",
+  "total_count": 300
+}

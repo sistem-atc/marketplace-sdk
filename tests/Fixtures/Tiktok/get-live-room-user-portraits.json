@@ -1,0 +1,44 @@
+{
+  "all_ads_gender_indicators": [
+    {
+      "type": "USER_PORTRAIT_GENDER_UNKNOWN",
+      "value": "123"
+    }
+  ],
+  "all_fan_indicators": [
+    {
+      "type": "USER_PORTRAIT_FOLLOWER",
+      "value": "123"
+    }
+  ],
+  "all_ads_age_indicators": [
+    {
+      "type": "USER_PORTRAIT_AGE_LESS_THAN_15",
+      "value": "123"
+    }
+  ],
+  "region_indicators": [
+    {
+      "value": "123",
+      "type": "ID"
+    }
+  ],
+  "paid_ads_age_indicators": [
+    {
+      "type": "USER_PORTRAIT_AGE_LESS_THAN_15",
+      "value": "123"
+    }
+  ],
+  "paid_ads_gender_indicators": [
+    {
+      "type": "USER_PORTRAIT_GENDER_UNKNOWN",
+      "value": "123"
+    }
+  ],
+  "paid_fan_indicators": [
+    {
+      "type": "USER_PORTRAIT_FOLLOWER",
+      "value": "123"
+    }
+  ]
+}

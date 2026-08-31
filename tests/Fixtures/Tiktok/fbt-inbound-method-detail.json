@@ -1,0 +1,55 @@
+{
+  "info": [
+    {
+      "allocation_shipments": [
+        {
+          "warehouse_id": "7542187927317874487",
+          "goods_items": [
+            {
+              "goods_id": "2134566",
+              "quantity": 400
+            }
+          ],
+          "cartons": [
+            {
+              "carton_type": "SINGLE_SKU",
+              "items": [
+                {
+                  "goods_id": "12345",
+                  "quantity": 20,
+                  "lot_code": "sfsfnjkfvv",
+                  "expiration_timestamp": "1623812664"
+                }
+              ],
+              "quantity": 2,
+              "carton_nums": [
+                "C0001",
+                "C0002"
+              ],
+              "box_measurements": {
+                "weight": "3.5",
+                "weight_unit": "POUNDS",
+                "width": "1.2",
+                "height": "2",
+                "length": "5",
+                "length_unit": "INCH"
+              }
+            }
+          ],
+          "shipment_options": [
+            {
+              "shipping_method": "SMALL_PARCEL"
+            }
+          ]
+        }
+      ],
+      "placement_option_id": "5766071177167344420",
+      "placement_fee_estimate": {
+        "amount": "13.50",
+        "currency": "USD"
+      }
+    }
+  ],
+  "placement_task_status": "Executing",
+  "expiration_timestamp": "1774767600"
+}

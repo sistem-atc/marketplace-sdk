@@ -1,0 +1,64 @@
+{
+  "check_result": "FAILED",
+  "fail_reasons": [
+    {
+      "code": 12052700,
+      "message": "Product title invalid"
+    }
+  ],
+  "warnings": {
+    "message": "Your product will not be sent for review. "
+  },
+  "listing_quality": {
+    "current_tier": "POOR",
+    "remaining_recommendations": 3
+  },
+  "diagnoses": [
+    {
+      "field": "TITLE",
+      "diagnosis_results": [
+        {
+          "code": "TITLE_LESS_THAN_40_CHARACTERS",
+          "how_to_solve": "Names must be at least 40 characters long and contain product-identifying information, such as \"hiking boots\" or \"lipstick\".",
+          "quality_tier": "POOR"
+        }
+      ],
+      "suggestions": {
+        "seo_words": [
+          {
+            "text": "dress"
+          }
+        ],
+        "smart_texts": [
+          {
+            "text": "this is a good title"
+          }
+        ],
+        "images": [
+          {
+            "uri": "tos-maliva-i-o3syd03w52-us/53b55d6e8cdf1f315affa7e70b45707d",
+            "url": "https://p16-graph-va.ibyteimg.com/tos-maliva-i-1por3rr4fy-us/v2/53b55d6e8cdf1f315affa7e70b45707d~tplv-1por3rr4fy-image.webp",
+            "optimized_uri": "tos-maliva-i-o3syd03w52-us/0266127022264e54ad2f639f5e0fb5e6",
+            "optimized_url": "https://p16-graph-va.ibyteimg.com/tos-maliva-i-1por3rr4fy-us/v2/0266127022264e54ad2f639f5e0fb5e6~tplv-1por3rr4fy-image.webp",
+            "height": 600,
+            "width": 600
+          }
+        ]
+      }
+    }
+  ],
+  "pre_check_results": [
+    {
+      "pre_check_item": "INCOMPLETE_INFO",
+      "pre_check_details": [
+        {
+          "short_reason": "Insufficient or Incomplete Product Information",
+          "long_reason": "Ensure product title and description contain complete information that accurately describes the product",
+          "related_fields": [
+            "PRE_CHECK_FIELD_TITLE"
+          ]
+        }
+      ]
+    }
+  ]
+}

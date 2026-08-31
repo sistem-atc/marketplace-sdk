@@ -1,0 +1,42 @@
+{
+    "target_collaboration_conflicts": [
+        {
+            "creator_user_open_id": "7494656937121841111",
+            "product_id": "789078671231"
+        }
+    ],
+    "update_failed": {
+        "remove_creator_open_ids": [
+            "12345"
+        ],
+        "remove_product_ids": [
+            "12345"
+        ],
+        "add_creator_open_ids": [
+            "12345"
+        ],
+        "add_products": {
+            "id": "789078671231312312",
+            "commission_rate": 1000
+        },
+        "change_commissions": {
+            "product_id": "789078671231312312",
+            "commission_rate": 1000
+        },
+        "end_time": 1715654330,
+        "seller_contact_info": {
+            "email": "test@bytedance.com",
+            "phone_number": "(+62) 1234567890\n",
+            "whatsapp": "(+62) 1234567890\n",
+            "telegram": "(+62) 1234567890\n",
+            "line": "(+62) 1234567890\n"
+        },
+        "name": "openapi_test",
+        "invalid_product_id_list": [
+            "1234"
+        ],
+        "invalid_open_id_list": [
+            "xxxxxx"
+        ]
+    }
+}

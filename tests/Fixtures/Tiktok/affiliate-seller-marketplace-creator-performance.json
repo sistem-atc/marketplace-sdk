@@ -1,0 +1,178 @@
+{
+    "creator": {
+        "username": "dioab",
+        "nickname": "Dion",
+        "avatar": {
+            "url": "https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/2bf6a2485ec8bf93483e4a6ed907e6fd~c5_720x720.webp?lk3s=a5d48078\\u0026x-expires=1712988000\\u0026x-signature=E8US22KfUCwKz0R%2FMFF6%2FMOmogs%3D"
+        },
+        "selection_region": "US",
+        "bio_description": "This is my personal introduction",
+        "follower_count": 2323,
+        "profile_tt_uri": "aweme://user/profile/7200669046446064666?sec_uid=MS4wLjABAAAAvkrSOIMxn2YpXW5qBFVHIbfQ11u2L1hamtgg3mbk5GRPpl1TrnKo5zzQe5T77YLw&from_scene=8&enter_from=scan",
+        "category_ids": [
+            "60001"
+        ],
+        "top_collaborated_brand_ids": [
+            "8363021"
+        ],
+        "brand_collaboration_count": 76,
+        "units_sold": 234,
+        "units_sold_range": {
+            "minimum_amount": 100,
+            "maximum_amount": 1000,
+            "formatted_range": "0-10"
+        },
+        "gmv": {
+            "currency": "USD",
+            "amount": "3434.23"
+        },
+        "video_gmv": {
+            "currency": "USD",
+            "amount": "39232.34"
+        },
+        "live_gmv": {
+            "currency": "USD",
+            "amount": "3432.34"
+        },
+        "gmv_range": {
+            "currency": "USD",
+            "minimum_amount": "1000.00",
+            "maximum_amount": "10000.00",
+            "formatted_range": "$0-$100"
+        },
+        "ec_live_engagement_rate": "6000",
+        "category_gmv_distribution": [
+            {
+                "category_id": "66666",
+                "value": "0.3035"
+            }
+        ],
+        "content_gmv_distribution": [
+            {
+                "content_type": "VIDEO",
+                "value": "0.3035"
+            }
+        ],
+        "product_original_price_range": {
+            "currency": "USD",
+            "minimum_amount": "2.59",
+            "maximum_amount": "343.23"
+        },
+        "gpm": {
+            "currency": "USD",
+            "amount": "10.23"
+        },
+        "live_gpm": {
+            "currency": "USD",
+            "amount": "44.96"
+        },
+        "video_gpm": {
+            "currency": "USD",
+            "amount": "28.89"
+        },
+        "gpm_range": {
+            "currency": "USD",
+            "minimum_amount": "100.00",
+            "maximum_amount": "1000.00",
+            "formatted_range": "$0-$100"
+        },
+        "video_gpm_range": {
+            "currency": "USD",
+            "minimum_amount": "100.00",
+            "maximum_amount": "1000.00",
+            "formatted_range": "$0-$100"
+        },
+        "live_gpm_range": {
+            "currency": "USD",
+            "minimum_amount": "100.00",
+            "maximum_amount": "1000.00",
+            "formatted_range": "$0-$100"
+        },
+        "promoted_product_num": 311,
+        "ec_live_count": 12,
+        "ec_video_count": 34,
+        "avg_ec_video_play_count": 1234,
+        "avg_commission_rate": 6000,
+        "avg_commission_rate_range": {
+            "minimum_amount": 6000,
+            "maximum_amount": 7000
+        },
+        "avg_gmv_per_buyer": {
+            "currency": "USD",
+            "amount": "45.68"
+        },
+        "avg_gmv_per_buyer_range": {
+            "currency": "USD",
+            "minimum_amount": "100.00",
+            "maximum_amount": "1000.00",
+            "formatted_range": "$15-$20"
+        },
+        "avg_ec_live_view_count": 4355,
+        "avg_ec_live_like_count": 344,
+        "avg_ec_live_comment_count": 23,
+        "avg_ec_live_share_count": 3434,
+        "avg_ec_video_like_count": 324,
+        "avg_ec_video_comment_count": 343,
+        "avg_ec_video_share_count": 22,
+        "follower_location": [
+            {
+                "key": "ID",
+                "value": "0.3705"
+            }
+        ],
+        "follower_age": [
+            {
+                "key": "18-23",
+                "value": "0.2500"
+            }
+        ],
+        "follower_gender": [
+            {
+                "key": "Male",
+                "value": "0.5000"
+            }
+        ],
+        "pps": "4.5",
+        "rating": "3.2",
+        "ec_video_engagement_rate": "3000",
+        "post_rate": "100",
+        "creator_profile": {
+            "is_official_recommend": false,
+            "contact_info_available": false,
+            "creator_bind_mcn_name": "name",
+            "live_engagement_rate_30d": 50,
+            "video_play_cnt_30d_med": 10,
+            "live_view_cnt_30d_med": 10,
+            "live_like_cnt_30d": 10,
+            "live_comment_cnt_30d_med": 10,
+            "live_share_cnt_30d_med": 10,
+            "video_publish_cnt_30d_med": 10,
+            "has_invited_90d": false,
+            "is_creator_blocked": false,
+            "creator_level": 2,
+            "creator_fulfillment_reviews": 10,
+            "is_eligible_flat_fee": false,
+            "is_rising_star": false,
+            "creator_fulfillment_score_90d": "4.1",
+            "sample_score": 75,
+            "creator_connect_info": {
+                "is_paired": false,
+                "is_connect": false,
+                "is_blocked": false
+            },
+            "creator_trend_profile": [
+                {
+                    "start_timestamp": 1784419200,
+                    "end_timestamp": 1784419200,
+                    "gmv": {
+                        "amount": "1000",
+                        "symbol": "$"
+                    },
+                    "units_sold": 1000,
+                    "follower": 1000,
+                    "engagement_rate": 558
+                }
+            ]
+        }
+    }
+}

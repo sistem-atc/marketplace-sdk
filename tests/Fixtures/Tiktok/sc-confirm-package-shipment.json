@@ -1,0 +1,15 @@
+{
+  "success_packages": [
+    "5345241234",
+    "42365346"
+  ],
+  "errors": [
+    {
+      "code": "39003015",
+      "message": "Provider is not supported by TikTok Shop",
+      "detail": {
+        "package_id": "4645645645"
+      }
+    }
+  ]
+}

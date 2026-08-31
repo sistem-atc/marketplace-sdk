@@ -1,0 +1,47 @@
+{
+  "total_count": 10,
+  "campaign_product_statistics": [
+    {
+      "data_update_time": "1736204400000",
+      "creator_sales_num": 1,
+      "collaborated_creators_num": 0,
+      "promoted_creator_num": 0,
+      "sample_requested_creator_num": 0,
+      "campaign_product_detail": {
+        "product_id": "12344",
+        "product_status": "PRODUCT_UNSPECIFIED",
+        "product_name": "summer underwear soft dress summer underwear-001",
+        "product_stock_count": "100",
+        "total_commission_percent": "6000",
+        "creator_commission_percent": "1000",
+        "partner_commission_percent": "5000",
+        "plan_commission_percent": "1400",
+        "product_price": {
+          "min_price": "1.00",
+          "max_price": "3.00",
+          "currency": "USD"
+        },
+        "product_thumbnail": {
+          "uri": "tos-useast5-i-omjb5zjo8w-tx/178e97ee3b254f9ab237ea7516828266",
+          "url_list": [
+            "https://p19-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/178e97ee3b254f9ab237ea7516828266~tplv-omjb5zjo8w-resize-jpeg:300:300.jpeg?from=520841845",
+            "https://p16-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/178e97ee3b254f9ab237ea7516828266~tplv-omjb5zjo8w-resize-jpeg:300:300.jpeg?from=520841845"
+          ]
+        },
+        "indicator_data": {
+          "paid_order_num": "3",
+          "actual_order_num": "0",
+          "estimated_amount": "0",
+          "actual_amount": "0",
+          "estimated_partner_commission": "0",
+          "actual_partner_commission": "0",
+          "creator_sales_num": "0",
+          "collaborated_creators_num": "0",
+          "promoted_creator_num": "0",
+          "sample_requested_creator_num": "0"
+        }
+      }
+    }
+  ],
+  "next_page_token": "0"
+}

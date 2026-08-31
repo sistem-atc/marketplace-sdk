@@ -1,0 +1,159 @@
+{
+    "id": "1729592969712207008",
+    "title": "Short Boat Invisible Socks",
+    "main_images": [
+        {
+            "height": 600,
+            "width": 600,
+            "uri": "tos-maliva-i-o3syd03w52-us/c668cdf70b7f483c94dbe"
+        }
+    ],
+    "video": {
+        "id": "v09ea0g40000cj91373c77u3mid3g1s0"
+    },
+    "description": " ",
+    "package_dimensions": {
+        "length": "10",
+        "width": "10",
+        "height": "10",
+        "unit": "CENTIMETER"
+    },
+    "package_weight": {
+        "value": "1.32",
+        "unit": "KILOGRAM"
+    },
+    "certifications": [
+        {
+            "id": "7267563252536723205",
+            "title": "SNI Certificate",
+            "files": [
+                {
+                    "id": "v09ea0g40000cj91373c77u3mid3g1s0",
+                    "urls": [
+                        "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/6c8519a3663a4d728c4e3c131dc914b4~tplv-o3syd03w52-resize-jpeg:300:300.jpeg?from=522366036"
+                    ],
+                    "name": "SNI.PDF",
+                    "format": "PDF"
+                }
+            ],
+            "images": [
+                {
+                    "height": 600,
+                    "width": 600,
+                    "uri": "tos-maliva-i-o3syd03w52-us/c668cdf70b7f483c94dbe"
+                }
+            ]
+        }
+    ],
+    "skus": [
+        {
+            "id": "1729592969712207234",
+            "seller_sku": "Color-Red-XM001",
+            "price": {
+                "amount": "1.01",
+                "currency": "USD",
+                "unit_price": "1.00"
+            },
+            "global_quantity": 100,
+            "identifier_code": {
+                "code": "10000000000010",
+                "type": "GTIN"
+            },
+            "sales_attributes": [
+                {
+                    "id": "100000",
+                    "name": "Color",
+                    "value_id": "7267563252536723205",
+                    "value_name": "Red\n",
+                    "sku_img": {
+                        "height": 600,
+                        "width": 600,
+                        "thumb_urls": [
+                            "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/6c8519a3663a4d728c4e3c131dc914b4~tplv-o3syd03w52-resize-jpeg:300:300.jpeg?from=522366036"
+                        ],
+                        "uri": "tos-maliva-i-o3syd03w52-us/6c8519a3663a4d728c4e3c131dc914b4",
+                        "urls": [
+                            "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/6c8519a3663a4d728c4e3c131dc914b4~tplv-o3syd03w52-resize-jpeg:300:300.jpeg?from=522366036"
+                        ]
+                    }
+                }
+            ],
+            "inventory": [
+                {
+                    "global_warehouse_id": "6966568648651605766",
+                    "quantity": 100
+                }
+            ],
+            "sku_unit_count": "100.00",
+            "extra_identifier_codes": [
+                "12345678901234"
+            ],
+            "external_global_sku_id": "1234567890"
+        }
+    ],
+    "update_time": 1694522875,
+    "create_time": 1694522875,
+    "product_attributes": [
+        {
+            "id": "100392",
+            "name": "Occasion",
+            "values": [
+                {
+                    "id": "1001533",
+                    "name": "Birthday"
+                }
+            ]
+        }
+    ],
+    "size_chart": {
+        "image": {
+            "height": 600,
+            "width": 600,
+            "uri": "tos-maliva-i-o3syd03w52-us/c668cdf70b7f483c94dbe"
+        },
+        "template": {
+            "id": "7267563252536723205"
+        }
+    },
+    "products": [
+        {
+            "region": "GB",
+            "id": "1729592969712207922",
+            "sku_mappings": [
+                {
+                    "global_sku_id": "1729592969712207234",
+                    "local_sku_id": "1729592969712207230",
+                    "sales_attribute_mappings": [
+                        {
+                            "global_attribute_id": "100000",
+                            "local_attribute_id": "100000",
+                            "global_value_id": "1001064",
+                            "local_value_id": "1001064"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "global_seller_id": "7494083603082020484",
+    "brand": {
+        "id": "7082427311584347905"
+    },
+    "category": {
+        "id": "600002"
+    },
+    "manufacturer": {
+        "name": "Sample Manufacturer Name",
+        "address": "123W 106th St, New York, NY, USA, 10025",
+        "phone_number": "+1-2124108036",
+        "email": "samplemanufacturer101@outlook.com\n"
+    },
+    "responsible_person_ids": [
+        "67726293bf1eb1e92401a"
+    ],
+    "manufacturer_ids": [
+        "67726293bf1eb1e92401a"
+    ],
+    "source_locale": "fr-FR",
+    "external_global_product_id": "123456789"
+}

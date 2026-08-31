@@ -1,0 +1,33 @@
+{
+  "type": 63,
+  "timestamp": 1678886400,
+  "shop_id": "789123456789123456",
+  "tts_notification_id": "000000000000000001",
+  "data": {
+    "activity_id": "act_123456789012345678",
+    "update_time": 1678886400,
+    "change_type": "product_update",
+    "product_update_list": {
+      "product_ids": [
+        "11111111",
+        "22222222"
+      ],
+      "exclude_product_ids": [
+        "33333333"
+      ],
+      "benefit_product_ids": [
+        "44444444"
+      ]
+    },
+    "product_remove_list": {
+      "product_ids": [
+        "55555555"
+      ],
+      "sku_ids": [
+        "66666666"
+      ],
+      "benefit_product_ids": [],
+      "exclude_product_ids": []
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "sales": 123,
+    "local_gmv": {
+      "amount": "123.45",
+      "currency": "USD"
+    },
+    "created_order_count": 123,
+    "current_visitor_count": 123,
+    "paid_order_count": 123,
+    "local_unit_price": {
+      "amount": "12.34",
+      "currency": "USD"
+    },
+    "product_reach_count": 123,
+    "watch_pv": 123,
+    "click_through_rate": "0.11",
+    "accumulated_new_follower_count": 123,
+    "buyer_count": 123,
+    "accumulated_comment_count": 123,
+    "product_view_count": 123,
+    "click_order_rate": "0.11",
+    "avg_watching_duration": 123,
+    "accumulated_sharing_count": 123,
+    "peak_concurrent_user_count": 123
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "EFASDFSAFDA23432DFAFDSA",
+  "type": "WITHDRAW",
+  "amount": "100",
+  "currency": "IDR",
+  "status": "PROCESSING",
+  "create_time": 1623812664
+}

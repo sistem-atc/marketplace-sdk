@@ -1,0 +1,17 @@
+{
+  "hazmat_and_expiration_info": {
+    "hazmat_and_expiration_dto_list": [
+      {
+        "tts_sku_id": "723456789012345678",
+        "is_hazmat": false,
+        "is_lot_code": true,
+        "is_expiration_management": true,
+        "exp_base_info": {
+          "inbound_cutoff_days": 90,
+          "expiration_alert_days": 80,
+          "sales_cutoff_days": 70
+        }
+      }
+    ]
+  }
+}

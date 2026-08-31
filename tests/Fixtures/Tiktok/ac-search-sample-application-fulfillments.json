@@ -1,0 +1,15 @@
+{
+  "fulfillments": [
+    {
+      "id": "123456",
+      "shop_id": "123456",
+      "application_id": "123456",
+      "sample_application_type": "FREE_SAMPLE",
+      "product_id": "123456",
+      "expiration_time": 1728542813,
+      "total_suspend_duration": 100020,
+      "status": "ONGOING",
+      "bound_product_status": "LIVE"
+    }
+  ]
+}

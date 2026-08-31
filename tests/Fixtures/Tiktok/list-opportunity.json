@@ -1,0 +1,37 @@
+{
+  "opportunities": [
+    {
+      "id": "7123456789012345678",
+      "title": "title info",
+      "reference_images": [
+        "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/61e605ce483f4f7b9b419d510f74fd22~tplv-o3syd03w52-resize-image:400:400.image?dr=15586&t=555f072d&ps=933b5bde&shp=5563f2fb&shcp=122e87b3&idc=maliva&from=1432613627&from_p=305039283"
+      ],
+      "category_id_level_1": "901128",
+      "category_id_level_2": "30122212",
+      "category_id_level_3": "3321212",
+      "category_name_level_1": "Shoes",
+      "category_name_level_2": "Women's Shoes",
+      "category_name_level_3": "Sandals & Flip Flops",
+      "is_collected": false,
+      "query_words": "word1,word2",
+      "opportunity_type": "PRODUCT",
+      "brand_name": "brand1",
+      "create_time": 1712544000,
+      "expire_time": 1712544000,
+      "est_market_sales_volume": "100k+",
+      "est_market_gmv": "$9M+",
+      "search_volume": "100k+",
+      "competitor_product_count": "100+",
+      "video_view_pv": "7k+",
+      "tags": "Pencarian teratas,Pencarian trending,Persaingan rendah,Trending di TikTok,Terlaris",
+      "tag_codes": [
+        "CORE_PRODUCT"
+      ],
+      "reward_info": "Boost shoptab visibility",
+      "external_product_id": "SH1234567890",
+      "reference_source": "1"
+    }
+  ],
+  "next_page_token": "100",
+  "total_count": 200
+}

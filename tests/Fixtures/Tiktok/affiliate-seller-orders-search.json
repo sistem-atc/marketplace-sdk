@@ -1,0 +1,78 @@
+{
+    "orders": [
+        {
+            "id": "579125529499110202",
+            "delivery_time": 1723748656,
+            "create_time": 1722420186,
+            "status": "COMPLETED",
+            "skus": [
+                {
+                    "sku_id": "1729791975232997145",
+                    "settlement_status": "SETTLED",
+                    "open_collaboration_id": "73661290629",
+                    "target_collaboration_id": "73661290629",
+                    "campaign_id": "73661290629",
+                    "creator_username": "exampleTikTokCreatorUsername",
+                    "price": {
+                        "amount": "1000",
+                        "currency": "VND"
+                    },
+                    "quantity": 1,
+                    "content_type": "LIVE",
+                    "content_id": "7493990579714164574",
+                    "product_id": "1729503179457070324",
+                    "commission_model": "Tiered commission",
+                    "commission_tier_setting": "3.0 OR 5.0",
+                    "commission_rate": "1000",
+                    "partner_commission_rate": "1000",
+                    "shop_ads_commission_rate": "5000",
+                    "estimated_commission_base": {
+                        "amount": "1000",
+                        "currency": "VND"
+                    },
+                    "estimated_paid_shop_ads_commission": {
+                        "amount": "1000",
+                        "currency": "VND"
+                    },
+                    "estimated_paid_commission": {
+                        "amount": "20000",
+                        "currency": "VND"
+                    },
+                    "estimated_paid_partner_commission": {
+                        "amount": "100",
+                        "currency": "USD"
+                    },
+                    "actual_commission_base": {
+                        "amount": "50000",
+                        "currency": "VND"
+                    },
+                    "actual_paid_commission": {
+                        "amount": "10000",
+                        "currency": "VND"
+                    },
+                    "actual_paid_partner_commission": {
+                        "amount": "20000",
+                        "currency": "VND"
+                    },
+                    "actual_paid_shop_ads_commission": {
+                        "amount": "20000",
+                        "currency": "VND"
+                    },
+                    "estimated_cofunded_creator_bonus_amount": {
+                        "amount": "100",
+                        "currency": "USD"
+                    },
+                    "actual_cofunded_creator_bonus_amount": {
+                        "amount": "100",
+                        "currency": "USD"
+                    },
+                    "refunded_quantity": 1,
+                    "returned_quantity": 1,
+                    "fully_return": "Yes"
+                }
+            ]
+        }
+    ],
+    "next_page_token": "WzE2OTUxMTY2NTQ2OTMsNTc2NDczNDg5ODYxNDEyMDI1XQ==",
+    "total_count": 10000
+}

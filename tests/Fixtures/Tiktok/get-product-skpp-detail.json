@@ -1,0 +1,40 @@
+{
+  "product_id": "7311223344556677889",
+  "affiliate_program_status": "ACTIVE",
+  "total_score": 6,
+  "target_score": 8,
+  "rewards": [
+    {
+      "reward_type": "AD_CREDIT",
+      "title": "Ad credit reward",
+      "status": "CLAIMABLE",
+      "ad_credit_claim_status": "UNCLAIMED",
+      "value": "100",
+      "claim_conditions": [
+        {
+          "condition_type": "SCORE",
+          "current_value": "72",
+          "target_value": "100"
+        }
+      ],
+      "campaign_id": "7390000000000000000"
+    }
+  ],
+  "task_details": [
+    {
+      "category": "PRODUCT_CONTENT",
+      "name": "Improve product title",
+      "current_value": "12",
+      "target_value": "20",
+      "passed": false,
+      "action_suggestions": [
+        {
+          "score_increase": 8,
+          "url": "https://seller.tiktokglobalshop.com/product/edit"
+        }
+      ]
+    }
+  ],
+  "update_time": 1779129600,
+  "skpp_status": "QUALIFIED"
+}

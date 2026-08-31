@@ -1,0 +1,13 @@
+{
+  "can_pickup": true,
+  "can_drop_off": true,
+  "can_van_collection": true,
+  "drop_off_point_url": "true",
+  "pickup_slots": [
+    {
+      "start_time": 1623812664,
+      "end_time": 1623812664,
+      "avaliable": true
+    }
+  ]
+}

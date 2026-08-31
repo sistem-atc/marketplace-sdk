@@ -1,0 +1,114 @@
+{
+  "next_page_token": "cGFnZV9udW1iZXI9Mg==",
+  "total_count": 123,
+  "goods": [
+    {
+      "id": "86533997569",
+      "name": "water1.0",
+      "barcodes": [
+        {
+          "code": "014673829105",
+          "type": "UPC"
+        }
+      ],
+      "reference_code": "abc32323",
+      "image_url": "https://p-boei18n.byted.org/tos-boei18n-i-0euhj0x6u9/beec7f914a044902a0c5dc929b97d064~tplv-k3ldphp9j8-origin-jpeg.jpeg?",
+      "merchant_declaration_info": {
+        "weight": {
+          "value": "1.122",
+          "unit": "GRAM"
+        },
+        "dimension": {
+          "width": "1.122",
+          "length": "2.122",
+          "height": "3.122",
+          "unit": "CENTIMETER"
+        }
+      },
+      "warehouse_confirmation_info": {
+        "weight": {
+          "value": "1",
+          "unit": "GRAM"
+        },
+        "dimension": {
+          "width": "1",
+          "length": "2.5",
+          "height": "3",
+          "unit": "CENTIMETER"
+        }
+      },
+      "skus": [
+        {
+          "id": "1729439634328225260",
+          "name": "Testcase SKU",
+          "image_url": "https://p-boei18n.byted.org/tos-boei18n-i-0euhj0x6u9/beec7f914a044902a0c5dc929b97d064~tplv-jvtte31kaf-origin-jpeg.jpeg?from=522366036",
+          "product": {
+            "id": "1729439631253210604",
+            "name": "Testcase_xd2.0_test_goods",
+            "image_url": "https://p-boei18n.byted.org/tos-boei18n-i-0euhj0x6u9/fc303cec3f9b4e54a247bc8583892a4d~tplv-k3ldphp9j8-origin-jpeg.jpeg?from=3498640996"
+          },
+          "regions": [
+            "US"
+          ],
+          "matched": true
+        }
+      ],
+      "lot_expiration_info": {
+        "is_lot_control": true,
+        "is_expiration_management": true,
+        "shelf_life_days": 12,
+        "inbound_cutoff_days": 90,
+        "expiration_alert_days": 60,
+        "sales_cutoff_days": 20,
+        "handling_method": "DISPOSE"
+      },
+      "is_hazmat": false,
+      "hazmat_info": {
+        "hazmat_type": "MAGNETIZED",
+        "battery_extra_info": {
+          "battery_type": "LITHIUM_ION",
+          "battery_packaging_type": "STANDALONE",
+          "total_battery_weight": "1",
+          "total_battery_weight_unit": "GRAM",
+          "total_battery_capacity": "1",
+          "battery_count_per_package": "2",
+          "is_need_un_38_3_test": false,
+          "un_38_3_test_file_url": "https://example.com/fbt/msds-report.pdf",
+          "total_battery_capacity_unit": "WATTHOUR"
+        },
+        "flammable_liquids_extra_info": {
+          "flammable_liquids_type": "PAINT",
+          "flammable_liquids_volume": "1",
+          "volume_unit": "MILLILITERS"
+        },
+        "aerosol_extra_info": {
+          "volume": "1",
+          "volume_unit": "MILLILITERS"
+        },
+        "dg_class": "CLASS_2\n",
+        "dg_uncode": "UN1266",
+        "msds_file_url": "https://example.com/fbt/msds-report.pdf"
+      },
+      "sioc_approval_status": "SIOC_APPROVAL_STATUS_APPROVE",
+      "hazmat_approval_status": "APPROVAL_STATUS_UNDER_REVIEW",
+      "bulky_item_attribute": {
+        "is_bulky_item": false,
+        "is_bulky_item_accessories": false
+      },
+      "goods_safety_attributes": {
+        "is_fragile": false,
+        "is_liquid": false,
+        "is_sharp": false
+      },
+      "is_sioc": false,
+      "sioc_attribute": {
+        "sioc_files": [
+          {
+            "sioc_certification_url": "https://p-boei18n.byted.org/tos-boei18n-i-0euhj0x6u9/beec7f914a044902a0c5dc929b97d064~tplv-k3ldphp9j8-origin-jpeg.jpeg?",
+            "sioc_file_type": "PHOTO"
+          }
+        ]
+      }
+    }
+  ]
+}

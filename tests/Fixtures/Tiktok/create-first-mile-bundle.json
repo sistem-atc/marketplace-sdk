@@ -1,0 +1,13 @@
+{
+  "first_mile_bundle_id": "BA123444534",
+  "url": "https://open-fs-va.tiktokshop.com/doc_tts/object/28b05?skipCookie=true&timeStamp=1721272360&sign=ef63cd6",
+  "errors": [
+    {
+      "code": 10007014,
+      "message": "invalid package id",
+      "detail": {
+        "order_id": "578967030217083407"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "metrics": [
+    {
+      "benchmarks": {
+        "excellent_threshold": "0.02",
+        "poor_threshold": "0.08"
+      },
+      "dimension": "Product satisfaction",
+      "evaluate_duration_days": 30,
+      "end_evaluation_time": 1761264000,
+      "start_evaluation_time": 1758672000,
+      "metric_code": "NRR",
+      "metric_name": "60-day negative review rate",
+      "score": "4.7",
+      "status": "EXCELLENT",
+      "status_text": "Excellent",
+      "value": "0.97",
+      "value_unit": "PERCENT",
+      "top_reason_text": "Top opportunity"
+    }
+  ]
+}

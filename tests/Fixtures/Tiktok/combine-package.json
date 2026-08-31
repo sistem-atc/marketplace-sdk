@@ -1,0 +1,20 @@
+{
+  "packages": [
+    {
+      "id": "413234134123412",
+      "order_ids": [
+        "1233213123123",
+        "32132131231"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 10007014,
+      "message": "fulfillment not allow combine package",
+      "detail": {
+        "package_id": "1231231231231313123132"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+    "next_page_token": "b2Zmc2V0PTAK",
+    "total_count": 100,
+    "global_products": [
+        {
+            "id": "1729592969712207008",
+            "title": "Men's Fashion Sports Low Cut Cotton Breathable Ankle Short Boat Invisible Socks",
+            "status": "PUBLISHED",
+            "skus": [
+                {
+                    "id": "1729592969712207012",
+                    "seller_sku": "Color-Red-XM001"
+                }
+            ],
+            "create_time": 1694576429,
+            "update_time": 1694576429
+        }
+    ]
+}

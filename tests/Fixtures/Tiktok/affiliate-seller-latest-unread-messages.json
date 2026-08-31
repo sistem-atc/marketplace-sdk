@@ -1,0 +1,11 @@
+{
+    "newest_message_list": [
+        {
+            "conversation_id": "12345",
+            "content": "{\"content\": \"simple text message\"}",
+            "type": "TEXT",
+            "sender_id": "12345678",
+            "unread_message_count": 1
+        }
+    ]
+}

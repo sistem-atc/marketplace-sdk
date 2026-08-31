@@ -1,0 +1,23 @@
+{
+    "manufacturers": [
+        {
+            "id": "66d3cbe4d9c8b09ddca932a7",
+            "regional_profiles": [
+                {
+                    "locale": "en-IE",
+                    "name": "John Doe",
+                    "registered_trade_name": "TikTok Shop",
+                    "email": "johndoe@email.com",
+                    "phone_number": {
+                        "availability": "AVAILABLE",
+                        "country_code": "+353",
+                        "local_number": "81234567"
+                    },
+                    "address": "10 Earlsfort Terrace, Dublin, Ireland"
+                }
+            ]
+        }
+    ],
+    "total_count": 26,
+    "next_page_token": "66d3cbe3d9c8b09ddca932a1"
+}

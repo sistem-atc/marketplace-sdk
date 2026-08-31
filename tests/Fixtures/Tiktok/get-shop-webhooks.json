@@ -1,0 +1,11 @@
+{
+  "webhooks": [
+    {
+      "event_type": "ORDER_STATUS_CHANGE",
+      "address": "https://partner.tiktokshop.com",
+      "create_time": 1635338186,
+      "update_time": 1635338186
+    }
+  ],
+  "total_count": 1
+}

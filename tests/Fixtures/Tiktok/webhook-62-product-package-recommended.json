@@ -1,0 +1,35 @@
+{
+  "type": 62,
+  "tts_notification_id": "7611238471432161025",
+  "shop_id": "1111111",
+  "timestamp": 1772129552,
+  "data": {
+    "abnormality_types": [
+      "Weight",
+      "Dimension"
+    ],
+    "dimension_recommendation": {
+      "height": {
+        "max_value": "3",
+        "min_value": "3"
+      },
+      "length": {
+        "max_value": "1234",
+        "min_value": "123"
+      },
+      "unit": "CENTIMETER",
+      "width": {
+        "max_value": "666",
+        "min_value": "555"
+      }
+    },
+    "product_id": "1733529220361062152",
+    "weight_recommendation": {
+      "unit": "GRAM",
+      "weight": {
+        "max_value": "12000",
+        "min_value": "12000"
+      }
+    }
+  }
+}

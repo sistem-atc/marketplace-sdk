@@ -1,0 +1,68 @@
+{
+  "aht_problem_order_items": [
+    {
+      "aftersales_type_name": "Only Return",
+      "approve_duration_hours": "12.5",
+      "inspect_duration_hours": "30.0",
+      "order_id": "576461413038785752",
+      "return_order_id": "576461413038785753",
+      "review_count": 2,
+      "total_handle_duration_hours": "42.5"
+    }
+  ],
+  "im_dsat_chat_items": [
+    {
+      "chat_duration_hours": "1.5",
+      "chat_record_id": "745961413038785752",
+      "customer_name": "J*** D***",
+      "customer_rating": 2,
+      "first_reply_time": 1761264060,
+      "rating_reasons": "other",
+      "service_agent": "Agent A"
+    }
+  ],
+  "metric_code": "NRR",
+  "nbfr_problem_order_items": [
+    {
+      "deliver_time": 1761523200,
+      "order_create_time": 1761264000,
+      "order_id": "576461413038785752",
+      "product_id": "1729592969712207010",
+      "product_name": "Cotton T-Shirt",
+      "return_refund_reason": "Wrong size",
+      "sku_id": "1729592969712207013"
+    }
+  ],
+  "next_page_token": "b2Zmc2V0PTAK",
+  "nrr_problem_order_items": [
+    {
+      "deliver_time": 1761523200,
+      "order_create_time": 1761264000,
+      "order_id": "576461413038785752",
+      "product_id": "1729592969712207008",
+      "product_name": "Wireless Headphones",
+      "sku_id": "1729592969712207012",
+      "user_review_rating": 2
+    }
+  ],
+  "otdr_problem_order_items": [
+    {
+      "actual_deliver_time": 1761609600,
+      "expect_deliver_time": 1761523200,
+      "order_id": "576461413038785752",
+      "product_name": "Wireless Headphones",
+      "sku_id": "1729592969712207014"
+    }
+  ],
+  "sfcr_problem_order_items": [
+    {
+      "cancellation_reasons": "Defective item",
+      "order_create_time": 1761264000,
+      "order_id": "576461413038785752",
+      "product_id": "1729592969712207011",
+      "product_name": "Smart Watch",
+      "sku_id": "1729592969712207014"
+    }
+  ],
+  "total_count": 200
+}

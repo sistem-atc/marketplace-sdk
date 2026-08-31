@@ -1,0 +1,24 @@
+{
+  "products": [
+    {
+      "id": "1729592969712207012",
+      "title": "testcase autotest Live Product",
+      "price": {
+        "amount": "56.00",
+        "currency": "USD"
+      },
+      "added_status": "ADDABLE\n",
+      "brand_name": "Apple",
+      "images": [
+        {
+          "url": "https://p19-pu-sign-useast8.tiktokcdn-us.com/tos-useast5-avt-0068-tx/982dd6b4e46a6a24203b00611a474cca~c5_1080x1080.webp",
+          "width": 200,
+          "height": 200
+        }
+      ],
+      "sales_count": 33
+    }
+  ],
+  "total_count": 300,
+  "next_page_token": "b2Zmc2V0PTAK"
+}

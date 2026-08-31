@@ -1,0 +1,10 @@
+{
+    "has_conflict": false,
+    "conflict_items": [
+        {
+            "creator_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg",
+            "product_id": "1234",
+            "existing_collaboration_id": "1234"
+        }
+    ]
+}

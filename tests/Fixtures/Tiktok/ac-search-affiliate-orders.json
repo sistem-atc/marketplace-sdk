@@ -1,0 +1,109 @@
+{
+  "orders": [
+    {
+      "id": "789078671231123124",
+      "create_time": 1685548800,
+      "delivery_time": 1685548800,
+      "status": "SETTLED",
+      "skus": [
+        {
+          "id": "1729793769377925388",
+          "campaign_id": "73661290629",
+          "open_collaboration_id": "73661290629",
+          "target_collaboration_id": "73661290629",
+          "product_name": "black_suit",
+          "product_id": "1729793769377859852",
+          "price": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "shop_name": "TestCase idl2l",
+          "content_type": "LIVE",
+          "content_id": "7493990579714164574",
+          "quantity": 2,
+          "commission_rate": 1000,
+          "commission_tier_setting": "3.0 OR 5.0",
+          "commission_model": "Tiered commission",
+          "commission_bonus_rate": 1000,
+          "estimated_commission_base": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "standard_commission_rate": 5000,
+          "shop_ads_commission_rate": 5000,
+          "estimated_bonus_commission": {
+            "amount": "Rp1.00",
+            "currency": "IDR"
+          },
+          "estimated_standard_commission": {
+            "amount": "Rp8.000",
+            "currency": "IDR"
+          },
+          "estimated_shop_ads_commission": {
+            "amount": "Rp8.000",
+            "currency": "IDR"
+          },
+          "estimated_commission": {
+            "amount": "Rp1.980",
+            "currency": "IDR"
+          },
+          "actual_commission": {
+            "amount": "Rp1.900",
+            "currency": "IDR"
+          },
+          "actual_bonus_commission": {
+            "amount": "Rp2.000",
+            "currency": "IDR"
+          },
+          "actual_commission_base": {
+            "amount": "Rp9.900",
+            "currency": "IDR"
+          },
+          "actual_standard_commission": {
+            "amount": "Rp5.000",
+            "currency": "IDR"
+          },
+          "actual_shop_ads_commission": {
+            "amount": "Rp5.000",
+            "currency": "IDR"
+          },
+          "returned_quantity": 1,
+          "refunded_quantity": 0,
+          "tag": "test-01",
+          "creator_commission_reward_rate": 1000,
+          "estimated_creator_commission_reward_fee": {
+            "amount": "250",
+            "currency": "IDR"
+          },
+          "actual_creator_commission_reward_fee": {
+            "amount": "100",
+            "currency": "IRD"
+          },
+          "isr": {
+            "amount": "100",
+            "currency": "IRD"
+          },
+          "iva": {
+            "amount": "100",
+            "currency": "IRD"
+          },
+          "pit": {
+            "amount": "100",
+            "currency": "IRD"
+          },
+          "shared_with_partner": {
+            "amount": "100",
+            "currency": "IRD"
+          },
+          "trace_info": {
+            "id": "15678763",
+            "type": "SPECIFIC"
+          },
+          "last_update_time": 1685548800
+        }
+      ]
+    }
+  ],
+  "next_page_token": "b2Zmc2V0PTEw",
+  "total_count": 10
+}

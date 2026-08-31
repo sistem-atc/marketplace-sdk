@@ -1,0 +1,16 @@
+{
+  "sample_status": {
+    "shipping_provider_name": "USPS",
+    "delivery_option": "PREMIUM_SHIPPING",
+    "estimated_earliest_delivery_date": "1712941200",
+    "estimated_latest_delivery_date": "1712941200",
+    "quantity": 1,
+    "tracking_results": [
+      {
+        "tracking_event_update_date": "1712941200",
+        "tracking_event_description": "THE_PACKAGE_HAS_BEEN_DELIVERED",
+        "tracking_event_description_extended": "delivering"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "6955034615128000261",
+  "name": "LSV-TTS-STD",
+  "type": "STANDARD",
+  "description": "LSV-TTS-STD  S",
+  "dimension_limit": {
+    "max_height": 100,
+    "max_length": 100,
+    "max_width": 100,
+    "unit": "INCH"
+  },
+  "weight_limit": {
+    "max_weight": 100,
+    "min_weight": 100,
+    "unit": "GRAM"
+  },
+  "platform": [
+    "TOKOPEDIA",
+    "TIKTOK_SHOP"
+  ]
+}

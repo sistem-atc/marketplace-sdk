@@ -92,6 +92,57 @@ final class OrderResponseDTO implements DTOInterface
         // STRING, não bool: o TikTok manda "yes"/"no" aqui.
         public readonly ?string $needUploadInvoice = null,
         public readonly ?string $commercePlatform = null,
+        // ── Campos que o DTO descartava em silencio ────────────────────────
+        // O teste de roundtrip passava porque comparava contra um fixture
+        // escrito a mao: campo ausente do fixture nunca era cobrado. Estes 24
+        // vinham da API e morriam na desserializacao.
+
+        /**
+         * AMOSTRA REEMBOLSAVEL: o comprador PAGA e o TikTok reembolsa depois
+         * (programa de creators). Diferente de `orderType =
+         * SELLER_FUND_FREE_SAMPLE`, onde o comprador paga zero.
+         *
+         * E' o unico sinal que distingue esse pedido de uma venda normal — sem
+         * ele o financeiro espera um repasse que nao vem.
+         */
+        public readonly ?bool $isRefundableSample = null,
+
+        // Troca/substituicao: o pedido novo aponta o que ele substitui.
+        public readonly ?bool $isExchangeOrder = null,
+        public readonly ?string $exchangeSourceOrderId = null,
+        public readonly ?string $replacedOrderId = null,
+
+        public readonly ?bool $isSubscriptionOrder = null,
+        public readonly ?bool $isBuyerRequestCancel = null,
+        public readonly ?bool $authenticationRequired = null,
+
+        /** COMBINED | SPLIT — pedido combinado ou dividido pelo canal. */
+        public readonly ?string $splitOrCombineTag = null,
+        public readonly ?string $autoCombineGroupId = null,
+
+        public readonly ?HandlingDuration $handlingDuration = null,
+
+        /** @var list<int>|null */
+        public readonly ?array $orderRights = null,
+
+        public readonly ?string $sellerNote = null,
+        public readonly ?string $consultationId = null,
+        public readonly ?string $fastDeliveryProgram = null,
+        public readonly ?int $fulfillmentPriorityLevel = null,
+
+        // Comprador (avatar/apelido publicos, nao PII sensivel).
+        public readonly ?string $buyerNickname = null,
+        public readonly ?string $buyerAvatar = null,
+
+        // Datas — epoch em SEGUNDOS, como o resto do DTO.
+        public readonly ?int $requestCancelTime = null,
+        public readonly ?int $releaseDate = null,
+        public readonly ?int $pickUpCutOffTime = null,
+        public readonly ?int $fastDispatchSlaTime = null,
+        public readonly ?int $recommendedShippingTime = null,
+        public readonly ?int $instorePickupSlaTime = null,
+        public readonly ?int $deliveryOptionRequiredDeliveryTime = null,
+
         #[ArrayOf(OrderLineItem::class)]
         public readonly ?array $lineItems = null,
         #[ArrayOf(OrderPackage::class)]

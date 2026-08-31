@@ -1,0 +1,10 @@
+{
+  "submission": {
+    "id": "8001234567890123456",
+    "opportunity_id": "7123456789012345678",
+    "product_id": "7298374612938475620",
+    "status": "PENDING_REVIEW",
+    "submit_time": 1775979270,
+    "rejection_reason": "The submitted product does not match the opportunity"
+  }
+}

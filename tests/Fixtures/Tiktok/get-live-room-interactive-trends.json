@@ -1,0 +1,13 @@
+{
+  "interactive_trend_performances": [
+    {
+      "stats_type": "WATCH_PV",
+      "data_points": [
+        {
+          "value": "456",
+          "timestamp": 1623812664
+        }
+      ]
+    }
+  ]
+}

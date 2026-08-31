@@ -1,0 +1,23 @@
+{
+  "conversation": {
+    "id": "7494560109732334261",
+    "participant_count": 3,
+    "participants": [
+      {
+        "im_user_id": "7494560109732334261",
+        "role": "BUYER",
+        "nickname": "Albert",
+        "avatar": "https://p16-oec-ttp.tiktokcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/566c497faaaf4491a84d3ce55d9cb095~tplv-omjb5zjo8w-origin-image.image?",
+        "user_id": "7494560109732334262",
+        "platform": "TIKTOK_SHOP"
+      }
+    ],
+    "create_time": 1691411573,
+    "unread_count": 0,
+    "cur_session_id": "7494472109882334261",
+    "cur_session": {
+      "id": "7494472109882334261",
+      "phase": "ASSIGNED"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "data": {
+        "total": 10,
+        "connect_list": [
+            {
+                "id": "1234",
+                "creator_open_id": "1234",
+                "has_sent_im_message": false,
+                "has_sent_invitation": false,
+                "is_paired": false
+            }
+        ]
+    }
+}

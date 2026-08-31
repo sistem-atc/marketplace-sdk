@@ -1,0 +1,21 @@
+{
+  "type": 42,
+  "tts_notification_id": "7327112393057371910",
+  "shop_id": "7494049642642441621",
+  "timestamp": 1644412885,
+  "data": {
+    "combined_listing_id": "123456789",
+    "products": [
+      {
+        "id": "987654321"
+      },
+      {
+        "id": "987654322"
+      }
+    ],
+    "status": "LIVE",
+    "change_type": "UPDATE",
+    "added_product_ids": ["987654321"],
+    "removed_product_ids": ["987654333"]
+  }
+}

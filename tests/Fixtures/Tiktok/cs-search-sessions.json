@@ -1,0 +1,19 @@
+{
+  "next_page_token": "10",
+  "sessions": [
+    {
+      "id": "7494560109732334261",
+      "conversation_id": "7601726193700929800",
+      "begin_time": 1773222516,
+      "end_time": 1773232516,
+      "buyer_nickname": "Albert",
+      "chat_tags": [
+        "Logistics"
+      ],
+      "satisfaction_score": 4,
+      "dissatisfaction_reason": "Slow response or resolution",
+      "first_response_late": false,
+      "first_response_time": 123
+    }
+  ]
+}

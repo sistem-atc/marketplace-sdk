@@ -1,0 +1,23 @@
+{
+  "music": [
+    {
+      "id": "717294069642063456",
+      "title": "Love Story",
+      "author": "Taylor Swift",
+      "cover_thumb": {
+        "url_list": [
+          "https://example.com/music/cover/love_story_1.jpg"
+        ]
+      },
+      "duration": "235",
+      "play_url": {
+        "url_list": [
+          "https://example.com/music/play/love_story.mp3"
+        ]
+      }
+    }
+  ],
+  "next_page_token": "40",
+  "has_more": false,
+  "search_id": "2026021821534288157A7F308E8C81359B"
+}

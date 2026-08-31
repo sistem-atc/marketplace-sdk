@@ -1,0 +1,70 @@
+{
+  "products": [
+    {
+      "id": "53219092314",
+      "shop": {
+        "name": "Gift store"
+      },
+      "addition": {
+        "customized_main_images": [
+          {
+            "width": 100,
+            "heigth": 100,
+            "url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/d76b8cc1b598de90ad5048df46e672b3~c5_100x100.webp?x-expires=1691895600&x-signature=oAT9KOL7aCN3Did9U%2FoKEsbBDj0%3D"
+          }
+        ]
+      },
+      "price": {
+        "original_price": {
+          "minimum_amount": "12.21",
+          "maximum_amount": "100.00",
+          "currency": "USD"
+        },
+        "seller_discount_price": {
+          "minimum_amount": "12.21",
+          "maximum_amount": "100.00",
+          "currency": "USD"
+        },
+        "platform_discount_price": {
+          "minimum_amount": "12.21",
+          "maximum_amount": "100.00",
+          "currency": "USD"
+        }
+      },
+      "title": "Chirstmas Gift",
+      "main_images": [
+        {
+          "width": 100,
+          "heigth": 100,
+          "url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/d76b8cc1b598de90ad5048df46e672b3~c5_100x100.webp?x-expires=1691895600&x-signature=oAT9KOL7aCN3Did9U%2FoKEsbBDj0%3D"
+        }
+      ],
+      "status": {
+        "inventory_status": "IN_STOCK",
+        "review_status": "APPROVED",
+        "is_hidden": false,
+        "added_status": "ADDED"
+      },
+      "source": "AFFILIATE",
+      "detail_link": "https://shop.tiktok.com/view/product/248901892031?region=US&local=en",
+      "third_party_link": "https://storename.myshopify.com/products/gold-bracelet-engraved-with-diamonds",
+      "sale_regions": [
+        "US"
+      ],
+      "commission": {
+        "rate": 3000,
+        "reward_rate": 500
+      },
+      "collaboration": {
+        "id": "7495383576027499219",
+        "type": "OPEN",
+        "partner": {
+          "id": "123456789",
+          "name": "Partner Name"
+        }
+      }
+    }
+  ],
+  "next_page_token": "V231as2V0PTAK",
+  "total_count": 15
+}

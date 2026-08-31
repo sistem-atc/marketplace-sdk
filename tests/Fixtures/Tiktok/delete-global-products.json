@@ -1,0 +1,11 @@
+{
+    "errors": [
+        {
+            "message": "Seller has no permission.",
+            "code": 12019114,
+            "detail": {
+                "global_product_id": "1729715829872102020"
+            }
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "responsible_persons": [
+        {
+            "id": "66d3cbe4d9c8b09ddca932a7",
+            "regional_profiles": [
+                {
+                    "locale": "en-IE",
+                    "name": "John Doe",
+                    "email": "john.doe@email.com",
+                    "phone_number": {
+                        "country_code": "+353",
+                        "local_number": "80915151"
+                    },
+                    "address": {
+                        "street_address_line1": "63 Cardiff Ln, Grand Canal Dock, Dublin City, Dublin",
+                        "street_address_line2": "-",
+                        "district": "-",
+                        "city": "-",
+                        "postal_code": "D02 HD23",
+                        "province": "-",
+                        "country": "IE"
+                    }
+                }
+            ]
+        }
+    ],
+    "total_count": 26,
+    "next_page_token": "66d3cbe3d9c8b09ddca932a1"
+}

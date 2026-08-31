@@ -1,0 +1,53 @@
+{
+  "performance": {
+    "intervals": [
+      {
+        "start_date": "2024-04-01",
+        "end_date": "2024-04-08",
+        "sales": {
+          "gmv": {
+            "overall": {
+              "amount": "335.02",
+              "currency": "GBP"
+            },
+            "breakdowns": [
+              {
+                "gmv": {
+                  "amount": "111",
+                  "currency": "USD"
+                },
+                "type": "LIVE"
+              }
+            ]
+          },
+          "gross_revenue": {
+            "overall": {
+              "amount": "239.04",
+              "currency": "GBP"
+            },
+            "breakdowns": [
+              {
+                "percentage": "0.4324",
+                "type": "NON_GMV_MAX"
+              }
+            ]
+          },
+          "items_sold": 32422,
+          "sku_orders_count": 23214,
+          "orders_count": 21234,
+          "avg_customers_count": 14322,
+          "refunds": {
+            "amount": "2323",
+            "currency": "USD"
+          }
+        },
+        "traffic": {
+          "avg_page_views": 56234,
+          "avg_visitors": 3433,
+          "avg_conversation_rate": "0.3342"
+        }
+      }
+    ]
+  },
+  "latest_available_date": "2024-04-07"
+}

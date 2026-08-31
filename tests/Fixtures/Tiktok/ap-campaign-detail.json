@@ -1,0 +1,29 @@
+{
+  "id": "7356876895365105455",
+  "name": "test_campaign",
+  "description": "Campaign for api test.",
+  "status": "READY",
+  "region": "US",
+  "registration_start_time": 1712941200,
+  "registration_end_time": 1713891599,
+  "campaign_start_time": 1712941200,
+  "campaign_end_time": 1715878799,
+  "commission_rate": 1000,
+  "contact_info": {
+    "whatsapp": "+14255550100",
+    "email": "123456@gmail.com",
+    "phone": "+14255550100",
+    "zalo": "+14255550100",
+    "viber": "+14255550100",
+    "line": "+14255550100"
+  },
+  "target_shops": [
+    {
+      "code": "THCBELNL4Y",
+      "name": "my_shop"
+    }
+  ],
+  "target_seller_types": [
+    "LOCAL"
+  ]
+}

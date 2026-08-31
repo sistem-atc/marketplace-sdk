@@ -1,0 +1,23 @@
+{
+    "fulfillments": [
+        {
+            "product": {
+                "id": "123456",
+                "main_image_url": "https://www.example.com"
+            },
+            "content": {
+                "id": "123456",
+                "format": "LIVE",
+                "url": "https://www.example.com",
+                "view_count": 100,
+                "like_count": 123,
+                "comment_count": 10,
+                "paid_order_count": 1,
+                "page_link": "https://www.example.com",
+                "description": "abc def gh",
+                "create_time": 1723529426,
+                "live_end_time": 1723529426
+            }
+        }
+    ]
+}

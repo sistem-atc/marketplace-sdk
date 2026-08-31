@@ -1,0 +1,21 @@
+{
+  "type": "TBD",
+  "tts_notification_id": "7327112393057371910",
+  "shop_id": "7494049642642441621",
+  "timestamp": 1644412885,
+  "data": {
+    "product_id": "123456789",
+    "skus": [
+      {
+        "sku_id": "987654321",
+        "status": "DEACTIVATED",
+        "deactivation_source": "SELLER"
+      },
+      {
+        "sku_id": "987654322",
+        "status": "CREATED"
+      }
+    ],
+    "update_time": 1627587600
+  }
+}

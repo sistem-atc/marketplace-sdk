@@ -1,0 +1,20 @@
+{
+  "message_templates": [
+    {
+      "id": "8646958016719848812",
+      "message_title": "Meet your next favorite thing!",
+      "message_body": "We strive to create products with you in mind. Check out our newest drop to find your perfect fit that’s built for a confidence boost.",
+      "product_card_rules": {
+        "min_count": 0,
+        "max_count": 4
+      },
+      "coupon_card_rules": {
+        "min_count": 1,
+        "max_count": 1,
+        "coupon_type": [
+          "REGULAR_ALL,REGULAR_REPEAT"
+        ]
+      }
+    }
+  ]
+}

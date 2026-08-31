@@ -1,0 +1,64 @@
+{
+    "target_collaboration": {
+        "id": "789078671231123124",
+        "name": "target_collaboration",
+        "message": "test",
+        "seller_contact_info": {
+            "email": "test@bytedance.com",
+            "phone_number": "1234",
+            "whatsapp": "aaaa",
+            "telegram": "1234",
+            "line": "asd"
+        },
+        "start_time": 1715654330,
+        "end_time": 1715654330,
+        "update_time": 1715654330,
+        "creator_invited_count": 10,
+        "showcase_creator_count": 2,
+        "content_creator_count": 1,
+        "product_count": 30,
+        "free_sample_rule": {
+            "has_free_sample": true,
+            "is_sample_approval_exempt": true
+        },
+        "products": [
+            {
+                "id": "789078671231312312",
+                "main_image_url": "https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a/12345~c5_168x168.webp?lk3s=a5d48078\\u0026nonce=49646\\u0026refresh_token=b53364a3a1947c4ac7a0c4bea62e31ea\\u0026x-expires=1727175600\\u0026x-signature=ASPIxFDNDkN1cknLEItlyC%2Bcfbw%3D\\u0026shp=a5d48078\\u0026shcp=39dffb78",
+                "title": "Christmas Gift",
+                "original_price": {
+                    "currency": "USD",
+                    "minimum_amount": "12.21",
+                    "maximum_amount": "100.00"
+                },
+                "commission": {
+                    "rate": 3000,
+                    "effective_time": "1715654330",
+                    "currency": "USD",
+                    "minimum_amount": "34.3",
+                    "maximum_amount": "55.7",
+                    "shop_ads_commission_rate": 100
+                },
+                "status": "LIVE",
+                "commission_effective_status": "EFFECTIVE_ALL",
+                "collaboration_status": "NORMAL"
+            }
+        ],
+        "creators": [
+            {
+                "username": "123456",
+                "nickname": "123456",
+                "avatar": {
+                    "url": "https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/2bf6a2485ec8bf93483e4a6ed907e6fd~c5_720x720.webp?lk3s=a5d48078\\u0026x-expires=1712988000\\u0026x-signature=E8US22KfUCwKz0R%2FMFF6%2FMOmogs%3D"
+                },
+                "selection_region": "US",
+                "showcase_product_count": 2,
+                "content_product_count": 1,
+                "collaboration_status": "NORMAL",
+                "product_effective_status": "EFFECTIVE_ALL",
+                "creator_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg"
+            }
+        ],
+        "type": "STANDARD"
+    }
+}

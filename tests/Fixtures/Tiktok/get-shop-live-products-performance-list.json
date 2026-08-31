@@ -1,0 +1,37 @@
+{
+  "products": [
+    {
+      "id": "1731736614984386107",
+      "name": "PANDAEYES \nWAHIDA   \nKNITWEAR \nCARDIGAN (CLO-CNSNSL97002BL)",
+      "sales": {
+        "direct_gmv": {
+          "currency": "SGD",
+          "amount": "737.97"
+        },
+        "items_sold": 24,
+        "customers": 24,
+        "created_sku_orders": 27,
+        "avg_price": {
+          "currency": "SGD",
+          "amount": "30.75"
+        },
+        "sku_orders": 24,
+        "main_orders": 24,
+        "payment_rate": "0.8888"
+      },
+      "traffic": {
+        "product_impressions": 14815,
+        "ctr": "0.0908",
+        "add_to_cart_count": 102,
+        "click_to_order_rate": {
+          "sku_order_ctor": "0.0178",
+          "main_order_ctor": "0.0178"
+        },
+        "gpm": {
+          "watch_gpm": "49.81"
+        },
+        "produt_clicks": 1346
+      }
+    }
+  ]
+}

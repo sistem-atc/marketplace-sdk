@@ -1,0 +1,14 @@
+{
+  "errors": [
+    {
+      "code": 10007014,
+      "message": "The invoice already exists in the upload. Please try again later",
+      "detail": {
+        "package_id": "1231231231231",
+        "order_ids": [
+          "58747683456"
+        ]
+      }
+    }
+  ]
+}

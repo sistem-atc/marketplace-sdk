@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "rank": 1,
+      "gmv_range": "$97K ~ $191K",
+      "id": "123456",
+      "name": "Labubu",
+      "rating": "4.5",
+      "product_image": {
+        "height": 2000,
+        "width": 2000,
+        "thumb_urls": [
+          "tos-useast5-i-omjb5zjo8w-tx/cad4b7c7409f459a87c54baf31ff8a20"
+        ],
+        "uri": "tos-useast5-i-omjb5zjo8w-tx/cad4b7c7409f459a87c54baf31ff8a20",
+        "urls": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/157d5bf9ac5a4af5855a2284626605c8~tplv-o3syd03w52-origin-jpeg.jpeg"
+      },
+      "shop_name": "Nia Batik",
+      "shop_id": "7028916274713380866"
+    }
+  ]
+}

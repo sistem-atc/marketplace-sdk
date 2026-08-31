@@ -1,0 +1,18 @@
+{
+    "translation_tasks": [
+        {
+            "original_image": {
+                "uri": "tos-useast2a-i-tulkllf4y5-euttp/748e39ecff38453ab8396a36a53dbb92",
+                "url": "https://p16-oec-sg.ibyteimg.com/tos-alisg-i-aphluv4xwc-sg/sample.jpeg"
+            },
+            "id": "764c6e87eedcea90399a0dafcd572b71",
+            "target_language": "it-IT",
+            "status": "COMPLETED",
+            "fail_reason": "This image can't be translated. Try a different image.",
+            "translated_image": {
+                "uri": "tos-maliva-i-o3syd03w52-us/53b55d6e8cdf1f315affa7e70b45707d",
+                "url": "https://p16-oec-sg.ibyteimg.com/tos-alisg-i-aphluv4xwc-sg/sample.jpeg"
+            }
+        }
+    ]
+}

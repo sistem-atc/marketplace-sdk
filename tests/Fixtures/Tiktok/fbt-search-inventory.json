@@ -1,0 +1,31 @@
+{
+  "next_page_token": "cGFnZV9udW1iZXI9Mg==",
+  "total_count": 22113,
+  "inventory": [
+    {
+      "goods": {
+        "id": "69167899745030",
+        "reference_code": "water01",
+        "name": "100ml water",
+        "skus": [
+          {
+            "id": "73243612345",
+            "on_hand_detail": {
+              "total_quantity": 20,
+              "available_quantity": 5,
+              "reserved_quantity": 15
+            }
+          }
+        ]
+      },
+      "fbt_warehouse_id": "7232382932030232",
+      "in_transit_quantity": 10,
+      "on_hand_detail": {
+        "total_quantity": 20,
+        "available_quantity": 5,
+        "reserved_quantity": 15,
+        "unfulfillable_quantity": 0
+      }
+    }
+  ]
+}

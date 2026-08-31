@@ -1,0 +1,18 @@
+{
+    "target_collaboration": {
+        "id": "7365861555575916210"
+    },
+    "target_collaboration_conflicts": [
+        {
+            "creator_user_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg",
+            "product_id": "789078671231"
+        }
+    ],
+    "invalid_open_id_list": [
+        "xxxx"
+    ],
+    "invalid_product_id_list": [
+        "1234"
+    ],
+    "create_time": 1715654330
+}

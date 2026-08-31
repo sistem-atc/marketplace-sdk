@@ -1,0 +1,17 @@
+{
+  "gmv_trend_performances": [
+    {
+      "stats_type": "TREND_GMV",
+      "data_points": [
+        {
+          "order_count": 123,
+          "timestamp": 1623812664,
+          "gmv": {
+            "currency": "USD",
+            "amount": "123.45"
+          }
+        }
+      ]
+    }
+  ]
+}

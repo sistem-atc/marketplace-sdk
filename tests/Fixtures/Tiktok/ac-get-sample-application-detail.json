@@ -1,0 +1,21 @@
+{
+  "sample_application": {
+    "id": "8070590921506065183",
+    "create_time": 1731298837,
+    "sample_product": {
+      "id": "1729863469568985219",
+      "sku_id": "1729480364147774364",
+      "sku_sale_property_value_names": "\"red, large size\""
+    },
+    "main_order_id": "57871819384716917",
+    "activity_id": "74378918272345199",
+    "type": "FREE_SAMPLE",
+    "status": "PENDING",
+    "creator_fulfillment": {
+      "id": "87147319238415178",
+      "expiration_time": 1726301400,
+      "total_suspend_duration": 7641234,
+      "status": "PENDING"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "decisions": [
+        {
+            "decision": "APPROVE_REFUND",
+            "eligible": true,
+            "ineligible_code": 25001001,
+            "ineligible_reason": "the return is already completed, you can't approve again.",
+            "available_reject_reasons": [
+                {
+                    "name": "seller_reject_apply_product_has_been_packed",
+                    "text": "Product shipped. Tracking updates will be available soon."
+                }
+            ]
+        }
+    ]
+}

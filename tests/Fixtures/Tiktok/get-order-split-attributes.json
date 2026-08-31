@@ -1,0 +1,17 @@
+{
+  "split_attributes": [
+    {
+      "order_id": "556643423444",
+      "can_split": false,
+      "reason": "Order has been canceled",
+      "must_split": false,
+      "must_split_reasons": [
+        {
+          "type": "CATEGORY_ITEM_LIMITATION",
+          "category_id": "601990",
+          "max_count": "2"
+        }
+      ]
+    }
+  ]
+}

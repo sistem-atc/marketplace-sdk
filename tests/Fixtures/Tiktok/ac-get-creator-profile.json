@@ -1,0 +1,18 @@
+{
+  "avatar": {
+    "width": 100,
+    "height": 100,
+    "url": "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/d76b8cc1b598de90ad5048df46e672b3~c5_100x100.webp?x-expires=1691895600&x-signature=oAT9KOL7aCN3Did9U%2FoKEsbBDj0%3D"
+  },
+  "username": "abc123",
+  "selection_region": "US",
+  "register_region": "US",
+  "seller_type": "LOCAL",
+  "permissions": [
+    "LIVE_STREAM_PERMISSION",
+    "SELF_SALE_PERMISSION",
+    "ADD_AFFILIATE_PERMISSION"
+  ],
+  "user_type": "TIKTOK_SHOP_OFFICIAL_ACCOUNT",
+  "creator_user_open_id": "uACafQAAAABmUU2qon4R0vUYvUVS3QC6CICP2m5A2-wd77j8R9G0yg"
+}

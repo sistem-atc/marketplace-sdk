@@ -1,0 +1,22 @@
+{
+  "videos": [
+    {
+      "rank": 1,
+      "id": "10484583",
+      "nick_name": "abc_bec",
+      "gmv_range": "$97K ~ $191K",
+      "views": 939829,
+      "likes": 83894,
+      "comments": 1934,
+      "shares": 223,
+      "product_infos": [
+        {
+          "product_id": "1731736614984386107",
+          "product_name": "labubu"
+        }
+      ],
+      "publish_time": 1623812664,
+      "duration": 7602
+    }
+  ]
+}

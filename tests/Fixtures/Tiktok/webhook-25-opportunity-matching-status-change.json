@@ -1,0 +1,13 @@
+{
+  "type": 25,
+  "tts_notification_id": "7327112393057371910",
+  "shop_id": "7494049642642441621",
+  "timestamp": 1730458800,
+  "data": {
+    "external_product_id": "576486316948490000",
+    "opportunity_matching_status": "PENDING",
+    "opportunity_ids": ["213231", "213233"],
+    "opportunity_matching_end_time": 1735603200,
+    "update_time": 1730458800
+  }
+}

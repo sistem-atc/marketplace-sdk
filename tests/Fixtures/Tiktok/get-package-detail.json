@@ -1,0 +1,83 @@
+{
+  "package_id": "5433567853345",
+  "orders": [
+    {
+      "id": "54335448533296",
+      "skus": [
+        {
+          "id": "2729382476852921560",
+          "name": "white,128g",
+          "image_url": "https://p19-oec-sg.ibyteimg.com/tos-maliva-i-o3syd03w52-us/12345670c",
+          "quantity": 5
+        }
+      ]
+    }
+  ],
+  "package_status": "PROCESSING",
+  "package_sub_status": "Created",
+  "ship_exception_reason": "PACKAGE_LOST",
+  "split_and_combine_tag": "SPLIT",
+  "has_multi_skus": true,
+  "note_tag": "BUYER_UNNOTED",
+  "shipping_provider_name": "TT Virtual express",
+  "shipping_provider_id": "6617675021119438849",
+  "shipping_type": "TIKTOK",
+  "delivery_option_name": "Shipped from seller\n",
+  "delivery_option_id": "7091146663229654785",
+  "tracking_number": "6617675021119438849",
+  "last_mile_tracking_number": "6617675021119438849",
+  "pickup_slot": {
+    "start_time": 1635338186,
+    "end_time": 1635338186
+  },
+  "create_time": 1635338186,
+  "handover_method": "PICKUP",
+  "order_line_item_ids": [
+    "1729382476852921560"
+  ],
+  "recipient_address": {
+    "full_address": "1*** Coleman Ave San Jose, CA 95110\n",
+    "phone_number": "(+1)213-***-1234\n",
+    "name": "Zay",
+    "postal_code": "95110\n",
+    "address_detail": "Unit one building 8\n",
+    "region_code": "US",
+    "address_line1": "TikTok 5800 bristol Pkwy\n",
+    "address_line2": "Suite 100\n",
+    "address_line3": "Suite 100\n",
+    "address_line4": "Suite 100\n"
+  },
+  "sender_address": {
+    "full_address": "1*** Coleman Ave San Jose, CA 95110",
+    "phone_number": "(+1)213-***-1234\n",
+    "name": "Zay",
+    "postal_code": "95110",
+    "address_detail": "Unit one building 8",
+    "region_code": "US",
+    "address_line1": "TikTok 5800 bristol Pkwy",
+    "address_line2": "Suite 100",
+    "address_line3": "Suite 100",
+    "address_line4": "Suite 100"
+  },
+  "weight": {
+    "value": "1.2",
+    "unit": "GRAM"
+  },
+  "dimension": {
+    "length": "1.2",
+    "width": "0.2",
+    "height": "0.03",
+    "unit": "CM"
+  },
+  "update_time": 1635338186,
+  "insurance": {
+    "is_purchased": true,
+    "coverage_amount": "200",
+    "is_claim_eligible": true,
+    "claim_status": "CLAIM_PENDING"
+  },
+  "biz_extension_tags": [
+    "NON_MCF"
+  ],
+  "warehouse_id": "7317467398322308906"
+}

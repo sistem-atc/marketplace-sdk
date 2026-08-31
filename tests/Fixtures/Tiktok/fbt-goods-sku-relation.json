@@ -1,0 +1,12 @@
+{
+  "operate_goods_sku_relation_info": {
+    "operate_result_list": [
+      {
+        "tts_goods_id": "9988776655",
+        "tts_sku_id": "723456789012345678",
+        "is_success": false,
+        "fail_reason": "SKU does not exist."
+      }
+    ]
+  }
+}

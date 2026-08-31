@@ -1,0 +1,45 @@
+{
+  "products": [
+    {
+      "id": "123456",
+      "listing_quality": {
+        "current_tier": "POOR",
+        "remaining_recommendations": 3
+      },
+      "diagnoses": [
+        {
+          "field": "TITLE",
+          "diagnosis_results": [
+            {
+              "code": "TITLE_LESS_THAN_40_CHARACTERS",
+              "how_to_solve": "Names must be at least 40 characters long and contain product-identifying information, such as \"hiking boots\" or \"lipstick\".",
+              "quality_tier": "GOOD"
+            }
+          ],
+          "suggestion": {
+            "seo_words": [
+              {
+                "text": "dress"
+              }
+            ],
+            "smart_texts": [
+              {
+                "text": "this is a good title"
+              }
+            ],
+            "images": [
+              {
+                "height": 600,
+                "width": 600,
+                "uri": "tos-maliva-i-o3syd03w52-us/53b55d6e8cdf1f315affa7e70b45707d",
+                "url": "https://p16-graph-va.ibyteimg.com/tos-maliva-i-1por3rr4fy-us/v2/53b55d6e8cdf1f315affa7e70b45707d~tplv-1por3rr4fy-image.webp",
+                "optimized_uri": "tos-maliva-i-o3syd03w52-us/0266127022264e54ad2f639f5e0fb5e6",
+                "optimized_url": "https://p16-graph-va.ibyteimg.com/tos-maliva-i-1por3rr4fy-us/v2/0266127022264e54ad2f639f5e0fb5e6~tplv-1por3rr4fy-image.webp"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

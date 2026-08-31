@@ -1,0 +1,33 @@
+{
+    "products": [
+        {
+            "region": "MY",
+            "shop_id": "7494083603082020484",
+            "skus": [
+                {
+                    "related_global_sku_id": "1729696746528737924",
+                    "id": "1729592969712207400",
+                    "seller_sku": "XL-COLOR-001",
+                    "sale_attributes": [
+                        {
+                            "id": "100001",
+                            "value_id": "7272008676829824800"
+                        }
+                    ]
+                }
+            ],
+            "id": "1929592969712207410"
+        }
+    ],
+    "publish_result": [
+        {
+            "region": "MY",
+            "status": "SUCCESS",
+            "fail_reasons": [
+                {
+                    "message": "The publish region is inactive."
+                }
+            ]
+        }
+    ]
+}

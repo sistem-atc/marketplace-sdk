@@ -1,0 +1,36 @@
+{
+  "type": 67,
+  "tts_notification_id": "7628321701399676688",
+  "shop_id": "123456",
+  "timestamp": 1776107052,
+  "data": {
+    "aftersales_request_id": "111111111",
+    "line_items": [
+      {
+        "main_order_id": "789456123",
+        "return_line_item_id": "999999",
+        "sku_id": "147852",
+        "sku_return_request_id": "321654987",
+        "sub_return_line_item_id": "888888"
+      },
+      {
+        "main_order_id": "789456123",
+        "return_line_item_id": "999999",
+        "sku_id": "147853",
+        "sku_return_request_id": "321654987",
+        "sub_return_line_item_id": "777777"
+      },
+      {
+        "main_order_id": "789456123",
+        "return_line_item_id": "666666",
+        "sku_id": "147853",
+        "sku_return_request_id": "321654987"
+      }
+    ],
+    "refund_currency": "USD",
+    "refund_status": "REFUND_SUCCESS",
+    "refund_timestamp": 1776102211,
+    "refund_total": "1.25",
+    "rma_id": "222222222"
+  }
+}

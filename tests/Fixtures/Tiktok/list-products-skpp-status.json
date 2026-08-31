@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "product_id": "7345678901234567890",
+      "title": "Premium Cotton T-Shirt",
+      "skpp_status": "QUALIFIED",
+      "affiliate_program_status": "ACTIVE",
+      "total_score": 8,
+      "target_score": 7,
+      "rewards": [
+        {
+          "reward_type": "ADS_CREDIT",
+          "status": "AVAILABLE",
+          "value": "$15",
+          "ad_credit_claim_status": "CLAIMED"
+        }
+      ]
+    }
+  ],
+  "total_count": 1234,
+  "update_time": 1779129600
+}

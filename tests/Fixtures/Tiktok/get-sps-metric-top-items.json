@@ -1,0 +1,43 @@
+{
+  "aht_aftersales_type_items": [
+    {
+      "handle_duration_hours": "18.5",
+      "product_id": "1729592969712207011",
+      "product_name": "Smart Watch",
+      "return_order_count": 30,
+      "top_aftersales_type_name": "Only Refund",
+      "top_type_order_count": 20,
+      "image_url": "https://example.com/product.jpg"
+    }
+  ],
+  "metric_code": "NRR",
+  "nbfr_top_product_items": [
+    {
+      "product_id": "1729592969712207010",
+      "product_name": "Cotton T-Shirt",
+      "return_order_count": 8,
+      "top_reason_order_count": 5,
+      "top_return_reasons": "Item doesn't match description",
+      "image_url": "https://example.com/product.jpg"
+    }
+  ],
+  "nrr_top_product_items": [
+    {
+      "delivered_order_count": 300,
+      "image_url": "https://example.com/product.jpg",
+      "negative_order_count": 12,
+      "product_id": "1729592969712207008",
+      "product_name": "Wireless Headphones",
+      "top_review_reasons": "Item doesn't match description"
+    }
+  ],
+  "otdr_logistics_items": [
+    {
+      "delivered_order_count": 1000,
+      "logistics_provider": "TikTok Shipping",
+      "on_time_deliver_order_count": 947,
+      "on_time_deliver_rate": "0.947"
+    }
+  ],
+  "total_count": 120
+}

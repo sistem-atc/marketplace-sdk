@@ -1,0 +1,17 @@
+{
+  "products": [
+    {
+      "id": "123456",
+      "suggestions": [
+        {
+          "field": "TITLE",
+          "items": [
+            {
+              "text": "this is a good title"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

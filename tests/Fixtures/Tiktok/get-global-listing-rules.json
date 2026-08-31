@@ -1,0 +1,15 @@
+{
+    "listing_methods": "GLOBAL_PUBLISHING",
+    "inventory_rules": [
+        {
+            "local_warehouse_id": "7068517275539719942",
+            "allocation_mode": "SHARED",
+            "associated_warehouses": [
+                {
+                    "warehouse_id": "7068517275539718842",
+                    "region": "DE"
+                }
+            ]
+        }
+    ]
+}

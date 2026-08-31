@@ -1,0 +1,16 @@
+{
+  "traffic_performances": [
+    {
+      "source": {
+        "name": "card_click",
+        "watch_pv": 123
+      },
+      "sub_sources": [
+        {
+          "name": "card_click",
+          "watch_pv": 123
+        }
+      ]
+    }
+  ]
+}

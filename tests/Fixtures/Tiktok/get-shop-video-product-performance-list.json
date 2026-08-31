@@ -1,0 +1,17 @@
+{
+  "products": [
+    {
+      "id": "105xxxxxxxxxxxxx247",
+      "name": "Product Name",
+      "gmv": {
+        "amount": "0",
+        "currency": "USD"
+      },
+      "units_sold": 0,
+      "daily_avg_buyers": "0"
+    }
+  ],
+  "latest_available_date": "2024-09-07",
+  "next_page_token": "cGFnZV9udW1iZXI9MQ==",
+  "total_count": 10
+}

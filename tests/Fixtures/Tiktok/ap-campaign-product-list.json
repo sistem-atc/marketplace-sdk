@@ -1,0 +1,65 @@
+{
+  "products": [
+    {
+      "id": "1729442777527587334",
+      "review_status": "PENDING",
+      "name": "test case number 4 test case number 4",
+      "main_image_url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499",
+      "lowest_price": {
+        "currency": "USD",
+        "amount": "1.1"
+      },
+      "highest_price": {
+        "currency": "USD",
+        "amount": "12.21"
+      },
+      "inventory": 89,
+      "shop_name": "my_shop",
+      "total_commission_rate": 6600,
+      "creator_commission_rate": 1000,
+      "partner_commission_rate": 5600,
+      "open_collaboration_commission_rate": 1000,
+      "is_available": true,
+      "product_sales": 10,
+      "category": {
+        "id": "12222",
+        "name": "COMPUTER"
+      },
+      "sample_quota": 12,
+      "sku_information_list": [
+        {
+          "sku_name": "factory product",
+          "sku_id": "1729666531097281876",
+          "inventory": {
+            "available_quantity": "80"
+          },
+          "base_price": {
+            "region_code": "MY",
+            "currency": "MYR",
+            "list_price": "162.34",
+            "sale_price": "162.34",
+            "localized_dutiable_price": "141.58"
+          },
+          "region_prices": [
+            {
+              "region_code": "MY",
+              "currency": "MYR",
+              "list_price": "162.34",
+              "sale_price": "162.34",
+              "localized_dutiable_price": "141.58"
+            }
+          ],
+          "properties": [
+            {
+              "name": "Spesifikasi",
+              "value_name": "lalai"
+            }
+          ]
+        }
+      ],
+      "product_description": "<p>This is an example product description.</p>"
+    }
+  ],
+  "next_page_token": "absdfV231as2V0PTAK",
+  "total_count": 1570
+}

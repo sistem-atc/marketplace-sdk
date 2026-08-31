@@ -1,0 +1,23 @@
+{
+  "total_count": 100,
+  "next_page_token": "b2Zmc2V0PTAK",
+  "target_collaborations": [
+    {
+      "id": "789078671231123124",
+      "name": "target_collaboration",
+      "status": "LIVE",
+      "products": [
+        {
+          "id": "1729432087292775344",
+          "title": "Blue t-shirt",
+          "main_image_url": "https://p16-oec-va.ibyteimg.com/tos-maliva-i-o3syd03w52-us/fa0387fa5a204dcfa44d5be75877a163~tplv-o3syd03w52-origin-webp.webp?from=3478900499",
+          "commission": {
+            "rate": 1000,
+            "amount": "121.23",
+            "currency": "USD"
+          }
+        }
+      ]
+    }
+  ]
+}

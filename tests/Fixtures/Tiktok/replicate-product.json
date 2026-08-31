@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "code": 12052223,
+      "message": "the category is unauthorized.",
+      "detail": {
+        "region": "US"
+      }
+    }
+  ]
+}
