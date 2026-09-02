@@ -7,6 +7,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\PreApprovals;
 use Generator;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\PreApprovals\PreApprovalResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\PreApprovals\PreApprovalSearchResponseDTO;
 
 /**
  * PreApproval — assinaturas (cobranca recorrente). Uma preapproval e' a
@@ -20,49 +22,43 @@ class PreApprovalsMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  payer_email, reason, auto_recurring, back_url, card_token_id, status, preapproval_plan_id...
-     * @return array<string, mixed>
      */
-    public function create(array $payload): array
+    public function create(array $payload): PreApprovalResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/preapproval', body: $payload);
+        return PreApprovalResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/preapproval', body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(string $preapprovalId): array
+    public function get(string $preapprovalId): PreApprovalResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/preapproval/'.rawurlencode($preapprovalId));
+        return PreApprovalResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/preapproval/'.rawurlencode($preapprovalId)));
     }
 
     /**
      * Pausar/cancelar/reativar e' via `status` (paused|cancelled|authorized).
      *
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(string $preapprovalId, array $payload): array
+    public function update(string $preapprovalId, array $payload): PreApprovalResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, '/preapproval/'.rawurlencode($preapprovalId), body: $payload);
+        return PreApprovalResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, '/preapproval/'.rawurlencode($preapprovalId), body: $payload));
     }
 
     /**
      * Filtros: payer_id, payer_email, preapproval_plan_id, status, q, sort, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): PreApprovalSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/preapproval/search', $filters);
+        return PreApprovalSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/preapproval/search', $filters));
     }
 
     /**
      * @param  array<string, mixed>  $filters
-     * @return Generator<int, array<string, mixed>>
+     * @return Generator<int, PreApprovalResponseDTO>
      */
     public function searchAll(array $filters = [], int $limit = 100): Generator
     {
-        return $this->paginate('/preapproval/search', $filters, $limit);
+        return $this->paginate('/preapproval/search', $filters, $limit, map: PreApprovalResponseDTO::fromArray(...));
     }
 }

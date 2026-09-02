@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Users;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Users\UserResponseDTO;
 
 /**
  * Users — a conta dona do token. Serve pra descobrir `id` (collector_id /
@@ -17,11 +18,8 @@ use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
  */
 class UsersMethods extends BaseMethods
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function me(): array
+    public function me(): UserResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/users/me');
+        return UserResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/users/me'));
     }
 }

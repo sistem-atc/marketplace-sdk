@@ -7,6 +7,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Payments;
 use Generator;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Payments\PaymentResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Payments\PaymentSearchResponseDTO;
 
 /**
  * Payments — pagamento individual do Mercado Pago.
@@ -31,31 +33,28 @@ class PaymentsMethods extends BaseMethods
      * devolva o MESMO pagamento em vez de cobrar duas vezes.
      *
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function create(array $payload, ?string $idempotencyKey = null): array
+    public function create(array $payload, ?string $idempotencyKey = null): PaymentResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::POST,
             path: '/v1/payments',
             body: $payload,
             headers: $idempotencyKey ? ['X-Idempotency-Key' => $idempotencyKey] : [],
-        );
+        ));
     }
 
     /**
      * Detalhe de um pagamento. Resposta inclui status/status_detail,
      * transaction_amount (bruto), net_received_amount (liquido), fee_details,
      * external_reference, order.id (merchant_order) e date_released.
-     *
-     * @return array<string, mixed>
      */
-    public function get(int|string $paymentId): array
+    public function get(int|string $paymentId): PaymentResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::GET,
             path: "/v1/payments/{$paymentId}",
-        );
+        ));
     }
 
     /**
@@ -63,24 +62,22 @@ class PaymentsMethods extends BaseMethods
      * date_of_expiration...).
      *
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(int|string $paymentId, array $payload): array
+    public function update(int|string $paymentId, array $payload): PaymentResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::PUT,
             path: "/v1/payments/{$paymentId}",
             body: $payload,
-        );
+        ));
     }
 
     /**
      * Cancela um pagamento ainda nao aprovado (pending/in_process).
      * Pagamento aprovado NAO cancela — e' reembolso (RefundsMethods).
      *
-     * @return array<string, mixed>
      */
-    public function cancel(int|string $paymentId): array
+    public function cancel(int|string $paymentId): PaymentResponseDTO
     {
         return $this->update($paymentId, ['status' => 'cancelled']);
     }
@@ -89,9 +86,8 @@ class PaymentsMethods extends BaseMethods
      * Captura um pagamento autorizado (capture=false na criacao).
      * `$amount` null = captura o valor total autorizado; menor = parcial.
      *
-     * @return array<string, mixed>
      */
-    public function capture(int|string $paymentId, ?float $amount = null): array
+    public function capture(int|string $paymentId, ?float $amount = null): PaymentResponseDTO
     {
         $body = ['capture' => true];
 
@@ -108,37 +104,34 @@ class PaymentsMethods extends BaseMethods
      * criteria, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): PaymentSearchResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentSearchResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::GET,
             path: '/v1/payments/search',
             query: $filters,
-        );
+        ));
     }
 
     /**
      * Todas as paginas do search, item a item.
      *
      * @param  array<string, mixed>  $filters
-     * @return Generator<int, array<string, mixed>>
+     * @return Generator<int, PaymentResponseDTO>
      */
     public function searchAll(array $filters = [], int $limit = 100): Generator
     {
-        return $this->paginate('/v1/payments/search', $filters, $limit);
+        return $this->paginate('/v1/payments/search', $filters, $limit, map: PaymentResponseDTO::fromArray(...));
     }
 
     /**
      * Lookup direto por external_reference (= order_id no marketplace).
      *
-     * @return array<int, array<string, mixed>>
+     * @return list<PaymentResponseDTO>
      */
     public function findByExternalReference(string $externalRef): array
     {
-        $resp = $this->search(['external_reference' => $externalRef]);
-
-        return $resp['results'] ?? [];
+        return $this->search(['external_reference' => $externalRef])->results ?? [];
     }
 }

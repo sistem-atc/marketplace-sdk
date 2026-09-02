@@ -7,6 +7,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Chargebacks;
 use Generator;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Chargebacks\ChargebackResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Chargebacks\ChargebackSearchResponseDTO;
 
 /**
  * Chargebacks — contestacoes abertas pelo comprador junto ao emissor.
@@ -20,31 +22,27 @@ use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
  */
 class ChargebacksMethods extends BaseMethods
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(int|string $chargebackId): array
+    public function get(int|string $chargebackId): ChargebackResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/v1/chargebacks/{$chargebackId}");
+        return ChargebackResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, "/v1/chargebacks/{$chargebackId}"));
     }
 
     /**
      * Filtros: payment_id, status, range de datas, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): ChargebackSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/chargebacks/search', $filters);
+        return ChargebackSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/chargebacks/search', $filters));
     }
 
     /**
      * @param  array<string, mixed>  $filters
-     * @return Generator<int, array<string, mixed>>
+     * @return Generator<int, ChargebackResponseDTO>
      */
     public function searchAll(array $filters = [], int $limit = 100): Generator
     {
-        return $this->paginate('/v1/chargebacks/search', $filters, $limit);
+        return $this->paginate('/v1/chargebacks/search', $filters, $limit, map: ChargebackResponseDTO::fromArray(...));
     }
 }

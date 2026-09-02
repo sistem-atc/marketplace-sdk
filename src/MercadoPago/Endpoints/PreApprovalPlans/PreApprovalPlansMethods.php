@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\PreApprovalPlans;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\PreApprovalPlans\PreApprovalPlanResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\PreApprovalPlans\PreApprovalPlanSearchResponseDTO;
 
 /**
  * PreApproval Plans — o "molde" de assinatura (valor, frequencia, trial,
@@ -17,38 +19,32 @@ class PreApprovalPlansMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  reason, auto_recurring, back_url, payment_methods_allowed...
-     * @return array<string, mixed>
      */
-    public function create(array $payload): array
+    public function create(array $payload): PreApprovalPlanResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/preapproval_plan', body: $payload);
+        return PreApprovalPlanResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/preapproval_plan', body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(string $planId): array
+    public function get(string $planId): PreApprovalPlanResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/preapproval_plan/'.rawurlencode($planId));
+        return PreApprovalPlanResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/preapproval_plan/'.rawurlencode($planId)));
     }
 
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(string $planId, array $payload): array
+    public function update(string $planId, array $payload): PreApprovalPlanResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, '/preapproval_plan/'.rawurlencode($planId), body: $payload);
+        return PreApprovalPlanResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, '/preapproval_plan/'.rawurlencode($planId), body: $payload));
     }
 
     /**
      * Filtros: status, q, sort, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): PreApprovalPlanSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/preapproval_plan/search', $filters);
+        return PreApprovalPlanSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/preapproval_plan/search', $filters));
     }
 }

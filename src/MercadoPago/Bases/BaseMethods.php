@@ -29,7 +29,9 @@ use SistemAtc\Marketplaces\MercadoPago\Support\HttpClientFactory;
  *     (o token e' renovado pelo TokenRefresher no HttpClientFactory).
  *   - `paginate()` = MPAutoPaginationGenerator do SDK: percorre `results`/
  *     `data`/`elements` ate' `paging.total`, que vem como int em payments e
- *     como STRING em Orders v2.
+ *     como STRING em Orders v2. Cada item sai como DTO do recurso.
+ *   - Toda resposta com corpo vira DTO (`DTO\\Response\\**`), no mesmo padrao
+ *     dos outros MPs do pacote; so' o 204 de delete continua array vazio.
  */
 abstract class BaseMethods
 {
@@ -115,10 +117,17 @@ abstract class BaseMethods
      * pagina volta vazia, quando veio menos que `limit` ou quando
      * `offset >= paging.total`.
      *
+     * `$map` converte cada item cru no DTO do recurso (ex.:
+     * `PaymentResponseDTO::fromArray(...)`). Sem ele, devolve o array cru —
+     * o criterio de parada olha SEMPRE o array cru da pagina, nunca o DTO.
+     *
+     * @template T
+     *
      * @param  array<string, mixed>  $filters
-     * @return Generator<int, array<string, mixed>>
+     * @param  (callable(array<string, mixed>): T)|null  $map
+     * @return Generator<int, T|array<string, mixed>>
      */
-    protected function paginate(string $path, array $filters = [], int $limit = 100, int $offset = 0): Generator
+    protected function paginate(string $path, array $filters = [], int $limit = 100, int $offset = 0, ?callable $map = null): Generator
     {
         if ($limit < 1) {
             throw new InvalidArgumentException('limit deve ser >= 1');
@@ -138,7 +147,7 @@ abstract class BaseMethods
             }
 
             foreach ($items as $item) {
-                yield $item;
+                yield $map === null ? $item : $map($item);
             }
 
             $offset += count($items);
@@ -148,6 +157,24 @@ abstract class BaseMethods
                 return;
             }
         }
+    }
+
+    /**
+     * Hidrata uma resposta que e' LISTA pura de recursos (ex.:
+     * `/v1/payment_methods`, `/v1/customers/{id}/cards`) em lista de DTOs.
+     *
+     * @template T
+     *
+     * @param  array<int, array<string, mixed>>  $items
+     * @param  class-string<T>  $dto
+     * @return list<T>
+     */
+    protected function hydrateList(array $items, string $dto): array
+    {
+        return array_values(array_map(
+            static fn (array $item) => $dto::fromArray($item),
+            array_filter($items, 'is_array'),
+        ));
     }
 
     /**

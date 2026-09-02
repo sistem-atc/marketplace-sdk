@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\OAuth\OAuthResponseDTO;
 use SistemAtc\Marketplaces\MercadoPago\Exceptions\MercadoPagoAuthenticationException;
 use SistemAtc\Marketplaces\MercadoPago\Support\OAuth;
 
@@ -25,7 +26,11 @@ it('troca o code por tokens via form-urlencoded em /oauth/token', function () {
 
     $data = OAuth::exchangeAuthorizationCode('cli', 'sec', 'TG-code', 'https://erp.test/cb');
 
-    expect($data['access_token'])->toBe('APP_USR-x')->and($data['user_id'])->toBe(42);
+    expect($data)->toBeInstanceOf(OAuthResponseDTO::class)
+        ->and($data->accessToken)->toBe('APP_USR-x')
+        ->and($data->userId)->toBe(42)
+        ->and($data->refreshToken)->toBe('TG-y')
+        ->and($data->expiresIn)->toBe(21600);
     Http::assertSent(fn (Request $r) => $r->method() === 'POST'
         && $r->url() === 'https://api.mercadopago.com/oauth/token'
         && $r->isForm()
@@ -37,7 +42,7 @@ it('troca o code por tokens via form-urlencoded em /oauth/token', function () {
 it('refresh manda grant_type=refresh_token', function () {
     Http::fake(['api.mercadopago.com/oauth/token' => Http::response(['access_token' => 'new', 'refresh_token' => 'rolling'])]);
 
-    expect(OAuth::refresh('cli', 'sec', 'old')['refresh_token'])->toBe('rolling');
+    expect(OAuth::refresh('cli', 'sec', 'old')->refreshToken)->toBe('rolling');
     Http::assertSent(fn (Request $r) => $r['grant_type'] === 'refresh_token' && $r['refresh_token'] === 'old');
 });
 

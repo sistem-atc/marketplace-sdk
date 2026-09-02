@@ -6,6 +6,12 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Point;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PaymentIntentCancelResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PaymentIntentListResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PaymentIntentResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PaymentIntentStatusResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PointDeviceOperatingModeResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Point\PointDevicesResponseDTO;
 
 /**
  * Point — maquininhas (Point Smart/Pro) em modo integrado: o sistema cria
@@ -19,82 +25,70 @@ class PointMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  amount (centavos), description, payment (installments, type...), additional_info (external_reference, print_on_terminal)
-     * @return array<string, mixed>
      */
-    public function createPaymentIntent(string $deviceId, array $payload): array
+    public function createPaymentIntent(string $deviceId, array $payload): PaymentIntentResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentIntentResponseDTO::fromArray($this->makeRequest(
             HttpMethod::POST,
             '/point/integration-api/devices/'.rawurlencode($deviceId).'/payment-intents',
             body: $payload,
-        );
+        ));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function getPaymentIntent(string $paymentIntentId): array
+    public function getPaymentIntent(string $paymentIntentId): PaymentIntentResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/'.rawurlencode($paymentIntentId));
+        return PaymentIntentResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/'.rawurlencode($paymentIntentId)));
     }
 
     /**
      * Cancela uma intencao ainda nao paga (OPEN/ON_TERMINAL).
-     *
-     * @return array<string, mixed>
      */
-    public function cancelPaymentIntent(string $deviceId, string $paymentIntentId): array
+    public function cancelPaymentIntent(string $deviceId, string $paymentIntentId): PaymentIntentCancelResponseDTO
     {
-        return $this->makeRequest(
+        return PaymentIntentCancelResponseDTO::fromArray($this->makeRequest(
             HttpMethod::DELETE,
             '/point/integration-api/devices/'.rawurlencode($deviceId).'/payment-intents/'.rawurlencode($paymentIntentId),
-        );
+        ));
     }
 
     /**
      * Eventos de intencao no periodo (datas `Y-m-d`). Janela maxima de 30 dias.
-     *
-     * @return array<string, mixed>
      */
-    public function listPaymentIntents(string $startDate, string $endDate): array
+    public function listPaymentIntents(string $startDate, string $endDate): PaymentIntentListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/events', [
+        return PaymentIntentListResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/events', [
             'startDate' => $startDate,
             'endDate' => $endDate,
-        ]);
+        ]));
     }
 
     /**
      * Ultimo status da intencao (OPEN, ON_TERMINAL, PROCESSING, FINISHED, CANCELED, ERROR...).
-     *
-     * @return array<string, mixed>
      */
-    public function getPaymentIntentStatus(string $paymentIntentId): array
+    public function getPaymentIntentStatus(string $paymentIntentId): PaymentIntentStatusResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/'.rawurlencode($paymentIntentId).'/events');
+        return PaymentIntentStatusResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/point/integration-api/payment-intents/'.rawurlencode($paymentIntentId).'/events'));
     }
 
     /**
      * Devices da conta. Filtros: store_id, pos_id, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function getDevices(array $filters = []): array
+    public function getDevices(array $filters = []): PointDevicesResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/point/integration-api/devices', $filters);
+        return PointDevicesResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/point/integration-api/devices', $filters));
     }
 
     /**
      * @param  string  $operatingMode  PDV | STANDALONE
-     * @return array<string, mixed>
      */
-    public function changeDeviceOperatingMode(string $deviceId, string $operatingMode): array
+    public function changeDeviceOperatingMode(string $deviceId, string $operatingMode): PointDeviceOperatingModeResponseDTO
     {
-        return $this->makeRequest(
+        return PointDeviceOperatingModeResponseDTO::fromArray($this->makeRequest(
             HttpMethod::PATCH,
             '/point/integration-api/devices/'.rawurlencode($deviceId),
             body: ['operating_mode' => $operatingMode],
-        );
+        ));
     }
 }

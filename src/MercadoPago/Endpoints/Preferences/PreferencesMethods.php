@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Preferences;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Preferences\PreferenceResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Preferences\PreferenceSearchResponseDTO;
 
 /**
  * Preferences — Checkout Pro. A preferencia descreve a compra (items,
@@ -18,38 +20,32 @@ class PreferencesMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function create(array $payload): array
+    public function create(array $payload): PreferenceResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/checkout/preferences', body: $payload);
+        return PreferenceResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/checkout/preferences', body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(string $preferenceId): array
+    public function get(string $preferenceId): PreferenceResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/checkout/preferences/'.rawurlencode($preferenceId));
+        return PreferenceResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/checkout/preferences/'.rawurlencode($preferenceId)));
     }
 
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(string $preferenceId, array $payload): array
+    public function update(string $preferenceId, array $payload): PreferenceResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, '/checkout/preferences/'.rawurlencode($preferenceId), body: $payload);
+        return PreferenceResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, '/checkout/preferences/'.rawurlencode($preferenceId), body: $payload));
     }
 
     /**
      * Filtros: external_reference, sponsor_id, marketplace, date_created...
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): PreferenceSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/checkout/preferences/search', $filters);
+        return PreferenceSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/checkout/preferences/search', $filters));
     }
 }

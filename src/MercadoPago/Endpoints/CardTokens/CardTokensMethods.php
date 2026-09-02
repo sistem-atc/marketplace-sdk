@@ -6,6 +6,7 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\CardTokens;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\CardTokens\CardTokenResponseDTO;
 
 /**
  * Card Tokens — tokenizacao de cartao no servidor. Em producao o token
@@ -19,18 +20,14 @@ class CardTokensMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  card_id + security_code (cartao salvo) ou dados abertos do cartao (so' teste).
-     * @return array<string, mixed>
      */
-    public function create(array $payload): array
+    public function create(array $payload): CardTokenResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/v1/card_tokens', body: $payload);
+        return CardTokenResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/v1/card_tokens', body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(string $cardTokenId): array
+    public function get(string $cardTokenId): CardTokenResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/card_tokens/'.rawurlencode($cardTokenId));
+        return CardTokenResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/card_tokens/'.rawurlencode($cardTokenId)));
     }
 }

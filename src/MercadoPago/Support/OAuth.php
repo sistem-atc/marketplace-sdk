@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SistemAtc\Marketplaces\MercadoPago\Support;
 
 use Illuminate\Support\Facades\Http;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\OAuth\OAuthResponseDTO;
 use SistemAtc\Marketplaces\MercadoPago\Exceptions\MercadoPagoAuthenticationException;
 
 /**
@@ -16,6 +17,9 @@ use SistemAtc\Marketplaces\MercadoPago\Exceptions\MercadoPagoAuthenticationExcep
  *   2. exchangeAuthorizationCode() → troca o `code` do callback por tokens
  *   3. refresh() → renova (o TokenRefresher faz isso sozinho no dia a dia;
  *      exposto aqui por paridade com o SDK)
+ *
+ * Toda troca/renovacao devolve `OAuthResponseDTO` (access_token, refresh_token,
+ * expires_in, user_id, scope, public_key, live_mode).
  *
  * O token de acesso de vendedor dura ~6h e o refresh_token e' ROLLING: a
  * resposta traz um novo a cada refresh e o anterior morre.
@@ -37,15 +41,12 @@ class OAuth
         ]);
     }
 
-    /**
-     * @return array{access_token: string, refresh_token?: string, expires_in?: int, user_id?: int, scope?: string, public_key?: string, live_mode?: bool}
-     */
     public static function exchangeAuthorizationCode(
         string $clientId,
         string $clientSecret,
         string $code,
         string $redirectUri,
-    ): array {
+    ): OAuthResponseDTO {
         return self::token([
             'grant_type' => 'authorization_code',
             'client_id' => $clientId,
@@ -55,10 +56,7 @@ class OAuth
         ]);
     }
 
-    /**
-     * @return array{access_token: string, refresh_token?: string, expires_in?: int}
-     */
-    public static function refresh(string $clientId, string $clientSecret, string $refreshToken): array
+    public static function refresh(string $clientId, string $clientSecret, string $refreshToken): OAuthResponseDTO
     {
         return self::token([
             'grant_type' => 'refresh_token',
@@ -70,9 +68,8 @@ class OAuth
 
     /**
      * @param  array<string, string>  $payload
-     * @return array<string, mixed>
      */
-    private static function token(array $payload): array
+    private static function token(array $payload): OAuthResponseDTO
     {
         $url = (string) config('marketplaces.mercadopago.oauth_token_url', 'https://api.mercadopago.com/oauth/token');
         $response = Http::asForm()->timeout(15)->post($url, $payload);
@@ -91,6 +88,6 @@ class OAuth
             throw new MercadoPagoAuthenticationException('Resposta OAuth Mercado Pago sem access_token.');
         }
 
-        return $data;
+        return OAuthResponseDTO::fromArray($data);
     }
 }

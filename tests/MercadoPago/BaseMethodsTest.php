@@ -5,6 +5,9 @@ declare(strict_types=1);
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use SistemAtc\Marketplaces\MarketPlaces;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\MerchantOrders\MerchantOrderResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Orders\OrderResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Payments\PaymentResponseDTO;
 use SistemAtc\Marketplaces\MercadoPago\Exceptions\MercadoPagoRequestException;
 use SistemAtc\Marketplaces\Tests\Support\FakeIntegration;
 
@@ -76,7 +79,7 @@ describe('X-Idempotency-Key', function () {
 
         $resp = MarketPlaces::MercadoPago()->payments(mpBaseIntegration())->create(['x' => 1]);
 
-        expect($resp['id'])->toBe(7);
+        expect($resp)->toBeInstanceOf(PaymentResponseDTO::class)->and($resp->id)->toBe(7);
 
         $keys = [];
         Http::assertSent(function (Request $r) use (&$keys) {
@@ -102,12 +105,10 @@ describe('paginate (searchAll)', function () {
             return Http::response($page);
         });
 
-        $ids = array_column(
-            iterator_to_array(MarketPlaces::MercadoPago()->orders(mpBaseIntegration())->searchAll(['status' => 'processed'], limit: 2), false),
-            'id',
-        );
+        $orders = iterator_to_array(MarketPlaces::MercadoPago()->orders(mpBaseIntegration())->searchAll(['status' => 'processed'], limit: 2), false);
 
-        expect($ids)->toBe(['a', 'b', 'c']);
+        expect($orders)->each->toBeInstanceOf(OrderResponseDTO::class)
+            ->and(array_map(fn (OrderResponseDTO $o) => $o->id, $orders))->toBe(['a', 'b', 'c']);
         Http::assertSentCount(2);
         Http::assertSent(fn (Request $r) => str_contains($r->url(), 'status=processed') && str_contains($r->url(), 'limit=2'));
     });
@@ -117,7 +118,9 @@ describe('paginate (searchAll)', function () {
 
         $items = iterator_to_array(MarketPlaces::MercadoPago()->merchantOrders(mpBaseIntegration())->searchAll(limit: 50), false);
 
-        expect($items)->toBe([['id' => 1]]);
+        expect($items)->toHaveCount(1)
+            ->and($items[0])->toBeInstanceOf(MerchantOrderResponseDTO::class)
+            ->and($items[0]->id)->toBe(1);
         Http::assertSentCount(1);
     });
 

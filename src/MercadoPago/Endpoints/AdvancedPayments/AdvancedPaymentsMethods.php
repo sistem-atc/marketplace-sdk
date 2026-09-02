@@ -6,6 +6,10 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\AdvancedPayments;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AdvancedPayments\AdvancedPaymentResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AdvancedPayments\AdvancedPaymentSearchResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AdvancedPayments\DisbursementRefundListResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AdvancedPayments\DisbursementRefundResponseDTO;
 
 /**
  * Advanced Payments — split de pagamento entre varios recebedores
@@ -21,56 +25,44 @@ class AdvancedPaymentsMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  payer, payments[], disbursements[], external_reference, capture...
-     * @return array<string, mixed>
      */
-    public function create(array $payload, ?string $idempotencyKey = null): array
+    public function create(array $payload, ?string $idempotencyKey = null): AdvancedPaymentResponseDTO
     {
-        return $this->makeRequest(
+        return AdvancedPaymentResponseDTO::fromArray($this->makeRequest(
             method: HttpMethod::POST,
             path: '/v1/advanced_payments',
             body: $payload,
             headers: $idempotencyKey ? ['X-Idempotency-Key' => $idempotencyKey] : [],
-        );
+        ));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(int|string $advancedPaymentId): array
+    public function get(int|string $advancedPaymentId): AdvancedPaymentResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/v1/advanced_payments/{$advancedPaymentId}");
+        return AdvancedPaymentResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, "/v1/advanced_payments/{$advancedPaymentId}"));
     }
 
     /**
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): AdvancedPaymentSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/advanced_payments/search', $filters);
+        return AdvancedPaymentSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/advanced_payments/search', $filters));
     }
 
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(int|string $advancedPaymentId, array $payload): array
+    public function update(int|string $advancedPaymentId, array $payload): AdvancedPaymentResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, "/v1/advanced_payments/{$advancedPaymentId}", body: $payload);
+        return AdvancedPaymentResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, "/v1/advanced_payments/{$advancedPaymentId}", body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function capture(int|string $advancedPaymentId): array
+    public function capture(int|string $advancedPaymentId): AdvancedPaymentResponseDTO
     {
         return $this->update($advancedPaymentId, ['capture' => true]);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function cancel(int|string $advancedPaymentId): array
+    public function cancel(int|string $advancedPaymentId): AdvancedPaymentResponseDTO
     {
         return $this->update($advancedPaymentId, ['status' => 'cancelled']);
     }
@@ -79,49 +71,45 @@ class AdvancedPaymentsMethods extends BaseMethods
      * Muda a data de liberacao de TODOS os disbursements.
      *
      * @param  string  $releaseDate  ISO-8601
-     * @return array<string, mixed>
      */
-    public function updateReleaseDate(int|string $advancedPaymentId, string $releaseDate): array
+    public function updateReleaseDate(int|string $advancedPaymentId, string $releaseDate): AdvancedPaymentResponseDTO
     {
-        return $this->makeRequest(
+        return AdvancedPaymentResponseDTO::fromArray($this->makeRequest(
             HttpMethod::POST,
             "/v1/advanced_payments/{$advancedPaymentId}/disburses",
             body: ['money_release_date' => $releaseDate],
-        );
+        ));
     }
 
     // ── Disbursement refunds ─────────────────────────────────────────────
 
     /**
-     * @return array<int, array<string, mixed>>
+     * Reembolsos por disbursement ja' feitos — a lista vem em `refunds`.
      */
-    public function listRefunds(int|string $advancedPaymentId): array
+    public function listRefunds(int|string $advancedPaymentId): DisbursementRefundListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/v1/advanced_payments/{$advancedPaymentId}/refunds");
+        return DisbursementRefundListResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, "/v1/advanced_payments/{$advancedPaymentId}/refunds"));
     }
 
     /**
      * Reembolsa TODOS os disbursements (total se body vazio).
      *
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function refundAll(int|string $advancedPaymentId, array $payload = []): array
+    public function refundAll(int|string $advancedPaymentId, array $payload = []): DisbursementRefundListResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, "/v1/advanced_payments/{$advancedPaymentId}/refunds", body: $payload);
+        return DisbursementRefundListResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, "/v1/advanced_payments/{$advancedPaymentId}/refunds", body: $payload));
     }
 
     /**
      * Reembolsa UM disbursement, parcial ou total.
-     *
-     * @return array<string, mixed>
      */
-    public function refundDisbursement(int|string $advancedPaymentId, int|string $disbursementId, float $amount): array
+    public function refundDisbursement(int|string $advancedPaymentId, int|string $disbursementId, float $amount): DisbursementRefundResponseDTO
     {
-        return $this->makeRequest(
+        return DisbursementRefundResponseDTO::fromArray($this->makeRequest(
             HttpMethod::POST,
             "/v1/advanced_payments/{$advancedPaymentId}/disbursements/{$disbursementId}/refunds",
             body: ['amount' => $amount],
-        );
+        ));
     }
 }

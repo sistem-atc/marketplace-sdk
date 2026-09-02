@@ -7,6 +7,9 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\Customers;
 use Generator;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Customers\CustomerCardResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Customers\CustomerResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\Customers\CustomerSearchResponseDTO;
 
 /**
  * Customers + Cards — clientes salvos e cartoes tokenizados (Checkout
@@ -22,64 +25,52 @@ class CustomersMethods extends BaseMethods
 {
     /**
      * @param  array<string, mixed>  $payload  email (obrigatorio), first_name, last_name, phone, identification, address...
-     * @return array<string, mixed>
      */
-    public function create(array $payload): array
+    public function create(array $payload): CustomerResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/v1/customers', body: $payload);
+        return CustomerResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/v1/customers', body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function createByEmail(string $email): array
+    public function createByEmail(string $email): CustomerResponseDTO
     {
         return $this->create(['email' => $email]);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(string $customerId): array
+    public function get(string $customerId): CustomerResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId));
+        return CustomerResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId)));
     }
 
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function update(string $customerId, array $payload): array
+    public function update(string $customerId, array $payload): CustomerResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, '/v1/customers/'.rawurlencode($customerId), body: $payload);
+        return CustomerResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, '/v1/customers/'.rawurlencode($customerId), body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function delete(string $customerId): array
+    public function delete(string $customerId): CustomerResponseDTO
     {
-        return $this->makeRequest(HttpMethod::DELETE, '/v1/customers/'.rawurlencode($customerId));
+        return CustomerResponseDTO::fromArray($this->makeRequest(HttpMethod::DELETE, '/v1/customers/'.rawurlencode($customerId)));
     }
 
     /**
      * Filtros: email, id, identification.type/number, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): CustomerSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/customers/search', $filters);
+        return CustomerSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/customers/search', $filters));
     }
 
     /**
      * @param  array<string, mixed>  $filters
-     * @return Generator<int, array<string, mixed>>
+     * @return Generator<int, CustomerResponseDTO>
      */
     public function searchAll(array $filters = [], int $limit = 100): Generator
     {
-        return $this->paginate('/v1/customers/search', $filters, $limit);
+        return $this->paginate('/v1/customers/search', $filters, $limit, map: CustomerResponseDTO::fromArray(...));
     }
 
     // ── Cards ────────────────────────────────────────────────────────────
@@ -88,43 +79,35 @@ class CustomersMethods extends BaseMethods
      * Salva um cartao no customer a partir de um card token (CardTokensMethods).
      *
      * @param  array<string, mixed>  $payload  token (obrigatorio), payment_method_id, issuer_id...
-     * @return array<string, mixed>
      */
-    public function createCard(string $customerId, array $payload): array
+    public function createCard(string $customerId, array $payload): CustomerCardResponseDTO
     {
-        return $this->makeRequest(HttpMethod::POST, '/v1/customers/'.rawurlencode($customerId).'/cards', body: $payload);
+        return CustomerCardResponseDTO::fromArray($this->makeRequest(HttpMethod::POST, '/v1/customers/'.rawurlencode($customerId).'/cards', body: $payload));
     }
 
     /**
-     * @return array<int, array<string, mixed>>
+     * @return list<CustomerCardResponseDTO>
      */
     public function listCards(string $customerId): array
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId).'/cards');
+        return $this->hydrateList($this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId).'/cards'), CustomerCardResponseDTO::class);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function getCard(string $customerId, string $cardId): array
+    public function getCard(string $customerId, string $cardId): CustomerCardResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId));
+        return CustomerCardResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId)));
     }
 
     /**
      * @param  array<string, mixed>  $payload
-     * @return array<string, mixed>
      */
-    public function updateCard(string $customerId, string $cardId, array $payload): array
+    public function updateCard(string $customerId, string $cardId, array $payload): CustomerCardResponseDTO
     {
-        return $this->makeRequest(HttpMethod::PUT, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId), body: $payload);
+        return CustomerCardResponseDTO::fromArray($this->makeRequest(HttpMethod::PUT, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId), body: $payload));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function deleteCard(string $customerId, string $cardId): array
+    public function deleteCard(string $customerId, string $cardId): CustomerCardResponseDTO
     {
-        return $this->makeRequest(HttpMethod::DELETE, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId));
+        return CustomerCardResponseDTO::fromArray($this->makeRequest(HttpMethod::DELETE, '/v1/customers/'.rawurlencode($customerId).'/cards/'.rawurlencode($cardId)));
     }
 }

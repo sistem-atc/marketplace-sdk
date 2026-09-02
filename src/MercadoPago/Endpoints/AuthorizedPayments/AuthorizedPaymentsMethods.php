@@ -6,6 +6,8 @@ namespace SistemAtc\Marketplaces\MercadoPago\Endpoints\AuthorizedPayments;
 
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
 use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AuthorizedPayments\AuthorizedPaymentResponseDTO;
+use SistemAtc\Marketplaces\MercadoPago\DTO\Response\AuthorizedPayments\AuthorizedPaymentSearchResponseDTO;
 
 /**
  * Authorized Payments — cada cobranca recorrente gerada por uma assinatura
@@ -16,22 +18,18 @@ use SistemAtc\Marketplaces\MercadoPago\Bases\BaseMethods;
  */
 class AuthorizedPaymentsMethods extends BaseMethods
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function get(int|string $authorizedPaymentId): array
+    public function get(int|string $authorizedPaymentId): AuthorizedPaymentResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, "/authorized_payments/{$authorizedPaymentId}");
+        return AuthorizedPaymentResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, "/authorized_payments/{$authorizedPaymentId}"));
     }
 
     /**
      * Filtros: preapproval_id, payer_id, status, sort, limit, offset.
      *
      * @param  array<string, mixed>  $filters
-     * @return array<string, mixed>
      */
-    public function search(array $filters = []): array
+    public function search(array $filters = []): AuthorizedPaymentSearchResponseDTO
     {
-        return $this->makeRequest(HttpMethod::GET, '/authorized_payments/search', $filters);
+        return AuthorizedPaymentSearchResponseDTO::fromArray($this->makeRequest(HttpMethod::GET, '/authorized_payments/search', $filters));
     }
 }
