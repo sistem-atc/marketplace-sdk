@@ -213,4 +213,38 @@ class UserProductMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::POST, '/items/multiwarehouse', [], $body);
     }
+
+
+    /**
+     * Kits dos quais um user product COMPONENTE participa
+     * (GET /user-products/{id}/bundles): `{user_product_id, bundles[], last_updated}`.
+     * Consulta pelo UP do componente, não pelo do kit nem pelo item_id. 404
+     * quando não está em nenhum kit.
+     *
+     * @return array<string, mixed>
+     */
+    public function bundles(string $userProductId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/user-products/'.rawurlencode($userProductId).'/bundles');
+    }
+
+    /**
+     * Ajusta o estoque de Flex/logística própria independente do Full
+     * (PUT /user-products/{id}/stock/type/selling_address, body `{quantity}`,
+     * header `x-version` = versão do stockWithVersion()). 204 sem corpo;
+     * 400 se os itens associados são só fulfillment. Rate limit 100 rpm.
+     *
+     * @return array<string, mixed>
+     */
+    public function updateSellingAddressStock(string $userProductId, int $quantity, int|string $version): array
+    {
+        return $this->makeRequest(
+            HttpMethod::PUT,
+            '/user-products/'.rawurlencode($userProductId).'/stock/type/selling_address',
+            [],
+            ['quantity' => $quantity],
+            0,
+            ['x-version' => (string) $version]
+        );
+    }
 }

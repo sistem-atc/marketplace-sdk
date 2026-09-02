@@ -471,4 +471,27 @@ class PromotionMethods extends BaseMethods
             ['item_id' => $itemId, 'exclusion_status' => $excluded ? 'true' : 'false'],
         );
     }
+
+
+    // ── Cupons do vendedor (SELLER_COUPON_CAMPAIGN) ───────────────────────
+
+    /**
+     * Cria campanha de CUPOM do vendedor — atalho do createPromotion() com
+     * `promotion_type=SELLER_COUPON_CAMPAIGN`. Body da doc: `{name,
+     * start_date, finish_date, coupon{type: FIXED_AMOUNT|PERCENTAGE, value,
+     * min_purchase_amount?, ...}, ...}`. Os demais fluxos (getPromotion,
+     * listItems, enrollItem, withdrawItem, updatePromotion, deletePromotion)
+     * já aceitam esse promotion_type — passe `SELLER_COUPON_CAMPAIGN`.
+     *
+     * @param  array<string,mixed>  $payload
+     * @param  array<string,mixed>  $extraQuery
+     * @return array<string, mixed>
+     */
+    public function createCouponCampaign(array $payload, array $extraQuery = []): array
+    {
+        return $this->createPromotion(
+            array_merge(['promotion_type' => 'SELLER_COUPON_CAMPAIGN'], $payload),
+            $extraQuery,
+        );
+    }
 }

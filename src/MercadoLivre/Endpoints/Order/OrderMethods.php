@@ -256,4 +256,18 @@ class OrderMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, '/currency_conversions/search', ['from' => $from, 'to' => $to]);
     }
+
+
+    /**
+     * Pedidos irmãos de um kit virtual (GET /orders/{id}/bundle). A venda de
+     * um kit gera UMA order por componente; a partir de qualquer uma delas
+     * vêm `bundles[{pack_id, shipment_id, main_orders[], addons_orders[],
+     * kit_orders[{order_id, item_id, variation_id, pack_id}]}]`.
+     *
+     * @return array<string, mixed>
+     */
+    public function bundle(int|string $orderId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}/bundle");
+    }
 }

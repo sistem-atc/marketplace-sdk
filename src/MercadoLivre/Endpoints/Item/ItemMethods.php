@@ -474,4 +474,303 @@ class ItemMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, '/items/'.rawurlencode($itemId).'/migration_live_listing');
     }
+
+
+    // ── Descrição (doc "Descrição de produtos") ───────────────────────────
+
+    /**
+     * Descrição do anúncio (GET /items/{id}/description): `{text, plain_text,
+     * last_updated, date_created, snapshot}`. `text` (HTML legado) vem vazio
+     * nos anúncios novos — use `plain_text`.
+     *
+     * @return array<string, mixed>
+     */
+    public function description(string $itemId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/items/'.rawurlencode($itemId).'/description');
+    }
+
+    /**
+     * Cria a descrição de um anúncio que ainda NÃO tem (POST /items/{id}/description).
+     * Só texto plano, quebra de linha com "\n". Se o item já tem descrição
+     * devolve 400 — nesse caso use updateDescription().
+     *
+     * @return array<string, mixed>
+     */
+    public function createDescription(string $itemId, string $plainText): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            '/items/'.rawurlencode($itemId).'/description',
+            [],
+            ['plain_text' => $plainText],
+        );
+    }
+
+    /**
+     * Substitui a descrição existente (PUT /items/{id}/description?api_version=2).
+     * O `api_version=2` faz o erro de validação apontar a posição do caractere
+     * inválido (emoji, tag HTML) no `cause`.
+     *
+     * @return array<string, mixed>
+     */
+    public function updateDescription(string $itemId, string $plainText): array
+    {
+        return $this->makeRequest(
+            HttpMethod::PUT,
+            '/items/'.rawurlencode($itemId).'/description',
+            ['api_version' => 2],
+            ['plain_text' => $plainText],
+        );
+    }
+
+    // ── Variações (doc "Variações") ───────────────────────────────────────
+
+    /**
+     * Lista as variações do anúncio (GET /items/{id}/variations) — array
+     * top-level com id, attribute_combinations, price, available_quantity,
+     * sold_quantity, picture_ids, seller_custom_field, attributes.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function variations(string $itemId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/items/'.rawurlencode($itemId).'/variations');
+    }
+
+    /**
+     * Uma variação específica (GET /items/{id}/variations/{variationId}).
+     *
+     * @return array<string, mixed>
+     */
+    public function variation(string $itemId, int|string $variationId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            '/items/'.rawurlencode($itemId).'/variations/'.rawurlencode((string) $variationId),
+        );
+    }
+
+    /**
+     * Adiciona UMA variação nova (POST /items/{id}/variations). Body:
+     * `{attribute_combinations[{id|name, value_id|value_name}], price,
+     * available_quantity, picture_ids[], attributes[]?, seller_custom_field?}`.
+     * Devolve o item completo. Pra editar várias de uma vez use update() com
+     * `variations[]` — e mande TODOS os ids, senão as ausentes são apagadas.
+     *
+     * @param  array<string, mixed>  $variation
+     * @return array<string, mixed>
+     */
+    public function createVariation(string $itemId, array $variation): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            '/items/'.rawurlencode($itemId).'/variations',
+            [],
+            $variation,
+        );
+    }
+
+    /**
+     * Remove uma variação (DELETE /items/{id}/variations/{variationId}).
+     * Devolve o item já sem ela.
+     *
+     * @return array<string, mixed>
+     */
+    public function deleteVariation(string $itemId, int|string $variationId): array
+    {
+        return $this->makeRequest(
+            HttpMethod::DELETE,
+            '/items/'.rawurlencode($itemId).'/variations/'.rawurlencode((string) $variationId),
+        );
+    }
+
+    // ── Imagens (doc "Trabalhar com imagens") ─────────────────────────────
+
+    /**
+     * Sobe uma imagem pro CDN do ML (POST /pictures/items/upload, multipart
+     * `file`) e devolve `{id, variations[{size,url,secure_url}], max_size}`.
+     * O `id` é o picture_id que vai em `pictures[].id` do item/variação.
+     * Só multipart — não aceita URL.
+     *
+     * @return array<string, mixed>
+     */
+    public function uploadPicture(string $contents, string $filename): array
+    {
+        $response = (clone $this->httpClient)
+            ->attach('file', $contents, $filename)
+            ->post('/pictures/items/upload');
+
+        if ($response->failed()) {
+            $this->handleError($response);
+        }
+
+        return $response->json() ?? [];
+    }
+
+    /**
+     * Vincula uma imagem já hospedada ao anúncio (POST /items/{id}/pictures).
+     * Body `{id}` (picture_id) ou `{source}` (URL pública). Anexa no FIM da
+     * lista; pra reordenar/substituir use update() com `pictures[]`.
+     *
+     * @return array<string, mixed>
+     */
+    public function addPicture(string $itemId, ?string $pictureId = null, ?string $source = null): array
+    {
+        $body = array_filter(['id' => $pictureId, 'source' => $source], fn ($v) => $v !== null);
+
+        return $this->makeRequest(
+            HttpMethod::POST,
+            '/items/'.rawurlencode($itemId).'/pictures',
+            [],
+            $body,
+        );
+    }
+
+    /**
+     * Por que uma imagem ficou em "Processando..." (GET /pictures/{id}/errors):
+     * `{id, source, error{message, items}}` — tipicamente 403/404 no source
+     * ou content-type que não bate com a extensão.
+     *
+     * @return array<string, mixed>
+     */
+    public function pictureErrors(string $pictureId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/pictures/'.rawurlencode($pictureId).'/errors');
+    }
+
+    // ── Republicar / validar ──────────────────────────────────────────────
+
+    /**
+     * Republica um anúncio fechado (POST /items/{id}/relist) gerando um item
+     * NOVO ligado ao pai. Body sem variações: `{price, quantity,
+     * listing_type_id}`; com variações: `{listing_type_id, variations[{id,
+     * price, quantity}]}`. Só UMA republicação por item pai; veículos/imóveis
+     * até 60 dias após fechar.
+     *
+     * @param  array<string, mixed>  $body
+     * @return array<string, mixed>
+     */
+    public function relist(string $itemId, array $body): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/items/'.rawurlencode($itemId).'/relist', [], $body);
+    }
+
+    /**
+     * Valida o JSON de um anúncio SEM publicar (POST /items/validate) — mesmo
+     * body do create(). 204 sem corpo quando está OK; 400 com `cause[]`
+     * detalhando campo a campo quando não.
+     *
+     * @param  array<string, mixed>  $item
+     * @return array<string, mixed>
+     */
+    public function validate(array $item): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/items/validate', [], $item);
+    }
+
+    // ── Preços standard por canal (doc "API de preços") ───────────────────
+
+    /**
+     * Define preços standard por canal (POST /items/{id}/prices/standard).
+     * Cada preço: `{conditions{context_restrictions: [channel_marketplace|
+     * channel_mshops|...]}, amount, currency_id}`. Substitui os standard
+     * existentes dos canais informados.
+     *
+     * @param  array<int, array<string, mixed>>  $prices
+     * @return array<string, mixed>
+     */
+    public function setStandardPrices(string $itemId, array $prices): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            '/items/'.rawurlencode($itemId).'/prices/standard',
+            [],
+            ['prices' => array_values($prices)],
+        );
+    }
+
+    // ── Kits virtuais (doc "Kits virtuais") ───────────────────────────────
+
+    /**
+     * Busca produtos do inventário elegíveis pra compor um kit
+     * (POST /users/{sellerId}/kits/components/search?searchText&limit).
+     * Body: `{active_channels: [marketplace], main_product_id?,
+     * added_products?[], search_filters?{only_eligible: ONLY_ELIGIBLE,
+     * family_id}}`. Paginação por `paging.search_after_hash`.
+     *
+     * @param  array<string, mixed>  $body
+     * @param  array<string, mixed>  $query  searchText, limit, search_after
+     * @return array<string, mixed>
+     */
+    public function searchKitComponents(int|string $sellerId, array $body, array $query = []): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            "/users/{$sellerId}/kits/components/search",
+            $query,
+            $body === [] ? ['active_channels' => ['marketplace']] : $body,
+        );
+    }
+
+    /**
+     * Cria um kit virtual (POST /items/kits) agrupando user products já
+     * existentes. Body: `{family_name, channels[], thumbnail{id, secure_url},
+     * price, currency_id, listing_type_id, official_store_id?, bundle{type:
+     * kit, components[{type: user_product, user_product_id, quantity (<=10),
+     * automatic_price: null | {discount}}]}}`. Kit tem de 2 a 6 componentes;
+     * `discount` (quando usado) precisa ser igual em todos.
+     *
+     * @param  array<string, mixed>  $body
+     * @return array<string, mixed>
+     */
+    public function createKit(array $body): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/items/kits', [], $body);
+    }
+
+    /**
+     * Configuração de preço de um kit (GET /items/{id}/bundle/prices_configuration):
+     * componentes com quantity e automatic_price.
+     *
+     * @return array<string, mixed>
+     */
+    public function kitPricesConfiguration(string $itemId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/items/'.rawurlencode($itemId).'/bundle/prices_configuration');
+    }
+
+    /**
+     * Liga/ajusta a sincronização de preço do kit
+     * (PUT /items/{id}/bundle/prices_configuration). Body
+     * `{bundle{components[{type: user_product, user_product_id,
+     * automatic_price{discount}}]}}` — mesmo desconto em todos.
+     *
+     * @param  array<string, mixed>  $body
+     * @return array<string, mixed>
+     */
+    public function updateKitPricesConfiguration(string $itemId, array $body): array
+    {
+        return $this->makeRequest(
+            HttpMethod::PUT,
+            '/items/'.rawurlencode($itemId).'/bundle/prices_configuration',
+            [],
+            $body,
+        );
+    }
+
+    // ── Busca de itens do seller ──────────────────────────────────────────
+
+    /**
+     * Restrições da busca do seller (GET /users/{id}/items/search/restrictions):
+     * `{aggregations_allowed, query_allowed, sort_allowed}`. Seller com mais
+     * de 200 mil itens vem `aggregations_allowed=false` e o search() não
+     * devolve `filters`/`available_filters`.
+     *
+     * @return array<string, mixed>
+     */
+    public function searchRestrictions(int|string $sellerId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/users/{$sellerId}/items/search/restrictions");
+    }
 }

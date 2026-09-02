@@ -60,4 +60,33 @@ class QuestionMethods extends BaseMethods
             'status' => 'UNANSWERED'
         ]);
     }
+
+
+    /**
+     * Faz uma pergunta num anúncio como COMPRADOR (POST /questions, body
+     * `{text, item_id}`). Útil pra testes com usuário de teste; o seller não
+     * pergunta no próprio item. Mande UTF-8.
+     */
+    public function create(string $itemId, string $text): QuestionResponseDTO
+    {
+        return QuestionResponseDTO::fromArray(
+            $this->makeRequest(HttpMethod::POST, '/questions', [], [
+                'text' => $text,
+                'item_id' => $itemId,
+            ])
+        );
+    }
+
+    /**
+     * Tempo médio de resposta do seller (GET /users/{id}/questions/response_time):
+     * `{user_id, total{response_time}, weekend{...}, weekdays_working_hours{...},
+     * weekdays_extra_hours{...}}` — janela dos últimos 14 dias, em minutos,
+     * com `sales_percent_increase` estimado por faixa.
+     *
+     * @return array<string, mixed>
+     */
+    public function responseTime(int|string $userId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/users/{$userId}/questions/response_time");
+    }
 }

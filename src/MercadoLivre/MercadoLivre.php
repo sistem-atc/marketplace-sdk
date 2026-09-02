@@ -28,6 +28,9 @@ use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Catalog\CatalogMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\UserProduct\UserProductMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Moderation\ModerationMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Metrics\MetricsMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Pricing\PricingAutomationMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Site\SiteMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Returns\ReturnMethods;
 
 class MercadoLivre
 {
@@ -146,5 +149,30 @@ class MercadoLivre
     public function metrics(MarketplaceIntegration $integration): MetricsMethods
     {
         return new MetricsMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Automatizações de preço (/pricing-automation) + referências de preço.
+     */
+    public function pricingAutomation(MarketplaceIntegration $integration): PricingAutomationMethods
+    {
+        return new PricingAutomationMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Recursos do site: sites, dump de categorias, custos por vender, busca
+     * pública, meios de pagamento, moedas, CEPs, comunicados, test_user.
+     */
+    public function sites(MarketplaceIntegration $integration): SiteMethods
+    {
+        return new SiteMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    /**
+     * Devoluções e trocas pós-venda (post-purchase returns/changes).
+     */
+    public function returns(MarketplaceIntegration $integration): ReturnMethods
+    {
+        return new ReturnMethods(HttpClientFactory::make($integration), $integration);
     }
 }

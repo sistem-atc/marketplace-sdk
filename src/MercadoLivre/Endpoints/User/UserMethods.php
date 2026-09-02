@@ -153,4 +153,49 @@ class UserMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, "/users/{$userId}/brands/{$officialStoreId}");
     }
+
+
+    // ── Aplicativo (doc "Gerencie seu aplicativo") ────────────────────────
+
+    /**
+     * Aplicativos autorizados pelo usuário (GET /users/{id}/applications):
+     * `[{user_id, app_id, date_created, scopes[]}]`.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function applications(int|string $userId): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/users/{$userId}/applications");
+    }
+
+    /**
+     * Usuários que autorizaram o SEU app (GET /applications/{appId}/grants):
+     * `{paging{total, limit, offset}, grants[{user_id, app_id, date_created,
+     * scopes[]}]}`. Precisa do token do dono do app.
+     *
+     * @return array<string, mixed>
+     */
+    public function applicationGrants(int|string $appId, int $limit = 50, int $offset = 0): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/applications/{$appId}/grants", [
+            'limit' => $limit,
+            'offset' => $offset,
+        ]);
+    }
+
+    /**
+     * Consumo de API do app no período
+     * (GET /applications/v1/{appId}/consumed-applications?date_start&date_end):
+     * `{app_id, total_request, request_by_status[{status, total_request,
+     * percentage}], ...}`. Datas `YYYY-MM-DD`.
+     *
+     * @return array<string, mixed>
+     */
+    public function consumedApplications(int|string $appId, string $dateStart, string $dateEnd): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/applications/v1/{$appId}/consumed-applications", [
+            'date_start' => $dateStart,
+            'date_end' => $dateEnd,
+        ]);
+    }
 }

@@ -486,6 +486,99 @@ class InvoiceMethods extends BaseMethods
         return (string) $response->body();
     }
 
+    // ── Inscrições estaduais do Faturador (doc "Envio de inscrições estaduais") ─
+
+    /**
+     * Inscrições estaduais cadastradas pro CNPJ
+     * (GET /users/{id}/invoices/state_registry/{cnpj}):
+     * `[{seller_id, cnpj, state, state_registry, gnre_enable, origin}]`.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function stateRegistries(int|string $userId, string $cnpj): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj));
+    }
+
+    /**
+     * Inscrição estadual de UM estado (GET .../state_registry/{cnpj}/{state}).
+     * `state` é a UF em minúsculo (sp, rj, mg...).
+     *
+     * @return array<string, mixed>
+     */
+    public function stateRegistry(int|string $userId, string $cnpj, string $state): array
+    {
+        return $this->makeRequest(
+            HttpMethod::GET,
+            "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj).'/'.rawurlencode(strtolower($state)),
+        );
+    }
+
+    /**
+     * Cadastra inscrição estadual num estado (POST .../state_registry/{cnpj}/{state},
+     * body `{state_registry, gnre_enable}`). 201 com o registro criado;
+     * `gnre_enable=true` faz o Faturador emitir GNRE do DIFAL pra essa UF.
+     *
+     * @return array<string, mixed>
+     */
+    public function createStateRegistry(int|string $userId, string $cnpj, string $state, string $stateRegistry, bool $gnreEnable = false): array
+    {
+        return $this->makeRequest(
+            HttpMethod::POST,
+            "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj).'/'.rawurlencode(strtolower($state)),
+            [],
+            ['state_registry' => $stateRegistry, 'gnre_enable' => $gnreEnable],
+        );
+    }
+
+    /**
+     * Atualiza inscrição estadual existente (PUT .../state_registry/{cnpj}/{state}).
+     *
+     * @return array<string, mixed>
+     */
+    public function updateStateRegistry(int|string $userId, string $cnpj, string $state, string $stateRegistry, bool $gnreEnable = false): array
+    {
+        return $this->makeRequest(
+            HttpMethod::PUT,
+            "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj).'/'.rawurlencode(strtolower($state)),
+            [],
+            ['state_registry' => $stateRegistry, 'gnre_enable' => $gnreEnable],
+        );
+    }
+
+    /**
+     * Cria/atualiza várias inscrições de uma vez (PUT .../state_registry/{cnpj}/batch).
+     * Body: lista `[{state, state_registry, gnre_enable}]` — o ML decide se
+     * insere ou atualiza cada uma. Sempre 200: quando alguma falha, o corpo
+     * traz a lista com o erro por registro.
+     *
+     * @param  array<int, array<string, mixed>>  $registries
+     * @return array<string, mixed>
+     */
+    public function batchStateRegistries(int|string $userId, string $cnpj, array $registries): array
+    {
+        return $this->makeRequest(
+            HttpMethod::PUT,
+            "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj).'/batch',
+            [],
+            array_values($registries),
+        );
+    }
+
+    /**
+     * Apaga a inscrição estadual de um estado (DELETE .../state_registry/{cnpj}/{state}).
+     * 200 sem corpo.
+     *
+     * @return array<string, mixed>
+     */
+    public function deleteStateRegistry(int|string $userId, string $cnpj, string $state): array
+    {
+        return $this->makeRequest(
+            HttpMethod::DELETE,
+            "/users/{$userId}/invoices/state_registry/".rawurlencode($cnpj).'/'.rawurlencode(strtolower($state)),
+        );
+    }
+
     /**
      * POST/PUT com corpo XML cru (Content-Type application/xml) + `?siteId=`.
      * Clona o client porque withBody() muta o PendingRequest.

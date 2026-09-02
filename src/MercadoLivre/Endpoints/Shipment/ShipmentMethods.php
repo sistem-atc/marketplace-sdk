@@ -273,4 +273,21 @@ class ShipmentMethods extends BaseMethods
 
         return $this->makeRequest(HttpMethod::POST, "/v2/shipments/{$shipmentId}/seller_notifications", body: $body);
     }
+
+
+    /**
+     * Atualiza um envio PERSONALIZADO (shipping mode `custom`, fora do
+     * Mercado Envios) — PUT /shipments/{id}. Body: `receiver_id` (comprador,
+     * sempre) + `tracking_number`, `status` (shipped|delivered|cancelled),
+     * `speed` (horas até entregar; vira a promessa de entrega) e `comments`.
+     * Pending→shipped exige tracking_number; delivered/cancelled só o
+     * receiver_id. Não serve pra envios do ME — esses são read-only.
+     *
+     * @param  array<string, mixed>  $body
+     * @return array<string, mixed>
+     */
+    public function updateCustomShipment(int|string $shipmentId, array $body): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "/shipments/{$shipmentId}", [], $body);
+    }
 }
