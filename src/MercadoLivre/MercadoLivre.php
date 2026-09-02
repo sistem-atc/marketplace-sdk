@@ -19,6 +19,15 @@ use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Category\CategoryMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Promotion\PromotionMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Advertising\AdvertisingMethods;
 use SistemAtc\Marketplaces\MercadoLivre\Support\HttpClientFactory;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Pack\PackMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Flex\FlexMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Pickup\PickupMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Bundle\BundleMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Shipping\ShippingMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Catalog\CatalogMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\UserProduct\UserProductMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Moderation\ModerationMethods;
+use SistemAtc\Marketplaces\MercadoLivre\Endpoints\Metrics\MetricsMethods;
 
 class MercadoLivre
 {
@@ -92,5 +101,50 @@ class MercadoLivre
     public function advertising(MarketplaceIntegration $integration): AdvertisingMethods
     {
         return new AdvertisingMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function packs(MarketplaceIntegration $integration): PackMethods
+    {
+        return new PackMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function flex(MarketplaceIntegration $integration): FlexMethods
+    {
+        return new FlexMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function pickup(MarketplaceIntegration $integration): PickupMethods
+    {
+        return new PickupMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function bundles(MarketplaceIntegration $integration): BundleMethods
+    {
+        return new BundleMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function shipping(MarketplaceIntegration $integration): ShippingMethods
+    {
+        return new ShippingMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function catalog(MarketplaceIntegration $integration): CatalogMethods
+    {
+        return new CatalogMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function userProducts(MarketplaceIntegration $integration): UserProductMethods
+    {
+        return new UserProductMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function moderations(MarketplaceIntegration $integration): ModerationMethods
+    {
+        return new ModerationMethods(HttpClientFactory::make($integration), $integration);
+    }
+
+    public function metrics(MarketplaceIntegration $integration): MetricsMethods
+    {
+        return new MetricsMethods(HttpClientFactory::make($integration), $integration);
     }
 }

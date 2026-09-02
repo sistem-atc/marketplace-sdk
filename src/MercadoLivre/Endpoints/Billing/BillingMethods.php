@@ -454,4 +454,161 @@ class BillingMethods extends BaseMethods
             );
         }
     }
+
+    /**
+     * Detalhes de Mercado Envios FLEX do periodo (bonificacoes/anulacoes por
+     * envio + dados da venda) — variante sincrona
+     * GET /billing/integration/periods/key/{key}/group/ML/flex/details.
+     * Paginacao por `from_id` (cursor = `last_id` da resposta), limit <= 1000.
+     * `$extra` aceita os mesmos filtros do details() (sort_by, order_by,
+     * detail_type, order_ids, ...).
+     *
+     * @param  array<string, mixed>  $extra
+     * @return array<string, mixed>
+     */
+    public function flexDetails(
+        string $periodKey,
+        BillingDocumentType $documentType = BillingDocumentType::BILL,
+        int|string|null $fromId = null,
+        int $limit = self::DEFAULT_LIMIT,
+        array $extra = [],
+    ): array {
+        return $this->groupSubDetails($periodKey, 'flex', $documentType, $fromId, $limit, $extra);
+    }
+
+    /**
+     * Detalhes de FULFILLMENT do periodo (coleta, armazenamento, armazenamento
+     * prolongado, retirada de estoque, descumprimento) com o produto de cada
+     * cobranca — GET .../group/ML/full/details. Mesma paginacao do flexDetails().
+     *
+     * @param  array<string, mixed>  $extra
+     * @return array<string, mixed>
+     */
+    public function fullDetails(
+        string $periodKey,
+        BillingDocumentType $documentType = BillingDocumentType::BILL,
+        int|string|null $fromId = null,
+        int $limit = self::DEFAULT_LIMIT,
+        array $extra = [],
+    ): array {
+        return $this->groupSubDetails($periodKey, 'full', $documentType, $fromId, $limit, $extra);
+    }
+
+    /**
+     * Detalhes de INSURTECH do periodo (cobrancas/bonificacoes das garantias
+     * aplicadas aos produtos) — GET .../group/ML/insurtech/details. Mesma
+     * paginacao do flexDetails().
+     *
+     * @param  array<string, mixed>  $extra
+     * @return array<string, mixed>
+     */
+    public function insurtechDetails(
+        string $periodKey,
+        BillingDocumentType $documentType = BillingDocumentType::BILL,
+        int|string|null $fromId = null,
+        int $limit = self::DEFAULT_LIMIT,
+        array $extra = [],
+    ): array {
+        return $this->groupSubDetails($periodKey, 'insurtech', $documentType, $fromId, $limit, $extra);
+    }
+
+    /**
+     * Resumo de PERCEPCOES do periodo
+     * (GET /billing/integration/periods/key/{key}/perceptions/summary?group=).
+     * So Argentina (MLA): retencoes de IVA/IIBB por documento, com `tax_type`
+     * e `document_id` que alimentam perceptionsDetails(). Pra MLB devolve
+     * summary vazio.
+     *
+     * @return array{summary?: list<array<string, mixed>>, errors?: list<mixed>}
+     */
+    public function perceptionsSummary(string $periodKey, ?BillingGroup $group = null): array
+    {
+        $this->assertPeriodKey($periodKey);
+
+        $query = [];
+        if ($group !== null) {
+            $query['group'] = $group->value;
+        }
+
+        return $this->makeRequest(
+            method: HttpMethod::GET,
+            path: "/billing/integration/periods/key/{$periodKey}/perceptions/summary",
+            query: $query,
+        );
+    }
+
+    /**
+     * Detalhe de uma PERCEPCAO
+     * (GET /billing/integration/group/{ML|MP}/perceptions/details). So
+     * Argentina. Filtra por `document_id` + `tax_type` (vindos do
+     * perceptionsSummary()); pra MP e obrigatorio tambem `tax_id`. Paginacao
+     * offset/limit. Campos variam por regime (geral / especial / Tucuman).
+     *
+     * @return array<string, mixed>
+     */
+    public function perceptionsDetails(
+        BillingGroup $group,
+        int|string $documentId,
+        string $taxType,
+        int|string|null $taxId = null,
+        int $offset = 0,
+        int $limit = self::DEFAULT_LIMIT,
+    ): array {
+        if (! $group->supportsSyncEndpoints()) {
+            throw new InvalidArgumentException(
+                "Perceptions details so suporta group ML ou MP. Recebido: {$group->value}"
+            );
+        }
+        if ($group === BillingGroup::MP && $taxId === null) {
+            throw new InvalidArgumentException('Perceptions details do grupo MP exige tax_id.');
+        }
+
+        $query = [
+            'document_id' => (string) $documentId,
+            'tax_type' => $taxType,
+            'offset' => max(0, $offset),
+            'limit' => min(max($limit, 1), self::MAX_LIMIT),
+        ];
+        if ($taxId !== null) {
+            $query['tax_id'] = (string) $taxId;
+        }
+
+        return $this->makeRequest(
+            method: HttpMethod::GET,
+            path: "/billing/integration/group/{$group->value}/perceptions/details",
+            query: $query,
+        );
+    }
+
+    /**
+     * Base dos details por sub-unidade do grupo ML (flex | full | insurtech).
+     *
+     * @param  array<string, mixed>  $extra
+     * @return array<string, mixed>
+     */
+    private function groupSubDetails(
+        string $periodKey,
+        string $subGroup,
+        BillingDocumentType $documentType,
+        int|string|null $fromId,
+        int $limit,
+        array $extra,
+    ): array {
+        $this->assertPeriodKey($periodKey);
+
+        $query = array_merge([
+            'document_type' => $documentType->value,
+            'limit' => min(max($limit, 1), self::MAX_LIMIT),
+        ], $extra);
+
+        if ($fromId !== null) {
+            $query['from_id'] = (string) $fromId;
+        }
+
+        return $this->makeRequest(
+            method: HttpMethod::GET,
+            path: "/billing/integration/periods/key/{$periodKey}/group/ML/{$subGroup}/details",
+            query: $query,
+        );
+    }
 }
