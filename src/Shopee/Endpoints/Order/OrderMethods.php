@@ -6,6 +6,9 @@ namespace SistemAtc\Marketplaces\Shopee\Endpoints\Order;
 
 use SistemAtc\Marketplaces\Shopee\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
+use SistemAtc\Marketplaces\Shopee\Exceptions\ShopeeRequestException;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\FbsDownloadItem;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\FbsRequestListResponseDTO;
 use SistemAtc\Marketplaces\Shopee\DTO\Response\Order\InvoiceData;
@@ -198,4 +201,212 @@ class OrderMethods extends BaseMethods
             $response['response'] ?? [],
         );
     }
+
+    // -----------------------------------------------------------------------
+    // Extras (2026-09): listagem de pacotes/bookings, cancelamento, notas,
+    // NF do comprador, split. Nada aqui toca DETAIL_FIELDS.
+    // -----------------------------------------------------------------------
+
+    /** Nota interna do vendedor no pedido. */
+    public function setNote(string $orderSn, string $note): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/set_note', [], ['order_sn' => $orderSn, 'note' => $note]);
+    }
+
+    /**
+     * Cancela pedido (total ou parcial). cancel_reason OUT_OF_STOCK exige
+     * item_list (item_id + model_id); cancelamento parcial usa
+     * partial_cancel_item_list (item_id, model_id, order_item_id,
+     * promotion_group_id, model_quantity). Estime antes em getEstimateCancelValue().
+     *
+     * @param list<array{item_id:int,model_id:int}>|null $itemList
+     * @param list<array<string,int>>|null $partialCancelItemList
+     */
+    public function cancelOrder(string $orderSn, string $cancelReason, ?array $itemList = null, ?array $partialCancelItemList = null): array
+    {
+        $body = ['order_sn' => $orderSn, 'cancel_reason' => $cancelReason];
+        if ($itemList !== null) $body['item_list'] = array_values($itemList);
+        if ($partialCancelItemList !== null) $body['partial_cancel_item_list'] = array_values($partialCancelItemList);
+
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/cancel_order', [], $body);
+    }
+
+    /**
+     * Simula o valor de estorno de um cancelamento parcial antes de executar.
+     *
+     * @param list<array<string,int>> $partialCancelItemList
+     */
+    public function getEstimateCancelValue(string $orderSn, array $partialCancelItemList): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/get_estimate_cancel_value', [], [
+            'order_sn' => $orderSn,
+            'partial_cancel_item_list' => array_values($partialCancelItemList),
+        ]);
+    }
+
+    /** Aceita (ACCEPT) ou rejeita (REJECT) pedido de cancelamento do comprador. */
+    public function handleBuyerCancellation(string $orderSn, string $operation): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/handle_buyer_cancellation', [], [
+            'order_sn' => $orderSn,
+            'operation' => strtoupper($operation),
+        ]);
+    }
+
+    /**
+     * Pedidos prontos pra envio que ainda nao tem package_number
+     * (response.order_list[] com order_sn + package_number). Cursor-paginado.
+     */
+    public function getShipmentList(int $pageSize = 100, string $cursor = ''): array
+    {
+        $query = ['page_size' => min($pageSize, 100)];
+        if ($cursor !== '') $query['cursor'] = $cursor;
+
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_shipment_list', $query);
+    }
+
+    /**
+     * Divide o pedido em N pacotes. Cada entrada de package_list traz
+     * item_list[] (item_id, model_id, order_item_id, promotion_group_id,
+     * model_quantity). Pedido com servico de instalacao nao divide por qtd.
+     *
+     * @param list<array{item_list:list<array<string,int>>}> $packageList
+     */
+    public function splitOrder(string $orderSn, array $packageList): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/split_order', [], [
+            'order_sn' => $orderSn,
+            'package_list' => array_values($packageList),
+        ]);
+    }
+
+    /** Desfaz o split (volta a 1 pacote). */
+    public function unsplitOrder(string $orderSn): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/unsplit_order', [], ['order_sn' => $orderSn]);
+    }
+
+    /**
+     * Sobe a NF do pedido (multipart, ate 1MB). file_type 1=pdf 2=jpeg
+     * 3=png 4=xml. Resposta sem `response` (so error/message/request_id).
+     */
+    public function uploadInvoiceDoc(string $orderSn, int $fileType, string $contents, string $filename): array
+    {
+        $apiPath = $this->normalizeApiPath('/api/v2/order/upload_invoice_doc');
+        $authQuery = $this->buildAuthQuery($apiPath, false);
+
+        $client = $this->multipartClient()->attach('file', $contents, $filename);
+        $response = $client->post($apiPath.'?'.http_build_query($authQuery), [
+            'order_sn' => $orderSn,
+            'file_type' => (string) $fileType,
+        ]);
+
+        $data = $response->json() ?? [];
+        if ($response->failed() || ! empty($data['error'])) throw new ShopeeRequestException($response);
+
+        return $data;
+    }
+
+    /**
+     * Pedidos aguardando NF do vendedor (response.order_sn_list[]). Cursor-paginado.
+     */
+    public function getPendingBuyerInvoiceOrderList(int $pageSize = 100, string $cursor = ''): array
+    {
+        $query = ['page_size' => min($pageSize, 100)];
+        if ($cursor !== '') $query['cursor'] = $cursor;
+
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_pending_buyer_invoice_order_list', $query);
+    }
+
+    /**
+     * Dados de NF informados pelo COMPRADOR (VN/TH/PH apenas — BR devolve
+     * vazio). ENVELOPE ATIPICO: invoice_info_list vem na RAIZ.
+     *
+     * @param list<string> $orderSnList
+     */
+    public function getBuyerInvoiceInfo(array $orderSnList): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/get_buyer_invoice_info', [], [
+            'queries' => array_map(static fn (string $sn): array => ['order_sn' => $sn], array_values($orderSnList)),
+        ]);
+    }
+
+    /**
+     * Aprova/rejeita receita medica de pedido farmacia. Ao rejeitar informe
+     * reject_reason_code (1-5; 5 = free_text) e items invalidos.
+     *
+     * @param array<string,mixed> $extra reject_reason_code, items, pharmacist_name, free_text
+     */
+    public function handlePrescriptionCheck(string $orderSn, bool $isApproved, array $extra = []): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/handle_prescription_check', [], [
+            'order_sn' => $orderSn,
+            'is_approved' => $isApproved,
+        ] + $extra);
+    }
+
+    /**
+     * Lista bookings por janela (create_time|update_time, max 15 dias) com
+     * filtro booking_status READY_TO_SHIP|PROCESSED|SHIPPED|CANCELLED|MATCHED.
+     * Cursor-paginado (response.more + next_cursor).
+     */
+    public function getBookingList(
+        int $timeFrom,
+        int $timeTo,
+        string $timeRangeField = 'create_time',
+        ?string $bookingStatus = null,
+        int $pageSize = 50,
+        string $cursor = '',
+    ): array {
+        $query = [
+            'time_range_field' => $timeRangeField,
+            'time_from' => $timeFrom,
+            'time_to' => $timeTo,
+            'page_size' => min($pageSize, 100),
+        ];
+        if ($cursor !== '') $query['cursor'] = $cursor;
+        if ($bookingStatus !== null) $query['booking_status'] = $bookingStatus;
+
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_booking_list', $query);
+    }
+
+    /**
+     * Busca de pacotes com filtros (package_status, product_location_ids,
+     * logistics_channel_ids, fulfillment_type, invoice_pending...), pagination
+     * {page_size, cursor} e sort {sort_type, ascending}. Opcoes validas dos
+     * filtros vem de getWarehouseFilterConfig().
+     *
+     * @param array<string,mixed>|null $filter
+     * @param array<string,mixed>|null $sort
+     */
+    public function searchPackageList(?array $filter = null, int $pageSize = 50, string $cursor = '', ?array $sort = null): array
+    {
+        $body = ['pagination' => ['page_size' => $pageSize, 'cursor' => $cursor]];
+        if ($filter !== null) $body['filter'] = $filter;
+        if ($sort !== null) $body['sort'] = $sort;
+
+        return $this->makeRequest(HttpMethod::POST, '/api/v2/order/search_package_list', [], $body);
+    }
+
+    /** Opcoes de filtro (armazens/product_location e canais) pro searchPackageList(). */
+    public function getWarehouseFilterConfig(): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_warehouse_filter_config');
+    }
+
+    /**
+     * Detalhe de ate 50 pacotes (response.package_list[]). Lista vai como
+     * string separada por virgula.
+     *
+     * @param list<string> $packageNumberList
+     */
+    public function getPackageDetail(array $packageNumberList): array
+    {
+        if (empty($packageNumberList)) return [];
+
+        return $this->makeRequest(HttpMethod::GET, '/api/v2/order/get_package_detail', [
+            'package_number_list' => implode(',', $packageNumberList),
+        ]);
+    }
+
 }
