@@ -37,4 +37,45 @@ class OrderMethods extends BaseMethods
             'url' => $url,
         ]);
     }
+
+    /**
+     * Grava o id_externo do pedido (PUT `pedido/{numero}`).
+     *
+     * @return array<string,mixed>
+     */
+    public function updateExternalId(int|string $numero, int|string $idExterno): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "pedido/{$numero}/", [], ['id_externo' => $idExterno]);
+    }
+
+    /**
+     * Atualiza o código de rastreio pelo id do ENVIO do pedido (`pedido_envio/{id}`,
+     * vem em `envios[].id` do pedido) — contrato atual da API.
+     *
+     * @return array<string,mixed>
+     */
+    public function updateShipmentTracking(int|string $pedidoEnvioId, string $trackingCode): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "pedido_envio/{$pedidoEnvioId}/", [], ['objeto' => $trackingCode]);
+    }
+
+    /**
+     * Cria pedido vindo de integração/marketplace (`integration/sales`).
+     *
+     * @param array<string,mixed> $data buyer{}, shipping{}, amount{}, items[], info{}, integration_data{}
+     * @return array<string,mixed>
+     */
+    public function createIntegrationSale(array $data): array
+    {
+        return $this->makeRequest(HttpMethod::POST, 'integration/sales/', [], $data);
+    }
+
+    /**
+     * @param array<string,mixed> $data
+     * @return array<string,mixed>
+     */
+    public function updateIntegrationSale(int|string $saleId, array $data): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "integration/sales/{$saleId}/", [], $data);
+    }
 }

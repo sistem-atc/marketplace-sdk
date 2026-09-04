@@ -95,4 +95,114 @@ class CategoryMethods extends BaseMethods
 
         return $response['results'] ?? [];
     }
+
+
+    // ------------------------------------------------------------------
+    // Paths conforme a doc atual (plural `/portfolios/categories`). Os metodos
+    // acima usam o singular `/portfolios/category`, que respondia em 2026-06;
+    // se o singular passar a dar 404, migre pra estes. Todos devolvem o
+    // envelope cru (`meta` + `results`), paginado por `_limit`/`_offset`/`_sort`.
+    // ------------------------------------------------------------------
+
+    /**
+     * Busca categorias (GET /seller/v1/portfolios/categories). Filtros: `id`, `name`.
+     *
+     * @param array<string, mixed> $filters
+     * @return array<string, mixed>
+     */
+    public function listCategories(array $filters = [], int $limit = 50, int $offset = 0, ?string $sort = null): array
+    {
+        $query = array_merge($filters, ['_limit' => $limit, '_offset' => $offset]);
+        if ($sort !== null) $query['_sort'] = $sort;
+
+        return $this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/categories', $query);
+    }
+
+    /**
+     * Hierarquia (GET /seller/v1/portfolios/categories/hierarchy).
+     * `root_only=true` so' o 1o nivel; `category_id` / `parent_id` filtram a arvore.
+     *
+     * @param array<string, mixed> $filters
+     * @return array<string, mixed>
+     */
+    public function listHierarchy(array $filters = [], int $limit = 50, int $offset = 0, ?string $sort = null): array
+    {
+        $query = array_merge($filters, ['_limit' => $limit, '_offset' => $offset]);
+        if ($sort !== null) $query['_sort'] = $sort;
+
+        return $this->makeRequest(HttpMethod::GET, '/seller/v1/portfolios/categories/hierarchy', $query);
+    }
+
+    /**
+     * Atributos de variacao (GET /seller/v1/portfolios/categories/{id}/attributes).
+     * `required`: required|optional|recommended.
+     *
+     * @return array<string, mixed>
+     */
+    public function listAttributes(string $categoryId, ?string $required = null, int $limit = 50, int $offset = 0): array
+    {
+        $query = ['_limit' => $limit, '_offset' => $offset];
+        if ($required !== null) $query['required'] = $required;
+
+        return $this->makeRequest(HttpMethod::GET, "/seller/v1/portfolios/categories/{$categoryId}/attributes", $query);
+    }
+
+    /**
+     * Ficha tecnica (GET /seller/v1/portfolios/categories/{id}/datasheet).
+     *
+     * @return array<string, mixed>
+     */
+    public function listDatasheet(string $categoryId, ?string $required = null, int $limit = 50, int $offset = 0): array
+    {
+        $query = ['_limit' => $limit, '_offset' => $offset];
+        if ($required !== null) $query['required'] = $required;
+
+        return $this->makeRequest(HttpMethod::GET, "/seller/v1/portfolios/categories/{$categoryId}/datasheet", $query);
+    }
+
+    // ------------------------------------------------------------------
+    // Visao CANAL (escopo open:portfolio-categories-channel:read) — catalogo
+    // de atributos global do canal, nao do seller.
+    // ------------------------------------------------------------------
+
+    /**
+     * Atributos do canal (GET /channel/v1/portfolios/attributes).
+     * Filtros: `attribute_id`, `name` (exato), `active`.
+     *
+     * @param array<string, mixed> $filters
+     * @return array<string, mixed>
+     */
+    public function channelAttributes(array $filters = [], int $limit = 50, int $offset = 0, ?string $sort = null): array
+    {
+        $query = array_merge($filters, ['_limit' => $limit, '_offset' => $offset]);
+        if ($sort !== null) $query['_sort'] = $sort;
+
+        return $this->makeRequest(HttpMethod::GET, '/channel/v1/portfolios/attributes', $query);
+    }
+
+    /**
+     * Atributos de variacao da categoria na visao canal
+     * (GET /channel/v1/portfolios/categories/{id}/attributes).
+     *
+     * @return array<string, mixed>
+     */
+    public function channelCategoryAttributes(string $categoryId, ?string $required = null): array
+    {
+        $query = $required !== null ? ['required' => $required] : [];
+
+        return $this->makeRequest(HttpMethod::GET, "/channel/v1/portfolios/categories/{$categoryId}/attributes", $query);
+    }
+
+    /**
+     * Ficha tecnica da categoria na visao canal
+     * (GET /channel/v1/portfolios/categories/{id}/datasheet).
+     *
+     * @return array<string, mixed>
+     */
+    public function channelCategoryDatasheet(string $categoryId, ?string $required = null): array
+    {
+        $query = $required !== null ? ['required' => $required] : [];
+
+        return $this->makeRequest(HttpMethod::GET, "/channel/v1/portfolios/categories/{$categoryId}/datasheet", $query);
+    }
 }

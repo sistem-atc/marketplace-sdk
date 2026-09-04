@@ -33,4 +33,15 @@ class TransactionMethods extends BaseMethods
     {
         return $this->makeRequest(HttpMethod::GET, "/orders/{$orderId}/transactions/{$transactionId}");
     }
+
+    /**
+     * Cria uma transacao no pedido (capture, sale, void, refund...).
+     * Ex.: ['kind' => 'capture', 'amount' => '10.00', 'parent_id' => 123].
+     *
+     * @param  array<string, mixed>  $transaction
+     */
+    public function create(int|string $orderId, array $transaction): array
+    {
+        return $this->makeRequest(HttpMethod::POST, "/orders/{$orderId}/transactions", [], ['transaction' => $transaction]);
+    }
 }

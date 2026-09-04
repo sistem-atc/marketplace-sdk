@@ -74,4 +74,45 @@ class InvoiceMethods extends BaseMethods
             throw new InvalidArgumentException("{$field} invalido: {$date}. Use YYYY-MM-DD.");
         }
     }
+
+
+    /**
+     * Notas da entrega, envelope cru paginado (GET /seller/v1/deliveries/{id}/invoices).
+     * `_sort`: `created_at:asc|desc`.
+     *
+     * @return array<string, mixed>
+     */
+    public function listForDeliveryRaw(string $deliveryId, int $limit = 20, int $offset = 0, ?string $sort = null): array
+    {
+        $query = ['_limit' => $limit, '_offset' => $offset];
+        if ($sort !== null) $query['_sort'] = $sort;
+
+        return $this->makeRequest(HttpMethod::GET, "/seller/v1/deliveries/{$deliveryId}/invoices", $query);
+    }
+
+    /**
+     * Envia a NF-e da entrega (POST /seller/v1/deliveries/{id}/invoices).
+     *
+     * Body: `key` (chave 44), `xml` (base64), `amount`, `issued_at`, `issuer`,
+     * `channel.id` (+ `extras`).
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function createForDelivery(string $deliveryId, array $data): array
+    {
+        return $this->makeRequest(HttpMethod::POST, "/seller/v1/deliveries/{$deliveryId}/invoices", [], $data);
+    }
+
+    /**
+     * Atualiza a NF-e ja' enviada (PUT /seller/v1/deliveries/{id}/invoices/{key}).
+     * Body: `amount`, `issued_at`, `xml`, `channel.id`.
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public function updateForDelivery(string $deliveryId, string $key, array $data): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "/seller/v1/deliveries/{$deliveryId}/invoices/{$key}", [], $data);
+    }
 }

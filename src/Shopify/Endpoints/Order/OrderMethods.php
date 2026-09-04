@@ -167,4 +167,43 @@ class OrderMethods extends BaseMethods
 
         return null;
     }
+
+    /**
+     * Conta pedidos (GET /orders/count). Aceita os mesmos filtros de `list()`.
+     *
+     * @param  array<string, mixed>  $params
+     */
+    public function count(array $params = []): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/orders/count', $params);
+    }
+
+    /**
+     * Cria um pedido (POST /orders). Embrulha em `order`.
+     *
+     * @param  array<string, mixed>  $order
+     */
+    public function create(array $order): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/orders', [], ['order' => $order]);
+    }
+
+    /**
+     * Atualiza um pedido (PUT /orders/{id}). Embrulha em `order`.
+     *
+     * @param  array<string, mixed>  $order
+     */
+    public function update(int|string $orderId, array $order): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "/orders/{$orderId}", [], ['order' => $order]);
+    }
+
+    /**
+     * Exclui um pedido (DELETE /orders/{id}). So' pedidos fechados/cancelados
+     * ou de teste; pedidos com fulfillment nao podem ser excluidos.
+     */
+    public function delete(int|string $orderId): array
+    {
+        return $this->makeRequest(HttpMethod::DELETE, "/orders/{$orderId}");
+    }
 }

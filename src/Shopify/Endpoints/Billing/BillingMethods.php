@@ -54,4 +54,92 @@ class BillingMethods extends BaseMethods
             ],
         ]);
     }
+
+    // ---------------------------------------------------------------
+    // Recurring Application Charges (cobranca recorrente do app)
+    // ---------------------------------------------------------------
+
+    /**
+     * Lista cobrancas recorrentes do app.
+     *
+     * @param  array<string, mixed>  $params  ex.: since_id, fields
+     */
+    public function listRecurringCharges(array $params = []): array
+    {
+        return $this->makeRequest(HttpMethod::GET, '/recurring_application_charges', $params);
+    }
+
+    /**
+     * Recupera uma cobranca recorrente.
+     *
+     * @param  array<string, mixed>  $params  ex.: fields
+     */
+    public function getRecurringCharge(int|string $chargeId, array $params = []): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/recurring_application_charges/{$chargeId}", $params);
+    }
+
+    /**
+     * Cria uma cobranca recorrente (o lojista aprova via confirmation_url).
+     *
+     * @param  array<string, mixed>  $charge  ex.: name, price, return_url, trial_days, test
+     */
+    public function createRecurringCharge(array $charge): array
+    {
+        return $this->makeRequest(HttpMethod::POST, '/recurring_application_charges', [], ['recurring_application_charge' => $charge]);
+    }
+
+    /**
+     * Cancela (remove) uma cobranca recorrente.
+     */
+    public function deleteRecurringCharge(int|string $chargeId): array
+    {
+        return $this->makeRequest(HttpMethod::DELETE, "/recurring_application_charges/{$chargeId}");
+    }
+
+    /**
+     * Altera o capped_amount de uma cobranca recorrente (o lojista precisa
+     * aprovar via update_capped_amount_url). A Shopify espera o valor como
+     * query `recurring_application_charge[capped_amount]`.
+     */
+    public function customizeRecurringCharge(int|string $chargeId, string|float|int $cappedAmount): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "/recurring_application_charges/{$chargeId}/customize", [
+            'recurring_application_charge' => ['capped_amount' => (string) $cappedAmount],
+        ]);
+    }
+
+    // ---------------------------------------------------------------
+    // Usage Charges (cobranca por uso, filha da recorrente)
+    // ---------------------------------------------------------------
+
+    /**
+     * Lista cobrancas por uso de uma cobranca recorrente.
+     *
+     * @param  array<string, mixed>  $params  ex.: fields
+     */
+    public function listUsageCharges(int|string $recurringChargeId, array $params = []): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/recurring_application_charges/{$recurringChargeId}/usage_charges", $params);
+    }
+
+    /**
+     * Recupera uma cobranca por uso.
+     *
+     * @param  array<string, mixed>  $params  ex.: fields
+     */
+    public function getUsageCharge(int|string $recurringChargeId, int|string $usageChargeId, array $params = []): array
+    {
+        return $this->makeRequest(HttpMethod::GET, "/recurring_application_charges/{$recurringChargeId}/usage_charges/{$usageChargeId}", $params);
+    }
+
+    /**
+     * Cria uma cobranca por uso. Ex.: ['description' => '...', 'price' => '1.00'].
+     *
+     * @param  array<string, mixed>  $usageCharge
+     */
+    public function createUsageCharge(int|string $recurringChargeId, array $usageCharge): array
+    {
+        return $this->makeRequest(HttpMethod::POST, "/recurring_application_charges/{$recurringChargeId}/usage_charges", [], ['usage_charge' => $usageCharge]);
+    }
 }

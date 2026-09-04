@@ -15,9 +15,14 @@ class ProductMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::GET, 'produto/', $query);
     }
 
-    public function get(int|string $id): array
+    /**
+     * `id_externo=1` busca pelo id externo; `descricao_completa=1` traz a descrição HTML.
+     *
+     * @return array<string,mixed>
+     */
+    public function get(int|string $id, bool $byExternalId = false, bool $fullDescription = false): array
     {
-        return $this->makeRequest(HttpMethod::GET, "produto/{$id}/");
+        return $this->makeRequest(HttpMethod::GET, "produto/{$id}/", $this->lookupQuery($byExternalId, $fullDescription));
     }
 
     public function create(array $data): array
@@ -25,13 +30,41 @@ class ProductMethods extends BaseMethods
         return $this->makeRequest(HttpMethod::POST, 'produto/', [], $data);
     }
 
-    public function update(int|string $id, array $data): array
+    /**
+     * @param array<string,mixed> $data
+     * @return array<string,mixed>
+     */
+    public function update(int|string $id, array $data, bool $byExternalId = false, bool $fullDescription = false): array
     {
-        return $this->makeRequest(HttpMethod::PUT, "produto/{$id}/", [], $data);
+        return $this->makeRequest(HttpMethod::PUT, "produto/{$id}/", $this->lookupQuery($byExternalId, $fullDescription), $data);
     }
 
     public function delete(int|string $id): array
     {
         return $this->makeRequest(HttpMethod::DELETE, "produto/{$id}/");
+    }
+
+    /**
+     * Altera a URL (alias) do produto; `replace_main=1` substitui a URL principal.
+     *
+     * @return array<string,mixed>
+     */
+    public function updateAlias(int|string $id, string $absolutePath, bool $replaceMain = false): array
+    {
+        return $this->makeRequest(HttpMethod::PUT, "produto/{$id}/alias/", $replaceMain ? ['replace_main' => 1] : [], ['absolute_path' => $absolutePath]);
+    }
+
+    /** @return array<string,int> */
+    private function lookupQuery(bool $byExternalId, bool $fullDescription): array
+    {
+        $query = [];
+        if ($byExternalId) {
+            $query['id_externo'] = 1;
+        }
+        if ($fullDescription) {
+            $query['descricao_completa'] = 1;
+        }
+
+        return $query;
     }
 }

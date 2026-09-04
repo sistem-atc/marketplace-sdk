@@ -11,6 +11,9 @@ return [
     ],
     'magalu' => [
         'api_base' => env('MARKETPLACES_MAGALU_BASE_URL', 'https://api.magalu.com'),
+        // Base das APIs Magalu Entregas/Magalog (fiscal-management, fiscal-documents,
+        // schedules, inventories, conversations, questions, carrier, smart-label).
+        'services_base' => env('MARKETPLACES_MAGALU_SERVICES_BASE_URL', 'https://services.magalu.com'),
         'token_url' => env('MARKETPLACES_MAGALU_TOKEN_URL', 'https://autoseg-idp.luizalabs.com/oauth/token'),
     ],
     'tiktok' => [
@@ -31,6 +34,8 @@ return [
     ],
     'shopify' => [
         'api_version' => env('MARKETPLACES_SHOPIFY_API_VERSION', '2024-04'),
+        // Versao da Admin API GraphQL (GraphQL/): classes geradas a partir do schema 2026-07.
+        'graphql_api_version' => env('MARKETPLACES_SHOPIFY_GRAPHQL_API_VERSION', '2026-07'),
     ],
     'mercadopago' => [
         'api_base' => env('MARKETPLACES_MERCADOPAGO_BASE_URL', 'https://api.mercadopago.com'),

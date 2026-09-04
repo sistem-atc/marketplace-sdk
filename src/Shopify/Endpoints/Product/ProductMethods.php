@@ -6,9 +6,12 @@ namespace SistemAtc\Marketplaces\Shopify\Endpoints\Product;
 
 use SistemAtc\Marketplaces\Shopify\Bases\BaseMethods;
 use SistemAtc\Marketplaces\Common\Enums\HttpMethod;
+use SistemAtc\Marketplaces\Shopify\Endpoints\Concerns\PaginatesRestByCursor;
 
 class ProductMethods extends BaseMethods
 {
+    use PaginatesRestByCursor;
+
     /**
      * Recupera detalhes de um produto.
      */
@@ -56,5 +59,16 @@ class ProductMethods extends BaseMethods
     {
         $response = $this->makeRequest(HttpMethod::GET, '/products/count', $params);
         return $response['count'] ?? 0;
+    }
+
+    /**
+     * Itera TODOS os produtos seguindo a paginacao por cursor (Link header).
+     *
+     * @param  array<string, mixed>  $params  filtros so' na 1a pagina (ex.: status, vendor, updated_at_min)
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function each(array $params = [], int $limit = 250): \Generator
+    {
+        return $this->eachPage('/products', 'products', $params, $limit);
     }
 }
