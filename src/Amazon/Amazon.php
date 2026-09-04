@@ -15,6 +15,35 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Messaging;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Reports;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Invoices;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Pricing;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FulfillmentInboundV0;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FulfillmentInbound;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FbaInboundEligibility;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FbaInventory;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ShippingV1;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Shipping;
+use SistemAtc\Marketplaces\Amazon\Endpoints\MerchantFulfillment;
+use SistemAtc\Marketplaces\Amazon\Endpoints\EasyShip;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Tracking;
+use SistemAtc\Marketplaces\Amazon\Endpoints\SupplySources;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ExternalFulfillment;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ListingsRestrictions;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ProductFees;
+use SistemAtc\Marketplaces\Amazon\Endpoints\CatalogItems;
+use SistemAtc\Marketplaces\Amazon\Endpoints\CatalogItemsLegacy;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Promotions;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FulfillmentOutbound;
+use SistemAtc\Marketplaces\Amazon\Endpoints\FulfillmentOutbound2026;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Awd;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Replenishment;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Uploads;
+use SistemAtc\Marketplaces\Amazon\Endpoints\AplusContent;
+use SistemAtc\Marketplaces\Amazon\Endpoints\OrdersV2026;
+use SistemAtc\Marketplaces\Amazon\Endpoints\SellerWallet;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Feeds;
+use SistemAtc\Marketplaces\Amazon\Endpoints\DataKiosk;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Sales;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Solicitations;
+use SistemAtc\Marketplaces\Amazon\Endpoints\CustomerFeedback;
 
 class Amazon
 {
@@ -83,5 +112,150 @@ class Amazon
     public function pricing(MarketplaceIntegration $integration): Pricing
     {
         return $this->client($integration)->pricing();
+    }
+
+    public function fulfillmentInboundV0(MarketplaceIntegration $integration): FulfillmentInboundV0
+    {
+        return $this->client($integration)->fulfillmentInboundV0();
+    }
+
+    public function fulfillmentInbound(MarketplaceIntegration $integration): FulfillmentInbound
+    {
+        return $this->client($integration)->fulfillmentInbound();
+    }
+
+    public function fbaInboundEligibility(MarketplaceIntegration $integration): FbaInboundEligibility
+    {
+        return $this->client($integration)->fbaInboundEligibility();
+    }
+
+    public function fbaInventory(MarketplaceIntegration $integration): FbaInventory
+    {
+        return $this->client($integration)->fbaInventory();
+    }
+
+    public function shippingV1(MarketplaceIntegration $integration): ShippingV1
+    {
+        return $this->client($integration)->shippingV1();
+    }
+
+    public function shipping(MarketplaceIntegration $integration): Shipping
+    {
+        return $this->client($integration)->shipping();
+    }
+
+    public function merchantFulfillment(MarketplaceIntegration $integration): MerchantFulfillment
+    {
+        return $this->client($integration)->merchantFulfillment();
+    }
+
+    public function easyShip(MarketplaceIntegration $integration): EasyShip
+    {
+        return $this->client($integration)->easyShip();
+    }
+
+    public function tracking(MarketplaceIntegration $integration): Tracking
+    {
+        return $this->client($integration)->tracking();
+    }
+
+    public function supplySources(MarketplaceIntegration $integration): SupplySources
+    {
+        return $this->client($integration)->supplySources();
+    }
+
+    public function externalFulfillment(MarketplaceIntegration $integration): ExternalFulfillment
+    {
+        return $this->client($integration)->externalFulfillment();
+    }
+
+    public function listingsRestrictions(MarketplaceIntegration $integration): ListingsRestrictions
+    {
+        return $this->client($integration)->listingsRestrictions();
+    }
+
+    public function productFees(MarketplaceIntegration $integration): ProductFees
+    {
+        return $this->client($integration)->productFees();
+    }
+
+    public function catalogItems(MarketplaceIntegration $integration): CatalogItems
+    {
+        return $this->client($integration)->catalogItems();
+    }
+
+    public function catalogItemsLegacy(MarketplaceIntegration $integration): CatalogItemsLegacy
+    {
+        return $this->client($integration)->catalogItemsLegacy();
+    }
+
+    public function promotions(MarketplaceIntegration $integration): Promotions
+    {
+        return $this->client($integration)->promotions();
+    }
+
+    public function fulfillmentOutbound(MarketplaceIntegration $integration): FulfillmentOutbound
+    {
+        return $this->client($integration)->fulfillmentOutbound();
+    }
+
+    public function fulfillmentOutbound2026(MarketplaceIntegration $integration): FulfillmentOutbound2026
+    {
+        return $this->client($integration)->fulfillmentOutbound2026();
+    }
+
+    public function awd(MarketplaceIntegration $integration): Awd
+    {
+        return $this->client($integration)->awd();
+    }
+
+    public function replenishment(MarketplaceIntegration $integration): Replenishment
+    {
+        return $this->client($integration)->replenishment();
+    }
+
+    public function uploads(MarketplaceIntegration $integration): Uploads
+    {
+        return $this->client($integration)->uploads();
+    }
+
+    public function aplusContent(MarketplaceIntegration $integration): AplusContent
+    {
+        return $this->client($integration)->aplusContent();
+    }
+
+    public function ordersV2026(MarketplaceIntegration $integration): OrdersV2026
+    {
+        return $this->client($integration)->ordersV2026();
+    }
+
+    public function sellerWallet(MarketplaceIntegration $integration): SellerWallet
+    {
+        return $this->client($integration)->sellerWallet();
+    }
+
+    public function feeds(MarketplaceIntegration $integration): Feeds
+    {
+        return $this->client($integration)->feeds();
+    }
+
+    public function dataKiosk(MarketplaceIntegration $integration): DataKiosk
+    {
+        return $this->client($integration)->dataKiosk();
+    }
+
+    public function sales(MarketplaceIntegration $integration): Sales
+    {
+        return $this->client($integration)->sales();
+    }
+
+    public function solicitations(MarketplaceIntegration $integration): Solicitations
+    {
+        return $this->client($integration)->solicitations();
+    }
+
+    public function customerFeedback(MarketplaceIntegration $integration): CustomerFeedback
+    {
+        return $this->client($integration)->customerFeedback();
     }
 }

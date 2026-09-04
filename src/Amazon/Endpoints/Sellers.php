@@ -37,4 +37,17 @@ class Sellers
 
         return $resp['payload'] ?? [];
     }
+
+    /**
+     * Dados da CONTA do seller (GET /sellers/v1/account): businessType,
+     * sellingPlan, marketplaceParticipationList, business (razão social,
+     * endereço) e primaryContact. Dado em `payload`. Não é grantless.
+     * Rate limit: 0.016 req/s + burst 15 (~1/min — cachear).
+     *
+     * @return array<string, mixed>
+     */
+    public function getAccount(): array
+    {
+        return $this->client->get('/sellers/v1/account');
+    }
 }
