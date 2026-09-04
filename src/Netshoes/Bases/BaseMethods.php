@@ -24,8 +24,13 @@ abstract class BaseMethods
     }
 
     /**
+     * O path e' SEMPRE completo, com a versao (`/api/v1/...` ou `/api/v2/...`):
+     * a base NAO prefixa versao — cada metodo escolhe a sua. Swagger oficial:
+     * pedidos/protocolos/templates em V1, produtos/precos/estoque em V2.
+     *
      * @param  array<string, mixed>  $query
      * @param  array<string, mixed>  $body
+     * @param  array<string, string>  $headers  headers extras por request (ex idSeller)
      * @return array<int|string, mixed>
      */
     protected function makeRequest(
@@ -33,16 +38,17 @@ abstract class BaseMethods
         string $path,
         array $query = [],
         array $body = [],
-        int $retryAttempt = 0
+        int $retryAttempt = 0,
+        array $headers = []
     ): array {
         $path = $this->normalizePath($path);
-        $response = $this->executeRequest($method, $path, $query, $body);
+        $response = $this->executeRequest($method, $path, $query, $body, $headers);
 
         if (($response->status() === 429 || $response->status() >= 500) && $retryAttempt < 3) {
             $sleep = (int) ($response->header('Retry-After') ?: pow(2, $retryAttempt + 1));
             sleep($sleep);
 
-            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1);
+            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1, $headers);
         }
 
         // Auth e' por header estatico (sem exchange). Um 401 reidrata o cliente
@@ -50,7 +56,7 @@ abstract class BaseMethods
         if ($response->status() === 401 && $retryAttempt === 0) {
             $this->httpClient = HttpClientFactory::make($this->integration);
 
-            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1);
+            return $this->makeRequest($method, $path, $query, $body, $retryAttempt + 1, $headers);
         }
 
         if ($response->failed()) {
@@ -60,13 +66,20 @@ abstract class BaseMethods
         return $response->json() ?? [];
     }
 
+    /**
+     * @param  array<string, mixed>  $query
+     * @param  array<string, mixed>  $body
+     * @param  array<string, string>  $headers
+     */
     protected function executeRequest(
         HttpMethod $method,
         string $path,
         array $query,
         array $body,
+        array $headers = [],
     ): Response {
-        $client = $this->httpClient;
+        // Clone: withHeaders muta o PendingRequest e vazaria pra proxima chamada.
+        $client = $headers ? (clone $this->httpClient)->withHeaders($headers) : $this->httpClient;
 
         return match ($method) {
             HttpMethod::GET => $client->get($path, $query),
