@@ -44,6 +44,11 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\DataKiosk;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Sales;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Solicitations;
 use SistemAtc\Marketplaces\Amazon\Endpoints\CustomerFeedback;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Services;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Vehicles;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationManagement;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationIntegrations;
+use SistemAtc\Marketplaces\Amazon\Endpoints\DeliveryByAmazon;
 
 class Amazon
 {
@@ -257,5 +262,97 @@ class Amazon
     public function customerFeedback(MarketplaceIntegration $integration): CustomerFeedback
     {
         return $this->client($integration)->customerFeedback();
+    }
+
+    // ---- Vendor Central (1P) ------------------------------------------
+
+    public function vendorOrders(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorOrders
+    {
+        return $this->client($integration)->vendorOrders();
+    }
+
+    public function vendorShipments(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorShipments
+    {
+        return $this->client($integration)->vendorShipments();
+    }
+
+    public function vendorInvoices(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorInvoices
+    {
+        return $this->client($integration)->vendorInvoices();
+    }
+
+    public function vendorTransactionStatus(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorTransactionStatus
+    {
+        return $this->client($integration)->vendorTransactionStatus();
+    }
+
+    public function vendorDirectFulfillmentOrdersV1(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrdersV1
+    {
+        return $this->client($integration)->vendorDirectFulfillmentOrdersV1();
+    }
+
+    public function vendorDirectFulfillmentOrders(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrders
+    {
+        return $this->client($integration)->vendorDirectFulfillmentOrders();
+    }
+
+    public function vendorDirectFulfillmentShippingV1(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShippingV1
+    {
+        return $this->client($integration)->vendorDirectFulfillmentShippingV1();
+    }
+
+    public function vendorDirectFulfillmentShipping(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShipping
+    {
+        return $this->client($integration)->vendorDirectFulfillmentShipping();
+    }
+
+    public function vendorDirectFulfillmentTransactionsV1(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactionsV1
+    {
+        return $this->client($integration)->vendorDirectFulfillmentTransactionsV1();
+    }
+
+    public function vendorDirectFulfillmentTransactions(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactions
+    {
+        return $this->client($integration)->vendorDirectFulfillmentTransactions();
+    }
+
+    public function vendorDirectFulfillmentInventory(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentInventory
+    {
+        return $this->client($integration)->vendorDirectFulfillmentInventory();
+    }
+
+    public function vendorDirectFulfillmentPayments(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentPayments
+    {
+        return $this->client($integration)->vendorDirectFulfillmentPayments();
+    }
+
+    public function vendorDirectFulfillmentSandbox(MarketplaceIntegration $integration): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentSandbox
+    {
+        return $this->client($integration)->vendorDirectFulfillmentSandbox();
+    }
+
+    public function services(MarketplaceIntegration $integration): Services
+    {
+        return $this->client($integration)->services();
+    }
+
+    public function vehicles(MarketplaceIntegration $integration): Vehicles
+    {
+        return $this->client($integration)->vehicles();
+    }
+
+    public function applicationManagement(MarketplaceIntegration $integration): ApplicationManagement
+    {
+        return $this->client($integration)->applicationManagement();
+    }
+
+    public function applicationIntegrations(MarketplaceIntegration $integration): ApplicationIntegrations
+    {
+        return $this->client($integration)->applicationIntegrations();
+    }
+
+    public function deliveryByAmazon(MarketplaceIntegration $integration): DeliveryByAmazon
+    {
+        return $this->client($integration)->deliveryByAmazon();
     }
 }

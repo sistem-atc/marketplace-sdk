@@ -50,6 +50,11 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\DataKiosk;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Sales;
 use SistemAtc\Marketplaces\Amazon\Endpoints\Solicitations;
 use SistemAtc\Marketplaces\Amazon\Endpoints\CustomerFeedback;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Services;
+use SistemAtc\Marketplaces\Amazon\Endpoints\Vehicles;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationManagement;
+use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationIntegrations;
+use SistemAtc\Marketplaces\Amazon\Endpoints\DeliveryByAmazon;
 
 /**
  * Cliente HTTP base pra Amazon Selling Partner API.
@@ -417,5 +422,97 @@ class Client
     public function customerFeedback(): CustomerFeedback
     {
         return new CustomerFeedback($this);
+    }
+
+    // ---- Vendor Central (1P) ------------------------------------------
+
+    public function vendorOrders(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorOrders
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorOrders($this);
+    }
+
+    public function vendorShipments(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorShipments
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorShipments($this);
+    }
+
+    public function vendorInvoices(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorInvoices
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorInvoices($this);
+    }
+
+    public function vendorTransactionStatus(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorTransactionStatus
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorTransactionStatus($this);
+    }
+
+    public function vendorDirectFulfillmentOrdersV1(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrdersV1
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrdersV1($this);
+    }
+
+    public function vendorDirectFulfillmentOrders(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrders
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentOrders($this);
+    }
+
+    public function vendorDirectFulfillmentShippingV1(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShippingV1
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShippingV1($this);
+    }
+
+    public function vendorDirectFulfillmentShipping(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShipping
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentShipping($this);
+    }
+
+    public function vendorDirectFulfillmentTransactionsV1(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactionsV1
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactionsV1($this);
+    }
+
+    public function vendorDirectFulfillmentTransactions(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactions
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentTransactions($this);
+    }
+
+    public function vendorDirectFulfillmentInventory(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentInventory
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentInventory($this);
+    }
+
+    public function vendorDirectFulfillmentPayments(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentPayments
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentPayments($this);
+    }
+
+    public function vendorDirectFulfillmentSandbox(): \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentSandbox
+    {
+        return new \SistemAtc\Marketplaces\Amazon\Endpoints\VendorDirectFulfillmentSandbox($this);
+    }
+
+    public function services(): Services
+    {
+        return new Services($this);
+    }
+
+    public function vehicles(): Vehicles
+    {
+        return new Vehicles($this);
+    }
+
+    public function applicationManagement(): ApplicationManagement
+    {
+        return new ApplicationManagement($this);
+    }
+
+    public function applicationIntegrations(): ApplicationIntegrations
+    {
+        return new ApplicationIntegrations($this);
+    }
+
+    public function deliveryByAmazon(): DeliveryByAmazon
+    {
+        return new DeliveryByAmazon($this);
     }
 }
