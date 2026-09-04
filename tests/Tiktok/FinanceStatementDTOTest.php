@@ -124,3 +124,15 @@ it('roundtrip nao perde os campos de ajuste', function () {
         ->and($back['adjustment_order_id'])->toBe($payload['adjustment_order_id'])
         ->and($back['adjustment_id'])->toBe($payload['adjustment_id']);
 });
+
+it('hidrata order_id quando vem do endpoint do demonstrativo e o devolve no toArray', function () {
+    // /statements/{id}/statement_transactions traz order_id por transacao; o
+    // endpoint por pedido nao (ja' e' o pedido da URL). Sem o campo, nao da'
+    // pra ligar a transacao do demonstrativo ao pedido.
+    $dto = StatementTransaction::fromArray(fakeTiktokStatement() + ['order_id' => '585390048990233842', 'type' => 'ORDER']);
+
+    expect($dto->orderId)->toBe('585390048990233842')
+        ->and($dto->toArray()['order_id'])->toBe('585390048990233842');
+
+    expect(StatementTransaction::fromArray(fakeTiktokStatement())->orderId)->toBeNull();
+});

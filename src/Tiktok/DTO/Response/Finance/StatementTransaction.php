@@ -73,6 +73,15 @@ final class StatementTransaction implements DTOInterface
         public readonly ?string $isrIncomeTaxAmount = null,
         public readonly ?string $ivaVatAmount = null,
         public readonly ?string $netSalesAmount = null,
+        /**
+         * Pedido dono da transacao. Vem preenchido no endpoint do DEMONSTRATIVO
+         * (`/statements/{id}/statement_transactions`); no endpoint do PEDIDO
+         * (`/orders/{id}/statement_transactions`) a API o omite, porque ja' e'
+         * o pedido da URL. Sem este campo o consumidor nao consegue ligar a
+         * transacao do demonstrativo ao pedido — e um estorno lancado depois
+         * do pull por pedido ficava invisivel (Bunker, 04/09/2026).
+         */
+        public readonly ?string $orderId = null,
         public readonly ?string $pitAmount = null,
         public readonly ?string $platformCommissionAmount = null,
         public readonly ?string $platformDiscountAmount = null,
