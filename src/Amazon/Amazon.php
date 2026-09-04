@@ -49,9 +49,19 @@ use SistemAtc\Marketplaces\Amazon\Endpoints\Vehicles;
 use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationManagement;
 use SistemAtc\Marketplaces\Amazon\Endpoints\ApplicationIntegrations;
 use SistemAtc\Marketplaces\Amazon\Endpoints\DeliveryByAmazon;
+use SistemAtc\Marketplaces\Amazon\Ads\Ads;
 
 class Amazon
 {
+    /**
+     * Hub completo da Amazon Ads API (SP/SB/SD/DSP/conta/audiencias...).
+     * `ads()` continua devolvendo so o Reporting v3 por compatibilidade.
+     */
+    public function advertising(MarketplaceIntegration $integration, string $clientId): Ads
+    {
+        return new Ads($integration, $clientId);
+    }
+
     public function client(MarketplaceIntegration $integration): Client
     {
         return new Client($integration);
