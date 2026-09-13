@@ -51,9 +51,21 @@ class PaymentMethods extends BaseMethods
      */
     public function getEscrowDetailBatch(array $orderSnList): array
     {
-        $response = $this->makeRequest(HttpMethod::GET, '/api/v2/payment/get_escrow_detail_batch', [
-            'order_sn_list' => implode(',', $orderSnList),
-        ]);
+        // POST com `order_sn_list` como ARRAY no corpo.
+        //
+        // Era GET com a lista em CSV, e a Shopee recusava toda chamada:
+        // `error_param — order_sn_list is required, format should be string[]`
+        // (medido em producao 13/09/2026, 2.000 pedidos, 2.000 erros).
+        //
+        // O CSV funciona em varios endpoints da Shopee, mas nao neste: aqui o
+        // parametro e' tipado como lista, e lista com um elemento so' tambem
+        // precisa vir como array.
+        $response = $this->makeRequest(
+            HttpMethod::POST,
+            '/api/v2/payment/get_escrow_detail_batch',
+            [],
+            ['order_sn_list' => array_values($orderSnList)],
+        );
 
         return $response['response'] ?? [];
     }
