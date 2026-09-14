@@ -87,6 +87,63 @@ class ReportingMethods extends BaseMethods
     }
 
     /**
+     * Colunas de RESULTADO por campanha, por produto. A Amazon nomeia as
+     * métricas de conversão diferente em cada relatório: Sponsored Products
+     * traz janelas explícitas (`purchases14d`, `sales14d`,
+     * `unitsSoldClicks14d`); Brands e Display trazem `purchases`, `sales`,
+     * `unitsSold` (janela padrão de 14 dias).
+     */
+    public const CAMPAIGN_COLUMNS = [
+        'SPONSORED_PRODUCTS' => ['date', 'campaignId', 'campaignName', 'campaignStatus', 'impressions', 'clicks', 'cost', 'purchases14d', 'sales14d', 'unitsSoldClicks14d'],
+        'SPONSORED_BRANDS' => ['date', 'campaignId', 'campaignName', 'campaignStatus', 'impressions', 'clicks', 'cost', 'purchases', 'sales', 'unitsSold'],
+        'SPONSORED_DISPLAY' => ['date', 'campaignId', 'campaignName', 'campaignStatus', 'impressions', 'clicks', 'cost', 'purchases', 'sales', 'unitsSold'],
+    ];
+
+    /**
+     * Cria o relatório diário POR CAMPANHA com as métricas de resultado
+     * (self::CAMPAIGN_COLUMNS por produto, ou as colunas que o consumidor
+     * passar). Mesmo ciclo assíncrono do requestDailyCostReport: devolve o
+     * reportId, depois getReport() até COMPLETED e downloadReportRows().
+     *
+     * @param  string  $adProduct  chave de self::REPORT_TYPES
+     * @param  list<string>|null  $columns
+     *
+     * @throws AmazonAdsRequestException
+     */
+    public function requestCampaignReport(string $profileId, string $adProduct, string $startDate, string $endDate, ?array $columns = null): string
+    {
+        $reportTypeId = self::REPORT_TYPES[$adProduct] ?? null;
+
+        if ($reportTypeId === null) {
+            throw new AmazonAdsRequestException("adProduct desconhecido: {$adProduct}");
+        }
+
+        $response = $this->http($profileId)
+            ->withHeaders(['Content-Type' => 'application/vnd.createasyncreportrequest.v3+json'])
+            ->post($this->baseUrl().'/reporting/reports', [
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'configuration' => [
+                    'adProduct' => $adProduct,
+                    'groupBy' => ['campaign'],
+                    'columns' => $columns ?? self::CAMPAIGN_COLUMNS[$adProduct],
+                    'reportTypeId' => $reportTypeId,
+                    'timeUnit' => 'DAILY',
+                    'format' => 'GZIP_JSON',
+                ],
+            ]);
+
+        $data = $this->decodeOrFail($response, 'POST /reporting/reports');
+        $reportId = (string) ($data['reportId'] ?? '');
+
+        if ($reportId === '') {
+            throw new AmazonAdsRequestException('POST /reporting/reports sem reportId: '.json_encode($data));
+        }
+
+        return $reportId;
+    }
+
+    /**
      * Estado do relatório: {status: PENDING|PROCESSING|COMPLETED|FAILURE, url?}.
      *
      * @return array<string, mixed>

@@ -73,6 +73,22 @@ describe('MarketPlaces::Amazon()->ads()', function () {
             ->and($rows[0]['cost'])->toBe(123.45);
     });
 
+    it('requestCampaignReport pede as colunas de resultado do produto', function () {
+        Http::fake([
+            'advertising-api.amazon.com/reporting/reports' => Http::response(['reportId' => 'rep-camp-1', 'status' => 'PENDING']),
+        ]);
+
+        $ads = MarketPlaces::Amazon()->ads(makeAmazonAdsIntegration(), 'client-id-x');
+
+        expect($ads->requestCampaignReport('111', 'SPONSORED_PRODUCTS', '2026-08-01', '2026-08-02'))->toBe('rep-camp-1');
+
+        Http::assertSent(fn ($req) => str_ends_with($req->url(), '/reporting/reports')
+            && $req['configuration']['reportTypeId'] === 'spCampaigns'
+            && $req['configuration']['groupBy'] === ['campaign']
+            && $req['configuration']['columns'] === ['date', 'campaignId', 'campaignName', 'campaignStatus', 'impressions', 'clicks', 'cost', 'purchases14d', 'sales14d', 'unitsSoldClicks14d']
+            && $req->header('Amazon-Advertising-API-Scope')[0] === '111');
+    });
+
     it('erro HTTP vira AmazonAdsRequestException com a mensagem do corpo', function () {
         Http::fake([
             'advertising-api.amazon.com/v2/profiles' => Http::response(['message' => 'Unauthorized'], 401),
