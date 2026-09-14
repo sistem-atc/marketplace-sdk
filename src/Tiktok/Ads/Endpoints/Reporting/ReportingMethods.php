@@ -43,6 +43,42 @@ class ReportingMethods extends BaseMethods
     }
 
     /**
+     * Métricas diárias POR CAMPANHA do GMV MAX — o mesmo relatório do
+     * `gmvMaxDaily`, só que pedindo as métricas que a Central do Vendedor
+     * mostra: custo, pedidos, receita bruta (GMV), ROI e custo por pedido.
+     * `campaign_name` também é uma "métrica" nessa API (a dimensão
+     * `campaign_name` é recusada), então o nome vem em `metrics.campaign_name`.
+     *
+     * Métricas NÃO aceitas pelo GMV Max (400 "Invalid metric(s)"):
+     * impressions, clicks, ctr, cpc — o relatório é de resultado, não de tráfego.
+     *
+     * Mesmas regras do `gmvMaxDaily`: 1 store por chamada, 1 linha por
+     * campanha por dia, valores como STRING.
+     *
+     * @param  list<string>  $storeIds
+     * @param  list<string>  $metrics
+     * @param  string  $startDate  YYYY-MM-DD
+     * @param  string  $endDate  YYYY-MM-DD
+     * @return list<array<string, mixed>>
+     */
+    public function gmvMaxCampaignDaily(
+        string $advertiserId,
+        array $storeIds,
+        string $startDate,
+        string $endDate,
+        array $metrics = ['campaign_name', 'cost', 'orders', 'gross_revenue', 'roi', 'cost_per_order'],
+    ): array {
+        return $this->paginatedList('/open_api/v1.3/gmv_max/report/get/', [
+            'advertiser_id' => $advertiserId,
+            'store_ids' => json_encode($storeIds),
+            'dimensions' => json_encode(['campaign_id', 'stat_time_day']),
+            'metrics' => json_encode($metrics),
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+    }
+
+    /**
      * Gasto diário AUCTION no nível do advertiser (Ads Manager tradicional,
      * relatório integrado). Métrica de gasto: `spend`.
      *

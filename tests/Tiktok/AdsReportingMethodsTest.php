@@ -48,6 +48,33 @@ describe('MarketPlaces::Tiktok()->ads()', function () {
         });
     });
 
+    it('gmvMaxCampaignDaily pede as metricas de resultado por campanha (nome vem como metrica)', function () {
+        Http::fake([
+            'business-api.tiktok.com/open_api/v1.3/gmv_max/report/get/*' => Http::response([
+                'code' => 0, 'message' => 'OK',
+                'data' => [
+                    'list' => [[
+                        'dimensions' => ['campaign_id' => '1858306937728034', 'stat_time_day' => '2026-08-21 00:00:00'],
+                        'metrics' => ['campaign_name' => 'Kit: Whey + Creatina', 'cost' => '608.43', 'cost_per_order' => '9.66', 'gross_revenue' => '6158.57', 'orders' => '63', 'roi' => '10.12'],
+                    ]],
+                    'page_info' => ['total_page' => 1],
+                ],
+            ]),
+        ]);
+
+        $rows = MarketPlaces::Tiktok()->ads(makeTiktokAdsIntegration())
+            ->gmvMaxCampaignDaily('7000001', ['7495'], '2026-08-21', '2026-08-21');
+
+        expect($rows)->toHaveCount(1)
+            ->and($rows[0]['dimensions']['campaign_id'])->toBe('1858306937728034')
+            ->and($rows[0]['metrics']['campaign_name'])->toBe('Kit: Whey + Creatina')
+            ->and($rows[0]['metrics']['gross_revenue'])->toBe('6158.57');
+
+        Http::assertSent(fn ($req) => str_contains($req->url(), '/gmv_max/report/get/')
+            && str_contains(urldecode($req->url()), 'dimensions=["campaign_id","stat_time_day"]')
+            && str_contains(urldecode($req->url()), 'metrics=["campaign_name","cost","orders","gross_revenue","roi","cost_per_order"]'));
+    });
+
     it('auctionDaily pagina seguindo page_info.total_page', function () {
         $page = fn (array $list, int $totalPages) => [
             'code' => 0, 'message' => 'OK',
