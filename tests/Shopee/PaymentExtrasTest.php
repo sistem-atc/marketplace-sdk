@@ -49,7 +49,7 @@ beforeEach(function () {
 });
 
 describe('PaymentMethods extras — escrow', function () {
-    it('getEscrowDetailBatch GET com order_sn_list csv e devolve a lista do response', function () {
+    it('getEscrowDetailBatch e POST com order_sn_list em ARRAY', function () {
         Http::fake(['partner.shopeemobile.com/api/v2/payment/get_escrow_detail_batch*' => Http::response([
             'error' => '', 'response' => [['escrow_detail' => ['order_sn' => 'A1']], ['escrow_detail' => ['order_sn' => 'B2']]],
         ])]);
@@ -57,7 +57,10 @@ describe('PaymentMethods extras — escrow', function () {
         $rows = paymentExtrasMethods()->getEscrowDetailBatch(['A1', 'B2']);
 
         expect($rows)->toHaveCount(2)->and($rows[1]['escrow_detail']['order_sn'])->toBe('B2');
-        paymentExtrasAssertShopCall('GET', '/api/v2/payment/get_escrow_detail_batch', fn ($req) => str_contains($req->url(), 'order_sn_list=A1%2CB2'));
+        // A Shopee recusa GET com CSV aqui: e' POST e a lista vai em ARRAY no
+        // corpo. Corrigido na v2.15.1 — este teste ficou pra tras e so' foi
+        // pego em 15/09/2026.
+        paymentExtrasAssertShopCall('POST', '/api/v2/payment/get_escrow_detail_batch', fn ($req) => ($req->data()['order_sn_list'] ?? null) === ['A1', 'B2']);
     });
 
     it('getEscrowList GET com janela de release_time + paginação', function () {
