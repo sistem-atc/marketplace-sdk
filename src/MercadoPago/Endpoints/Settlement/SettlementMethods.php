@@ -93,6 +93,108 @@ class SettlementMethods extends BaseMethods
     }
 
     /**
+     * Colunas de que um parser de release report costuma depender.
+     *
+     * O relatorio MINIMO do MP traz data, valor e descricao — e nada que ligue
+     * a linha ao pedido. Numa conta assim o dinheiro chega anonimo: medido em
+     * 15/09/2026 numa conta real, 3.567 liberacoes gravadas e ZERO casando com
+     * um pedido.
+     *
+     * `RECORD_TYPE` e' a mais critica e a menos obvia: sem ela nao da' pra
+     * separar `release` de `initial_available_balance` / `available_balance` /
+     * `total`, que sao AGREGADOS de saldo. Eles entram como se fossem movimento
+     * e DOBRAM a soma.
+     *
+     * @var list<string>
+     */
+    public const COLUNAS_RECOMENDADAS = [
+        'EXTERNAL_REFERENCE',
+        'RECORD_TYPE',
+        'ORDER_ID',
+        'SHIPPING_ID',
+        'INSTALLMENTS',
+        'SHIPPING_FEE_AMOUNT',
+        'FINANCING_FEE_AMOUNT',
+        'COUPON_AMOUNT',
+        'EFFECTIVE_COUPON_AMOUNT',
+    ];
+
+    /**
+     * Config atual do release report da conta (colunas, idioma, frequencia).
+     *
+     * @return array<string, mixed>
+     */
+    public function releaseReportConfig(): array
+    {
+        return $this->makeRequest(
+            method: HttpMethod::GET,
+            path: '/v1/account/release_report/config',
+        );
+    }
+
+    /**
+     * Grava a config do release report.
+     *
+     * ## E' PUT, nao POST
+     *
+     * `POST` responde **409 Conflict** quando a conta ja' tem config — o
+     * endpoint interno e' `report-config-legacy` e trata POST como criacao. E
+     * responde **500** se o corpo trouxer `frequency` copiada de outra conta.
+     * `PUT` e' o verbo de atualizacao e funciona nos dois casos.
+     *
+     * @param  array<string, mixed>  $config  Config COMPLETA (leia com
+     *                                        `releaseReportConfig()` e altere o
+     *                                        que precisa — o MP substitui tudo).
+     * @return array<string, mixed>
+     */
+    public function saveReleaseReportConfig(array $config): array
+    {
+        return $this->makeRequest(
+            method: HttpMethod::PUT,
+            path: '/v1/account/release_report/config',
+            data: $config,
+        );
+    }
+
+    /**
+     * Acrescenta as colunas que faltam, preservando o resto da config.
+     *
+     * So' as COLUNAS mudam: prefixo de arquivo, frequencia e agendamento sao
+     * proprios da conta, e sobrescreve-los muda o comportamento do schedule do
+     * MP sem necessidade — alem de ser o que faz o POST devolver 500.
+     *
+     * NAO corrige o passado: o relatorio e' montado no momento do pedido, entao
+     * e' preciso RE-PEDIR os periodos depois de aplicar.
+     *
+     * @param  list<string>|null  $colunas  Default: COLUNAS_RECOMENDADAS.
+     * @return list<string> As colunas que foram acrescentadas (vazio = ja estava completa).
+     */
+    public function ensureReleaseReportColumns(?array $colunas = null): array
+    {
+        $querido = $colunas ?? self::COLUNAS_RECOMENDADAS;
+        $config = $this->releaseReportConfig();
+
+        $tem = array_map(
+            static fn ($c) => is_array($c) ? (string) ($c['key'] ?? '') : (string) $c,
+            $config['columns'] ?? [],
+        );
+
+        $faltam = array_values(array_diff($querido, $tem));
+
+        if ($faltam === []) {
+            return [];
+        }
+
+        foreach ($faltam as $coluna) {
+            $config['columns'][] = ['key' => $coluna];
+        }
+
+        $this->saveReleaseReportConfig($config);
+
+        return $faltam;
+    }
+
+    /**
      * Lista reports criados (released_money + settlement).
      *
      * Resposta inclui pra cada report: `file_name`, `status` (pending/
